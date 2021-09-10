@@ -1,0 +1,22 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="toolbar">
+  <Ui::ToolbarClearButton
+    @action={{@clearProfiles}}
+  />
+
+  {{#unless @showEmpty}}
+    <Ui::ToolbarDivider />
+    <Ui::ToolbarReloadButton
+      @action={{@refreshPage}}
+      class="js-toolbar-page-refresh-btn"
+    />
+  {{/unless}}
+
+  <Ui::ToolbarDivider />
+
+  <Ui::ToolbarSearchField
+    @value={{@searchValue}}
+    class="js-render-profiles-search"
+  />
+</div>

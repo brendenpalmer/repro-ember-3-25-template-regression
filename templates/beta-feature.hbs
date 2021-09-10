@@ -1,0 +1,11 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div>
+  <span class="name">
+    {{this.feature.displayName}}
+  </span>
+  <p class="description">
+    {{this.feature.description}}
+  </p>
+</div>
+<FeatureToggle @feature={{this.feature}} />

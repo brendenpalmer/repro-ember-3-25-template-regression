@@ -1,0 +1,8 @@
+{{! Template from `skylines` with MIT license }}
+<FormPage @title={{t "recover-password"}}>
+  {{#if key}}
+    <RecoverStep2Form @recoveryKey={{key}} />
+  {{else}}
+    <RecoverStep1Form />
+  {{/if}}
+</FormPage>

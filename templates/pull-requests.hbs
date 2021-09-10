@@ -1,0 +1,7 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<RepoBuildList
+  @repo={{this.repo}}
+  @eventTypes='pull_request'
+  @missingNotice="No {{vcs-vocab this.repo.vcsType 'pullRequest' lower=true}} builds for this repository"
+/>

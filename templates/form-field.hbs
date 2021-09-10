@@ -1,0 +1,121 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.label}}
+  <label for={{this.fieldElementId}} class="travis-form__label">
+    {{this.label}}
+    {{#if this.showRequiredMark}}
+      <span class="travis-form__required-mark">
+        {{this.requiredMark}}
+        <EmberTooltip @text="This field is required" @delay={{300}} />
+      </span>
+    {{/if}}
+  </label>
+{{/if}}
+{{#if this.helperText}}
+  <div class="travis-form__helper-text">
+    {{this.helperText}}
+  </div>
+{{/if}}
+{{#if this.showIcon}}
+  <div class="travis-form__icon">
+    <SvgImage @name={{icon}} />
+  </div>
+{{/if}}
+{{yield
+  (hash
+    isValid=this.isValid
+    isError=this.isError
+    errorMessage=this.errorMessage
+    input=(component "forms/form-input"
+      form=this.form
+      value=this.value
+      disabled=this.disabled
+      placeholder=this.placeholder
+      onFocus=(action "handleFocus")
+      onBlur=(action "handleBlur")
+      onChange=(action "handleChange")
+      onInit=(action "setFieldElementId")
+      class="travis-form__field-component"
+    )
+    textarea=(component "forms/form-textarea"
+      form=this.form
+      value=this.value
+      disabled=this.disabled
+      placeholder=this.placeholder
+      onFocus=(action "handleFocus")
+      onBlur=(action "handleBlur")
+      onChange=(action "handleChange")
+      onInit=(action "setFieldElementId")
+      class="travis-form__field-component"
+    )
+    select=(component selectComponent
+      form=this.form
+      selected=this.value
+      disabled=this.disabled
+      placeholder=this.placeholder
+      onfocus=(action "handleFocus")
+      onopen=(action "handleFocus")
+      onblur=(action "handleSelectBlur")
+      onclose=(action "handleSelectBlur")
+      onchange=(action "handleChange")
+    )
+    checkbox=(component "forms/form-checkbox"
+      form=this.form
+      checked=this.value
+      disabled=this.disabled
+      onFocus=(action "handleFocus")
+      onBlur=(action "handleBlur")
+      onChange=(action "handleChange")
+      onInit=(action "setFieldElementId")
+      class="travis-form__field-component"
+    )
+    switch=(component "forms/form-switch"
+      form=this.form
+      checked=this.value
+      disabled=this.disabled
+      onChange=(action "handleChange")
+      onInit=(action "setFieldElementId")
+      class="travis-form__field-component"
+    )
+    slider=(component 'forms/form-slider'
+      form=form
+      value=this.value
+      max=this.max
+      min=this.min
+      step=this.step
+      list=this.list
+      onChange=(action 'handleChange')
+      onInit=(action 'setFieldElementId')
+      class='travis-form__field-component'
+    )
+    multipleInputs=(component 'forms/multiple-inputs-field'
+      form=form
+      initialValue=this.initialValue
+      required=this.required
+      disabled=this.disabled
+      validateMultipleInputs=(action "validateMultipleInputs")
+      onInit=(action "setFieldElementId")
+    )
+  )
+}}
+
+{{#if this.requiresValidation }}
+  {{#if this.showValidationStatusIcons}}
+    <div class="travis-form__field-badge travis-form__field-badge--error">
+      <SvgImage @name="form-error-icon" @width=14 @height=14 />
+    </div>
+    <div class="travis-form__field-badge travis-form__field-badge--valid">
+      <SvgImage @name="form-valid-icon" @width=14 @height=14 />
+    </div>
+  {{/if}}
+  {{#if this.showValidationStatusMessage}}
+    <div class="travis-form__error-message">
+      {{this.errorMessage}}&nbsp;
+    </div>
+  {{/if}}
+{{/if}}
+{{#if this.showClear}}
+  <div class="travis-form__clear" onclick={{action "handleClear"}}>
+    &times;
+  </div>
+{{/if}}

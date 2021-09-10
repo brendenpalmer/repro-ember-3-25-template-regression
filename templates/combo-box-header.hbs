@@ -1,0 +1,21 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+<div class="select-kit-header-wrapper">
+  {{#each icons as |icon|}} {{d-icon icon}} {{/each}}
+
+  {{component selectKit.options.selectedNameComponent
+    tabindex=tabindex
+    item=selectedContent
+    selectKit=selectKit
+  }}
+
+  {{#if shouldDisplayClearableButton}}
+    {{d-button
+      class="btn-clear"
+      icon="times"
+      action=selectKit.onClearSelection
+      ariaLabel="clear_input"
+    }}
+  {{/if}}
+
+  {{d-icon caretIcon class="caret-icon"}}
+</div>

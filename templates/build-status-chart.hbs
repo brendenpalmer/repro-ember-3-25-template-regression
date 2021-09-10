@@ -1,0 +1,22 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<h3 class="insights-odyssey__title" data-test-insights-odyssey-title>
+  Build Statuses
+</h3>
+<div class="insights-odyssey__chart" data-test-insights-odyssey-chart>
+  {{#if this.isLoading}}
+    <div class="insights-odyssey__loading-indicator">
+      <LoadingIndicator />
+    </div>
+  {{else if this.hasNoBuilds}}
+    No builds {{this.currentIntervalLabel}}.
+  {{else}}
+    <C3Chart
+      @data={{this.data}}
+      @axis={{this.axis}}
+      @grid={{this.grid}}
+      @tooltip={{this.tooltip}}
+      class="chart-component"
+    />
+  {{/if}}
+</div>

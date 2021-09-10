@@ -1,0 +1,4 @@
+{{! Template from `discourse` with MIT license }}
+{{#each connectors as |c|}}
+  {{plugin-connector connector=c args=args deprecatedArgs=deprecatedArgs class=c.classNames tagName=connectorTagName}}
+{{/each}}

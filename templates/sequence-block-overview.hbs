@@ -1,0 +1,463 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<section
+  class="curriculum-inventory-sequence-block-overview"
+  data-test-curriculum-inventory-sequence-block-overview
+  {{did-insert (perform this.load) (await @sequenceBlock)}}
+  {{did-update (perform this.load) (await @sequenceBlock) (await @sequenceBlock.course)}}
+  ...attributes
+>
+  {{#let (unique-id) as |templateId|}}
+    <div class="curriculum-inventory-sequence-block-overview-wrapper" data-test-overview>
+      <div class="title" data-test-title>{{t "general.overview"}}</div>
+      <div class="curriculum-inventory-sequence-block-overview-content">
+        {{#if (or this.load.isRunning this.reload.isRunning)}}
+          <div class="block"><LoadingSpinner /></div>
+        {{else}}
+          <div class="block course" data-test-course>
+            <span>
+              <label for="course-{{templateId}}">{{t "general.course"}}:</label>
+              {{#if @canUpdate}}
+                <EditableField
+                  @value={{this.course.title}}
+                  @save={{perform this.saveCourse}}
+                  @close={{this.revertCourseChanges}}
+                  @clickPrompt={{t "general.selectCourse"}}
+                >
+                  <select
+                    id="course-{{templateId}}"
+                    disabled={{this.saveCourse.isRunning}}
+                    {{on "change" this.updateCourse}}
+                  >
+                    <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
+                    {{#each (sort-by "title" this.linkableCourses) as |obj|}}
+                      <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
+                    {{/each}}
+                  </select>
+                </EditableField>
+              {{else}}
+                <span data-test-course-title>{{if this.course this.course.title (t "general.notApplicableAbbr")}}</span>
+              {{/if}}
+            </span>
+            {{#if this.course}}
+              <span class="details" data-test-course-details>
+                {{t "general.level"}}: {{this.course.level}},
+                {{t "general.startDate"}}: {{moment-format this.course.startDate "YYYY-MM-DD"}},
+                {{t "general.endDate"}}: {{moment-format this.course.endDate "YYYY-MM-DD"}}
+                {{#if this.course.clerkshipType}}
+                  - {{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
+                {{/if}}
+              </span>
+            {{/if}}
+          </div>
+          <div class="block description" data-test-description>
+            <label for="description-{{templateId}}">{{t "general.description"}}:</label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{if this.description this.description (t "general.clickToAddDescription")}}
+                @save={{perform this.saveDescription}}
+                @close={{this.revertDescriptionChanges}}
+                @closeOnEscape={{true}}
+                as |isSaving|
+              >
+                <textarea
+                  id="description-{{templateId}}"
+                  value={{this.description}}
+                  oninput={{this.changeDescription}}
+                  disabled={{isSaving}}
+                >
+                  {{this.description}}
+                </textarea>
+              </EditableField>
+            {{else}}
+              <span>{{@sequenceBlock.description}}</span>
+            {{/if}}
+          </div>
+          <div class="block required" data-test-required>
+            <label for="required-{{templateId}}">{{t "general.required"}}:</label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{this.requiredLabel}}
+                @save={{perform this.changeRequired}}
+                @close={{this.revertRequiredChanges}}
+              >
+                <select
+                  id="required-{{templateId}}"
+                  {{on "change" (pick "target.value" this.setRequired)}}
+                >
+                  <option value="1" selected={{eq this.required "1"}}>{{t "general.required"}}</option>
+                  <option value="2" selected={{eq this.required "2"}}>{{t "general.optionalElective"}}</option>
+                  <option value="3" selected={{eq this.required "3"}}>{{t "general.requiredInTrack"}}</option>
+                </select>
+              </EditableField>
+            {{else}}
+              <span>{{this.requiredLabel}}</span>
+            {{/if}}
+          </div>
+          <div class="block track" data-test-track>
+            <label>{{t "general.isTrack"}}:</label>
+            {{#if @canUpdate}}
+              <ToggleYesno @yes={{@sequenceBlock.track}} @toggle={{perform this.changeTrack}} />
+            {{else}}
+              <span>{{if @sequenceBlock.track (t "general.yes") (t "general.no")}}</span>
+            {{/if}}
+          </div>
+          {{#if this.isEditingDatesAndDuration}}
+            <section
+              class="curriculum-inventory-sequence-block-dates-duration-editor"
+              data-test-curriculum-inventory-sequence-block-dates-duration-editor
+            >
+              <div class="item start-date" data-test-startdate>
+                <label for="startdate-{{templateId}}">
+                  {{t "general.start"}}:
+                </label>
+                <DatePicker
+                  id="startdate-{{templateId}}"
+                  @value={{this.startDate}}
+                  @onChange={{this.changeStartDate}}
+                />
+                {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="item end-date" data-test-enddate>
+                <label for="enddate-{{templateId}}">
+                  {{t "general.end"}}:
+                </label>
+                <DatePicker
+                  id="enddate-{{templateId}}"
+                  @value={{this.endDate}}
+                  @onChange={{this.changeEndDate}}
+                />
+                {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="item duration" data-test-duration>
+                <label for="duration-{{templateId}}">
+                  {{t "general.durationInDays"}}:
+                </label>
+                <input
+                  id="duration-{{templateId}}"
+                  type="text"
+                  value={{this.duration}}
+                  disabled={{this.saveDuration.isRunning}}
+                  {{on "input" (pick "target.value" (set this.duration))}}
+                  {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)}}
+                >
+                {{#each (await (compute this.getErrorsFor "duration")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="buttons">
+                <button
+                  type="button"
+                  class="done text"
+                  disabled={{this.saveDuration.isRunning}}
+                  data-test-save
+                  {{on "click" (perform this.saveDuration)}}
+                >
+                  {{#if this.saveDuration.isRunning}}
+                    <LoadingSpinner />
+                  {{else}}
+                    {{t "general.done"}}
+                  {{/if}}
+                </button>
+                <button
+                  type="button"
+                  class="cancel text"
+                  disabled={{this.saveDuration.isRunning}}
+                  data-test-cancel
+                  {{on "click" this.cancelDurationEditing}}
+                >
+                  {{t "general.cancel"}}
+                </button>
+              </div>
+            </section>
+          {{else}}
+            <div class="block start-date" data-test-start-date>
+              <label>{{t "general.start"}}:</label>
+              {{#if @canUpdate}}
+                <span class="editinplace">
+                  <span
+                    class="editable"
+                    role="button"
+                    {{on "click" (set this.isEditingDatesAndDuration true)}}
+                    data-test-edit
+                  >
+                    {{#if @sequenceBlock.startDate}}
+                      {{moment-format @sequenceBlock.startDate "L"}}
+                    {{else}}
+                      {{t "general.clickToEdit"}}
+                    {{/if}}
+                  </span>
+                </span>
+              {{else}}
+                <span>
+                  {{#if @sequenceBlock.startDate}}
+                    {{moment-format @sequenceBlock.startDate "L"}}
+                  {{else}}
+                    {{t "general.notApplicableAbbr"}}
+                  {{/if}}
+                </span>
+              {{/if}}
+            </div>
+            <div class="block end-date" data-test-end-date>
+              <label>{{t "general.end"}}:</label>
+              {{#if @canUpdate}}
+                <span class="editinplace">
+                  <span
+                    class="editable"
+                    role="button"
+                    {{on "click" (set this.isEditingDatesAndDuration true)}}
+                    data-test-edit
+                  >
+                    {{#if @sequenceBlock.endDate}}
+                      {{moment-format @sequenceBlock.endDate "L"}}
+                    {{else}}
+                      {{t "general.clickToEdit"}}
+                    {{/if}}
+                  </span>
+                </span>
+              {{else}}
+                <span>
+                  {{#if @sequenceBlock.endDate}}
+                    {{moment-format @sequenceBlock.endDate "L"}}
+                  {{else}}
+                    {{t "general.notApplicableAbbr"}}
+                  {{/if}}
+                </span>
+              {{/if}}
+            </div>
+            <div class="block duration" data-test-duration>
+              <label>{{t "general.durationInDays"}}:</label>
+              {{#if @canUpdate}}
+                <span class="editinplace">
+                  <span
+                    class="editable"
+                    role="button"
+                    {{on "click" (set this.isEditingDatesAndDuration true)}}
+                    data-test-edit
+                  >
+                    {{@sequenceBlock.duration}}
+                  </span>
+                </span>
+              {{else}}
+                <span>{{@sequenceBlock.duration}}</span>
+              {{/if}}
+            </div>
+          {{/if}}
+          <div class="block child-sequence-order" data-test-child-sequence-order>
+            <label for="child-sequence-order-{{templateId}}">{{t "general.childSequenceOrder"}}:</label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{this.childSequenceOrderLabel}}
+                @save={{perform this.changeChildSequenceOrder}}
+                @close={{this.revertChildSequenceOrderChanges}}
+              >
+                <select
+                  id="child-sequence-order-{{templateId}}"
+                  {{on "change" (pick "target.value" (set this.childSequenceOrder))}}
+                >
+                  <option value="1" selected={{eq this.childSequenceOrder "1"}}>{{t "general.ordered"}}</option>
+                  <option value="2" selected={{eq this.childSequenceOrder "2"}}>{{t "general.unordered"}}</option>
+                  <option value="3" selected={{eq this.childSequenceOrder "3"}}>{{t "general.parallel"}}</option>
+                </select>
+              </EditableField>
+            {{else}}
+              <span>{{this.childSequenceOrderLabel}}</span>
+            {{/if}}
+          </div>
+          <div class="block order-in-sequence" data-test-order-in-sequence>
+            <label for="order-in-sequence-{{templateId}}">{{t "general.orderInSequence"}}:</label>
+            <span>
+              {{#if this.isInOrderedSequence}}
+                {{#if @canUpdate}}
+                  <EditableField
+                    @value={{this.orderInSequence}}
+                    @save={{perform this.changeOrderInSequence}}
+                    @close={{this.revertOrderInSequenceChanges}}
+                  >
+                    <select
+                      id="order-in-sequence-{{templateId}}"
+                      {{on "change" this.updateOrderInSequence}}
+                    >
+                      {{#each this.orderInSequenceOptions as |val|}}
+                        <option value={{val}} selected={{eq val this.orderInSequence}}>{{val}}</option>
+                      {{/each}}
+                    </select>
+                  </EditableField>
+                {{else}}
+                  {{@sequenceBlock.orderInSequence}}
+                {{/if}}
+              {{else}}
+                {{t "general.notApplicableAbbr"}}
+              {{/if}}
+            </span>
+          </div>
+          <div class="block is-selective {{unless this.isSelective "hidden"}}" data-test-is-selective>
+            <label>{{t "general.sequenceBlockIsSelective"}}</label>
+          </div>
+          {{#if this.isEditingMinMax}}
+            <section
+              class="curriculum-inventory-sequence-block-min-max-editor"
+              data-test-curriculum-inventory-sequence-block-min-max-editor
+            >
+              <div class="item minimum" data-test-minimum>
+                <label for="minimum-{{templateId}}">
+                  {{t "general.minimum"}}:
+                </label>
+                <input
+                  id="minimum-{{templateId}}"
+                  type="text"
+                  value={{if this.isElective "0" this.minimum}}
+                  disabled={{or this.isElective this.saveMinMax.isRunning}}
+                  {{on "input" (pick "target.value" (set this.minimum))}}
+                  {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancelMinMax)}}
+                >
+                {{#each (await (compute this.getErrorsFor "minimum")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="item maximum" data-test-maximum>
+                <label for="maximum-{{templateId}}">
+                  {{t "general.maximum"}}:
+                </label>
+                <input
+                  id="maximum-{{templateId}}"
+                  type="text"
+                  value={{this.maximum}}
+                  disabled={{this.saveMinMax.isRunning}}
+                  {{on "input" (pick "target.value" (set this.maximum))}}
+                  {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancelMinMax)}}
+                >
+                {{#each (await (compute this.getErrorsFor "maximum")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="buttons">
+                <button
+                  type="button"
+                  class="done text"
+                  disabled={{this.saveMinMax.isRunning}}
+                  data-test-save
+                  {{on "click" (perform this.saveMinMax)}}
+                >
+                  {{#if this.save.isRunning}}
+                    <LoadingSpinner />
+                  {{else}}
+                    {{t "general.done"}}
+                  {{/if}}
+                </button>
+                <button
+                  type="button"
+                  class="cancel text"
+                  data-test-cancel
+                  disabled={{this.save.isRunning}}
+                  {{on "click" this.cancelMinMaxEditing}}
+                >
+                  {{t "general.cancel"}}
+                </button>
+              </div>
+            </section>
+          {{else}}
+            <div class="block minimum" data-test-minimum>
+              <label>{{t "general.minimum"}}:</label>
+              {{#if (and @canUpdate (not this.isElective))}}
+                <span class="editinplace">
+                  <span
+                    class="editable"
+                    role="button"
+                    {{on "click" this.editMinMax}}
+                    data-test-edit
+                  >
+                    {{this.minimum}}
+                  </span>
+                </span>
+              {{else}}
+                <span>{{this.minimum}}</span>
+              {{/if}}
+            </div>
+            <div class="block maximum" data-test-maximum>
+              <label>{{t "general.maximum"}}:</label>
+              {{#if @canUpdate}}
+                <span class="editinplace">
+                  <span
+                    class="editable"
+                    role="button"
+                    {{on "click" this.editMinMax}}
+                    data-test-edit
+                  >
+                    {{this.maximum}}
+                  </span>
+                </span>
+              {{else}}
+                <span>{{this.maximum}}</span>
+              {{/if}}
+            </div>
+          {{/if}}
+          <div class="block academic-level" data-test-academic-level>
+              <label for="academic-level-{{templateId}}">{{t "general.academicLevel"}}:</label>
+              {{#if @canUpdate}}
+                <EditableField
+                  @value={{this.academicLevel.name}}
+                  @save={{perform this.changeAcademicLevel}}
+                  @close={{this.revertAcademicLevelChanges}}
+                >
+                  <select
+                    id="academic-level-{{templateId}}"
+                    {{on "change" this.setAcademicLevel}}
+                  >
+                    {{#each (sort-by "level" this.academicLevels) as |obj|}}
+                      <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
+                    {{/each}}
+                  </select>
+                </EditableField>
+              {{else}}
+                <span>{{this.academicLevel.name}}</span>
+              {{/if}}
+          </div>
+        {{/if}}
+        {{#unless this.isManagingSessions}}
+          <div class="block sessions" data-test-session-list-controls>
+            <label>{{t "general.sessions"}} ({{this.sessions.length}})</label>
+            {{#if (and (not this.isManagingSessions) @canUpdate this.sessions.length)}}
+              <div class="actions">
+                <button type="button" {{on "click" this.toggleManagingSessions}}>{{t "general.manage"}}</button>
+              </div>
+            {{/if}}
+          </div>
+        {{/unless}}
+      </div>
+    </div>
+    {{#if this.sessions.length}}
+      {{#if this.isManagingSessions}}
+        <CurriculumInventory::SequenceBlockSessionManager
+          @sequenceBlock={{@sequenceBlock}}
+          @sessions={{this.sessions}}
+          @cancel={{this.cancelManagingSessions}}
+          @save={{perform this.changeSessions}}
+          @sortBy={{@sortBy}}
+          @setSortBy={{@setSortBy}}
+        />
+      {{else}}
+        <CurriculumInventory::SequenceBlockSessionList
+          @sequenceBlock={{@sequenceBlock}}
+          @sessions={{this.sessions}}
+          @sortBy={{@sortBy}}
+          @setSortBy={{@setSortBy}}
+        />
+      {{/if}}
+    {{/if}}
+  {{/let}}
+</section>

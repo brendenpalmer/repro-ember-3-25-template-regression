@@ -1,0 +1,13 @@
+{{! Template from `skylines` with MIT license }}
+<tr ...attributes>
+  <th>{{t (concat "circling-direction." @perf.circlingDirection)}}</th>
+  <td class="numeric">
+    {{@perf.count}}<br>
+    {{format-lift @perf.vario}}
+  </td>
+  <td class="numeric">
+    {{format-seconds @perf.duration}}<br>
+    {{format-altitude @perf.altDiff}}
+  </td>
+
+</tr>

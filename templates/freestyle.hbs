@@ -1,0 +1,25 @@
+{{! Template from `freestyle` with unknown license }}
+<style>
+  .binding {
+    display: inline-block;
+    padding: 3px 6px;
+    margin: 0 3px;
+    background-color: rgba(255, 196, 73, 0.29);
+    border-radius: 3px;
+    white-space: pre-wrap;
+  }
+</style>
+
+<FreestyleGuide @title="SkyLines">
+
+  <FreestyleSection @name="Components" as |section|>
+
+    {{#each components as |componentName|}}
+      <section.subsection @name={{componentName}}>
+        {{component (concat "usage/" componentName)}}
+      </section.subsection>
+    {{/each}}
+
+  </FreestyleSection>
+
+</FreestyleGuide>

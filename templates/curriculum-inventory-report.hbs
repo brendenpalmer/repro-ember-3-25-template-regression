@@ -1,0 +1,17 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.curriculumInventoryReports")}}
+<div class="backtolink">
+  <LinkTo @route="curriculumInventoryReports">
+    {{t "general.backToReports"}}
+  </LinkTo>
+</div>
+<CurriculumInventory::ReportDetails
+  @report={{@model}}
+  @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
+  @leadershipDetails={{this.leadershipDetails}}
+  @setLeadershipDetails={{this.setLeadershipDetails}}
+  @manageLeadership={{this.manageLeadership}}
+  @setManageLeadership={{this.setManageLeadership}}
+/>
+{{outlet}}

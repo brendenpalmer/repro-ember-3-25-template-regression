@@ -1,0 +1,17 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if account.hasSubscriptionPermissions}}
+  <a href={{this.subscription.billingUrl}} class="{{if this.subscription.isExpired 'button--green' 'button--blue'}} manage-subscription">
+    <SvgImage @name="github" @width="15px" @class="icon github-icon"/> 
+    {{#if this.subscription.isExpired}}
+      Resubscribe or change plan
+    {{else}}
+      Edit subscription
+    {{/if}}
+  </a>
+{{else}}
+  <div class="button--green manage-subscription disabled">
+    Edit subscription
+    <EmberTooltip @text="You do not have permission to edit this subscription" />
+  </div>
+{{/if}}

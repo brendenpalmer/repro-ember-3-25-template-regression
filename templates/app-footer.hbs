@@ -1,0 +1,49 @@
+{{! Template from `emberclear` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear.git }}
+{{! template-lint-disable no-bare-strings }}
+<footer class='footer'>
+  <div class='container pad-b-md'>
+    <div class='row'>
+      <div class='col mar-t-md'>
+        <h4>{{t 'ui.footer.navigation'}}</h4>
+
+        <LinkTo @route='application'>{{t 'routes.home'}}</LinkTo><br>
+        <LinkTo @route='chat'>{{t 'routes.chat'}}</LinkTo><br>
+        <LinkTo @route='settings'>{{t 'routes.settings'}}</LinkTo><br>
+        <LinkTo @route='setup'>{{t 'routes.createNewUser'}}</LinkTo><br>
+
+        <br>
+        <h4>{{t 'ui.footer.about'}}</h4>
+
+        <LinkTo @route='faq' data-test-footer-faq>{{t 'routes.faq'}}</LinkTo><br>
+        <ExternalLink href='/bundle.html'>{{t 'bundle-analysis'}}</ExternalLink><br>
+        Made with ❤️ in <ExternalLink href='https://emberjs.com'>{{t 'emberjs'}}</ExternalLink>
+      </div>
+
+
+      <div class='col mar-t-md'>
+        <strong>{{t 'appname'}}</strong> {{t 'authoredBy'}}
+        <ExternalLink href='https://github.com/NullVoxPopuli/'>NullVoxPopuli</ExternalLink>.
+        <br><br>
+        {{t 'ui.footer.license' htmlSafe=true}}
+        <br><br>
+
+        <ExternalLink href='https://commerce.coinbase.com/checkout/377a2db4-46eb-41df-9206-1cada43f050f'>
+          {{t 'ui.footer.wantToSupport'}}
+          <br>
+          {{t 'buttons.donate'}}
+        </ExternalLink>
+        <br>
+        <br>
+
+        <ExternalLink href='https://reddit.com/r/emberclear'>
+          <FaIcon @icon='reddit' @prefix='fab' /> {{t 'redditCommunity'}}
+        </ExternalLink>
+        <br>
+        <ExternalLink href='https://twitter.com/emberclear_io'>
+          <FaIcon @icon='twitter' @prefix='fab' /> {{t 'twitter'}}
+        </ExternalLink>
+      </div>
+    </div>
+  </div>
+</footer>

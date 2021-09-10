@@ -1,0 +1,13 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.search")}}
+<GlobalSearch
+  @page={{this.page}}
+  @query={{this.query}}
+  @onQuery={{this.setQuery}}
+  @onSelectPage={{this.setPage}}
+  @ignoredSchoolIds={{this.ignoredSchoolIdsArray}}
+  @setIgnoredSchoolIds={{this.setIgnoredSchools}}
+  @selectedYear={{this.selectedYearInt}}
+  @setSelectedYear={{this.setSelectedYear}}
+/>

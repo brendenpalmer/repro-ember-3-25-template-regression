@@ -1,0 +1,17 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+{{#if tags}}
+  <div class="mini-tag-chooser-selected-collection selected-tags">
+    {{#each tags as |tag|}}
+      {{#d-button
+        translatedTitle=tag.value
+        icon="times"
+        action=(action selectKit.deselect)
+        actionParam=tag.value
+        class=tag.classNames
+        tabindex=0
+      }}
+        {{discourse-tag tag.value noHref=true}}
+      {{/d-button}}
+    {{/each}}
+  </div>
+{{/if}}

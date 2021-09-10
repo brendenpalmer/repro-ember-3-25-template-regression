@@ -1,0 +1,9 @@
+{{! Template from `liquid-fire` with MIT license }}
+{{! Repo URL: https://github.com/ember-animation/liquid-fire }}
+{{#each versions as |version| ~}}
+  {{#if (lf-or renderWhenFalse version.value) ~}}
+    {{#liquid-child version=version liquidChildDidRender=(action "childDidRender") class=class ~}}
+      {{yield version.value ~}}
+    {{/liquid-child}}
+  {{/if}}
+{{/each}}

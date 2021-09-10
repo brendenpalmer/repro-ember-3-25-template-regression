@@ -1,0 +1,14 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="list__content js-list-content" style={{this.style}}>
+  <div class="list__table-container">
+    <table>
+      <colgroup>
+        {{#each columns as |column|}}
+          <col style={{build-style width=(concat column.width "px")}} />
+        {{/each}}
+      </colgroup>
+      {{yield (hash rowEvents=rowEvents)}}
+    </table>
+  </div>
+</div>

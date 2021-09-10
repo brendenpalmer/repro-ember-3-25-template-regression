@@ -1,0 +1,122 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="two-line fade-out">
+  <div class="row-item build-info">
+    <h2 class="row-branch {{this.build.state}}">
+      <StatusIcon @status={{this.build.state}} />
+      {{#if this.build.isPullRequest}}
+        <LinkTo
+          @route="build"
+          @models={{array this.build.repo this.build}}
+          @title={{concat "PR #" this.build.pullRequestNumber " " this.build.pullRequestTitle}}
+        >
+          <small>
+            PR #{{this.build.pullRequestNumber}}
+          </small>
+          {{#if this.build.request.isDraft}}
+            <span data-test-build-list-draft-badge class="message-label badge">
+              draft
+            </span>
+          {{/if}}
+        </LinkTo>
+      {{else if this.build.isTag}}
+        <LinkTo
+          @route="build"
+          @model={{this.build.id}}
+          @title={{this.build.tag.name}}
+        >
+          {{this.build.tag.name}}
+        </LinkTo>
+      {{else}}
+        <LinkTo
+          @route="build"
+          @model={{this.build.id}}
+          @title={{this.build.branchName}}
+        >
+          {{this.build.branchName}}
+        </LinkTo>
+      {{/if}}
+    </h2>
+    {{#if this.build.isPullRequest}}
+      <div class="row-message">
+        {{format-message this.build.pullRequestTitle short="true" repo=this.build.repo}}
+      </div>
+    {{else}}
+      <div class="row-message">
+        {{format-message
+          this.build.commit.message
+          short="true"
+          repo=this.build.repo
+          eventType=this.build.eventType
+          maxLength=72
+        }}
+      </div>
+    {{/if}}
+  </div>
+  <div class="row-item row-committer">
+    <CreatedBy
+      @user={{this.build.createdBy}}
+      @commit={{this.build.commit}}
+      @committerOnly={{true}}
+      @eventType={{this.build.eventType}}
+    />
+  </div>
+</div>
+<div class="two-line">
+  <h3 class="row-item request {{this.build.state}}">
+    {{#if this.build.id}}
+      <LinkTo
+        @route="build"
+        @model={{this.build.id}}
+        class="inner-underline"
+      >
+        {{#if this.build.isTag}}
+          <SvgImage @name="icon-tag" @class="{{this.build.state}} icon" />
+        {{else}}
+          <RequestIcon @event={{this.build.eventType}} @state={{this.build.state}} />
+        {{/if}}
+        <span class="label-align inner-underline">
+          #{{this.build.number}} {{humanize-state this.build.state}}
+        </span>
+      </LinkTo>
+    {{/if}}
+  </h3>
+  <div class="row-item row-commit">
+    <ExternalLinkTo @href={{this.build.commit.url}}>
+      <EmberTooltip @text="{{concat "View commit on " (vcs-name this.vcsType)}}" />
+      <SvgImage @name="icon-commit" @class="icon" />
+      <span class="label-align inner-underline monospace">
+        {{format-sha this.build.commit.sha}}
+      </span>
+      <SvgImage @name="icon-external-link" @class="icon" />
+    </ExternalLinkTo>
+  </div>
+</div>
+<div class="two-line">
+  <div class="row-item row-duration">
+    <div>
+      <SvgImage @name="icon-clock" @class="icon" />
+      <time class="label-align" datetime="PT{{this.build.duration}}S">
+        {{format-duration this.build.duration}}
+      </time>
+    </div>
+  </div>
+  <div class="row-item row-calendar">
+    <div title="{{if this.build.finishedAt (concat "Finished " this.build.formattedFinishedAt)}}" >
+      <SvgImage @name="icon-calendar" @class="icon" />
+      <time class="label-align" datetime={{this.build.finishedAt}}>
+        {{format-time this.build.finishedAt}}
+      </time>
+    </div>
+  </div>
+</div>
+<div class="two-line actions">
+  <div class="row-item actions">
+    <RepoActions
+      @build={{this.build}}
+      @repo={{this.build.repo}}
+      @labelless={{true}}
+    />
+  </div>
+  <div class="row-item">&nbsp;</div>
+</div>

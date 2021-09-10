@@ -1,0 +1,21 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.isEmpty}}
+  <SvgImage @name="icon-nobuilds" />
+{{else}}
+  {{#if this.hasPassed}}
+    <SvgImage @name="icon-passed" />
+  {{/if}}
+  {{#if this.hasFailed}}
+    <SvgImage @name="icon-failed" />
+  {{/if}}
+  {{#if this.wasCanceled}}
+    <SvgImage @name="icon-canceled" />
+  {{/if}}
+  {{#if this.hasErrored}}
+    <SvgImage @name="icon-errored" />
+  {{/if}}
+  {{#if this.isRunning}}
+    <SvgImage @name="icon-running" />
+  {{/if}}
+{{/if}}

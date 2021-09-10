@@ -1,0 +1,43 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div data-test-active_on_org-display class="missing-notice">
+  <SvgImage @name="hammer" @class="page-graphic snapshot-hide" />
+  <h2 class="text-big">
+    {{this.headerText}}
+  </h2>
+  {{#if this.showMigrateButton}}
+    <button
+      disabled={{this.isButtonDisabled}}
+      onclick={{action "migrate"}}
+      class="button button--flex button--blue {{if this.isButtonDisabled 'disabled'}}"
+    >
+      {{#if this.repo.isMigrationInProgress}}
+        Migrating...
+      {{else if this.repo.isMigrationSucceeded}}
+        Done!
+      {{else}}
+        Migrate <SvgImage @name="icon-migrate" @class="icon icon--m white icon--right" />
+      {{/if}}
+    </button>
+  {{else if this.showBetaButton}}
+    <button
+      class="button--blue {{if this.isButtonDisabled 'disabled'}}"
+      disabled={{this.isButtonDisabled}}
+      {{on 'click' (fn (mut this.isShowingMigrateBetaDialog) true)}}
+    >
+      Sign up for the beta
+    </button>
+  {{else if this.showSignInButton}}
+    <MultiSigninButton @isLinkToSignin={{true}} />
+  {{/if}}
+  {{#if this.helperText}}
+    <p>
+      {{this.helperText}}
+    </p>
+  {{/if}}
+</div>
+
+<Dialogs::MigrateBeta
+  @isOpen={{this.isShowingMigrateBetaDialog}}
+  @onClose={{fn (mut this.isShowingMigrateBetaDialog) false}}
+/>

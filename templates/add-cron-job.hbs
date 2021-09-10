@@ -1,0 +1,65 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<TravisForm
+  @onSubmit={{perform this.save}}
+  as |form|
+>
+  <div class="form-elem select">
+    <form.field
+      @label="Branch"
+      @value={{this.selectedBranch}}
+      required={{true}}
+      class="branch-selector"
+      @showValidationStatusIcons={{false}}
+      as |field|
+    >
+      <field.select
+        @searchField="name"
+        @placeholder="Select branch"
+        @selected={{this.selectedBranch}}
+        @onchange={{action (mut this.selectedBranch)}}
+        @search={{perform this.search}}
+        as |branch|
+      >
+        {{branch.name}}
+      </field.select>
+    </form.field>
+  </div>
+  <div class="form-elem select">
+    <form.field
+      @label="Interval"
+      @required={{true}}
+      @value={{this.selectedInterval}}
+      @onChange={{action (mut this.selectedInterval)}}
+      @showValidationStatusIcons={{false}}
+      as |field|
+    >
+      <field.select @options={{this.intervals}} as |interval|>
+        {{interval}}
+      </field.select>
+    </form.field>
+  </div>
+  <div class="form-elem select">
+    <form.field
+      @label="Options"
+      @required={{true}}
+      @value={{this.selectedOption}}
+      @onChange={{action (mut this.selectedOption)}}
+      @showValidationStatusIcons={{false}}
+      as |field|
+    >
+      <field.select @options={{this.options}} as |option|>
+        {{option.name}}
+      </field.select>
+    </form.field>
+  </div>
+  <div class="form-elem">
+    {{#if this.save.isRunning}}
+      <LoadingIndicator />
+    {{else}}
+      <button onclick={{action form.submit}} class="cron-form-submit form-submit">
+        Add
+      </button>
+    {{/if}}
+  </div>
+</TravisForm>

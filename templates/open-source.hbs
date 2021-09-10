@@ -1,0 +1,31 @@
+{{! Template from `website` with MIT license }}
+{{! Repo URL: https://github.com/shipshapecode/shipshape.io }}
+<HeroBlock @heroClasses="open-source" @icon="open-source">
+  <h1 class="heading">We {{svg-jar "heart1" class="heartIcon"}} Open Source</h1>
+  <p>
+    At Ship Shape, contributing to open source software is an addiction. We maintain
+    several Ember addons of our own, and have contributed to countless other
+    projects throughout the open source community.
+  </p>
+  <div>
+    <LinkTo @route="contact" class="btn btn-navy">
+      Learn how we work
+    </LinkTo>
+  </div>
+</HeroBlock>
+
+<PortfolioContainer @model={{model}}></PortfolioContainer>
+
+<div class="section bg-grey-transparent flex flex-wrap justify-center">
+  <div class="section-content">
+    <h2 class="heading">Sponsored Open Source Development</h2>
+
+    <p>
+      Ember could not be the incredible framework it is, without companies helping fund
+      its progress. Whether you need an Ember addon to implement your favorite
+      library in native Ember, a custom Ember data adapter for your API setup,
+      or changes to Ember itself, sponsored open source development can help
+      give back to the community, while also solving your business needs.
+    </p>
+  </div>
+</div>

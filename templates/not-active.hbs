@@ -1,0 +1,58 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="missing-notice">
+  {{#if this.migratedOnOrg}}
+    <div data-test-recently-migrated-to-com-banner>
+      <SvgImage @name="migrated" @class="page-graphic snapshot-hide" />
+      <h2 data-test-not-active-migrated-subtext class="text-big">
+        This repository was migrated and is now building on
+        <ExternalLinkTo @href={{this.comRepositoryLink}}>
+          travis-ci.com
+        </ExternalLinkTo>
+      </h2>
+      <ExternalLinkTo
+        @href={{this.comRepositoryLink}}
+        class="button button--blue"
+        data-test-not-active-migrated-button="true"
+      >
+        Take me there!
+      </ExternalLinkTo>
+    </div>
+  {{else}}
+    <figure class="page-graphic">
+      <SvgImage @name="wheelbarrow" />
+    </figure>
+    <h2 class="page-title">
+      This is not an active repository
+    </h2>
+    {{#if this.canActivate}}
+      {{#if (and this.config.githubApps this.repo.owner.installation)}}
+        <ExternalLinkTo
+          @href={{this.githubAppsActivationURL}}
+          class="button button--blue button--repo-activate-gh"
+        >
+          <SvgImage @name={{vcs-icon this.repo.vcsType}} @class="icon--github" />
+          <span>
+            Activate repository on GitHub
+          </span>
+        </ExternalLinkTo>
+      {{else}}
+        <p class="page-notice">
+          You can activate the repository on <LinkTo @route="account">your profile</LinkTo>,<br />
+          or by clicking the button below
+        </p>
+        <button class="button button--blue" onclick={{action (perform this.activate)}}>
+          Activate repository
+        </button>
+      {{/if}}
+      {{#if this.activate.isRunning}}
+        <LoadingIndicator />
+      {{/if}}
+    {{else}}
+      <p class="page-notice">
+        You don't have sufficient rights to enable this repo on Travis.<br />
+        Please contact the admin to enable it or to receive admin rights yourself.
+      </p>
+    {{/if}}
+  {{/if}}
+</div>

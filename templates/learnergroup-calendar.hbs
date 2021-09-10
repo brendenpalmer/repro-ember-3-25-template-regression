@@ -1,0 +1,45 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="learnergroup-calendar"
+  {{did-insert (perform this.load) @learnerGroup this.showSubgroupEvents}}
+  {{did-update (perform this.load) @learnerGroup this.showSubgroupEvents}}
+  data-test-learnergroup-calendar
+>
+  <p class="learnergroup-calendar-filter-options">
+    <span class="filter" data-test-learnergroup-calendar-toggle-subgroup-events>
+      <ToggleYesno
+        @yes={{this.showSubgroupEvents}}
+        @toggle={{set this.showSubgroupEvents}}
+      />
+      <label {{on "click" (fn (set this.showSubgroupEvents) (not this.showSubgroupEvents))}}>
+        {{t "general.showSubgroupEvents"}}
+      </label>
+    </span>
+  </p>
+  <ul class="inline learnergroup-calendar-time-picker">
+    <li class="clickable" role="button" {{on "click" this.goBack}}>
+      <FaIcon @icon="backward" />
+    </li>
+    <li class="clickable" role="button" {{on "click" this.gotoToday}}>
+      {{t "general.today"}}
+    </li>
+    <li class="clickable" role="button" {{on "click" this.goForward}}>
+      <FaIcon @icon="forward" />
+    </li>
+  </ul>
+  <div class="ilios-calendar">
+    <IliosCalendarWeek
+      @calendarEvents={{this.calendarEvents}}
+      @date={{selectedDate}}
+      @areEventsSelectable={{false}}
+      @areDaysSelectable={{false}}
+    />
+  </div>
+  <span class="loading-indicator {{unless this.load.isRunning "loaded"}}">
+    <LoadingSpinner />
+    {{t "general.loadingEvents"}}
+    ...
+  </span>
+
+</div>

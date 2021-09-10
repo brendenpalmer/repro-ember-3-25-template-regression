@@ -1,0 +1,32 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<section>
+  <section class="billing-subscription">
+    {{#if (and this.isProcessCompleted this.hasV2Subscription)}}
+      <Billing::SummaryV2
+        @subscription={{this.v2subscription}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @selectedPlan={{this.selectedPlan}}
+        @account={{this.account}}
+      />
+    {{else}}
+      <Billing::Summary
+        @subscription={{this.subscription}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @selectedPlan={{this.selectedPlan}}
+        @account={{this.account}}
+        @isProcessCompleted={{this.isProcessCompleted}}
+      />
+    {{/if}}
+  </section>
+  {{#if (and this.subscription.isGithubResubscribable (and this.isV2SubscriptionEmpty (not this.hasExpiredStripeSubscription)))}}
+    <Billing::Process
+      @account={{this.account}}
+      @showPlansSelector={{true}}
+      @subscription={{this.newSubscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @isProcessCompleted={{this.isProcessCompleted}}
+    />
+  {{/if}}
+</section>

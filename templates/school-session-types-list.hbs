@@ -1,0 +1,108 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div class="school-session-types-list" data-test-school-session-types-list ...attributes>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">
+          {{t "general.title"}}
+        </th>
+        <th class="hide-from-small-screen">
+          {{t "general.sessions"}}
+        </th>
+        <th>
+          {{t "general.assessment"}}
+        </th>
+        <th class="hide-from-small-screen" colspan="2">
+          {{t "general.assessmentOption"}}
+        </th>
+        <th class="hide-from-small-screen" colspan="2">
+          {{t "general.aamcMethod"}}
+        </th>
+        <th class="hide-from-small-screen">
+          {{t "general.color"}}
+        </th>
+        <th>
+          {{t "general.actions"}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each (sort-by "active:desc" "title" @sessionTypes) as |sessionType|}}
+        <tr data-test-session-type>
+          <td colspan="3" data-test-title>
+            <button class="link-button" type="button" {{on "click" (fn @manageSessionType sessionType.id)}}>
+              {{sessionType.title}}
+            </button>
+            {{#unless sessionType.active}}
+              <em data-test-inactive>
+                ({{t "general.inactive"}})
+              </em>
+            {{/unless}}
+          </td>
+          <td class="hide-from-small-screen" data-test-sessions-count>
+            {{sessionType.sessionCount}}
+          </td>
+          <td data-test-is-assessment>
+            {{#if sessionType.assessment}}
+              <FaIcon @icon="check" class="yes" />
+            {{else}}
+              <FaIcon @icon="ban" class="no" />
+            {{/if}}
+          </td>
+          <td class="hide-from-small-screen" colspan="2" data-test-assessment-option>
+            {{get (await sessionType.assessmentOption) "name"}}
+          </td>
+          <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
+            {{get (await sessionType.firstAamcMethod) "description"}}
+            {{#if (not (get (await sessionType.firstAamcMethod) "active"))}}
+              <em>
+                ({{t "general.inactive"}})
+              </em>
+            {{/if}}
+          </td>
+          <td class="calendar-color hide-from-small-screen">
+            {{! template-lint-disable no-inline-styles style-concatenation}}
+            <span
+              class="box"
+              data-test-colorbox
+              style={{{concat "background-color: " sessionType.safeCalendarColor}}}
+            ></span>
+          </td>
+          <td>
+            <FaIcon
+              @icon="edit"
+              class="edit clickable enabled"
+              @click={{fn @manageSessionType sessionType.id}}
+              data-test-manage
+            />
+            {{#if (eq sessionType.sessionCount 0)}}
+              {{#if (includes sessionType.id this.deletedSessionTypes)}}
+                <LoadingSpinner />
+              {{else if @canDelete}}
+                <FaIcon
+                  @icon="trash"
+                  data-test-delete
+                  class={{if
+                    this.deleteSessionType.isRunning
+                    "inactive"
+                    "clickable remove enabled"
+                  }}
+                  @click={{perform this.deleteSessionType sessionType}}
+                />
+              {{/if}}
+            {{else}}
+              <FaIcon @icon="trash" class="disabled" />
+            {{/if}}
+            <LinkTo
+              @route="session-type-visualize-vocabularies"
+              @model={{sessionType}}
+            >
+              <FaIcon @icon="chart-bar" class="enabled" />
+            </LinkTo>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

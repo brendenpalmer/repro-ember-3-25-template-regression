@@ -1,0 +1,25 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<TravisSwitch
+  @active={{this.enabled}}
+  @description={{this.description}}
+  @onToggle={{perform this.toggle}}
+/>
+<ExternalLinkTo
+  @href="https://docs.travis-ci.com/user/customizing-the-build/#limiting-concurrent-jobs"
+  @title="about the concurrency setting"
+  class="settings-tooltip"
+>
+  <EmberTooltip @text="Read more about concurrent jobs" />
+  <SvgImage @name="icon-help" @class="icon-help" />
+</ExternalLinkTo>
+{{#if this.enabled}}
+  <input
+    value={{this.value}}
+    onchange={{action this.limitChanged value="target.value"}}
+    pattern="/^[0-9]+$/"
+  />
+{{/if}}
+{{#if this.toggle.isRunning}}
+  <LoadingIndicator @inline={{true}} />
+{{/if}}

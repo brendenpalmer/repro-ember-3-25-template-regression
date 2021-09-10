@@ -1,0 +1,36 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="connection-status {{unless this.isOnline "offline"}}"
+  aria-hidden={{this.isOnline}}
+  aria-role={{unless this.isOnline "alert"}}
+  {{did-insert this.setup}}
+  {{will-destroy this.teardown}}
+>
+  {{#unless this.isOnline}}
+    {{#if this.unableToReconnect}}
+        <span>
+          <FaIcon @icon="exclamation-triangle" />
+          {{t "general.unableToReconnect"}}
+        </span>
+      {{else}}
+        <span>
+          <FaIcon @icon="exclamation-circle" />
+          {{t "general.connectionLost"}}
+          {{#unless this.stopAttemptingToReconnect}}
+            {{t "general.reconnectionSeconds" count=this.timer}}
+          {{/unless}}
+        </span>
+        <div class="buttons">
+          <button type="button" {{on "click" (perform this.reconnect true)}}>
+            {{t "general.reconnectNow"}}
+          </button>
+          {{#unless this.stopAttemptingToReconnect}}
+            <button type="button" {{on "click" (toggle "stopAttemptingToReconnect" this)}}>
+              {{t "general.ignore"}}
+            </button>
+          {{/unless}}
+        </div>
+      {{/if}}
+  {{/unless}}
+</div>

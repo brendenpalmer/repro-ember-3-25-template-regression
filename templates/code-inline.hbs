@@ -1,0 +1,9 @@
+{{! Template from `ember-prism` with MIT license }}
+{{! Repo URL: https://github.com/shipshapecode/ember-prism }}
+<code
+  ...attributes
+  class="{{this.languageClass}}"
+  {{create-ref "codeElement" bucket=this tracked=true}}
+>
+  {{~! ~}}{{this.prismCode}}{{~! ~}}
+</code>

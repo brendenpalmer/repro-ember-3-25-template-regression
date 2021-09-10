@@ -1,0 +1,14 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.learnerGroups")}}
+<LearnerGroups::Root
+  @setSchoolId={{set this.school}}
+  @schoolId={{this.school}}
+  @setProgramId={{set this.program}}
+  @programId={{this.program}}
+  @setProgramYearId={{set this.programYear}}
+  @programYearId={{this.programYear}}
+  @schools={{this.model}}
+  @titleFilter={{this.filter}}
+  @setTitleFilter={{perform this.setTitleFilter}}
+/>

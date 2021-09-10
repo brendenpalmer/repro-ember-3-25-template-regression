@@ -1,0 +1,6 @@
+{{! Template from `discourse` with MIT license }}
+{{#each flags as |f|}}
+  {{yield f}}
+{{else}}
+  {{i18n "flagging.cant"}}
+{{/each}}

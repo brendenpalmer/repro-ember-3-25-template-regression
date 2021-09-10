@@ -1,0 +1,27 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<span class="insights-privacy-selector__title">
+  View:
+</span>
+{{#if this.isPrivateViewable}}
+  <TravisForm as |form|>
+    <form.field
+      @value={{this.currentState}}
+      @onChange={{action "selectInsightScope"}}
+      @showFrame={{this.showFrame}}
+      data-test-insights-privacy-selector-main-field={{true}}
+      as |field|
+    >
+      <field.select @options={{this.availableOptions}} as |option|>
+        {{option}}
+      </field.select>
+    </form.field>
+  </TravisForm>
+{{else}}
+  <span
+    class="insights-privacy-selector__selected"
+    data-test-insights-privacy-selector-selected
+  >
+    {{this.currentState}}
+  </span>
+{{/if}}

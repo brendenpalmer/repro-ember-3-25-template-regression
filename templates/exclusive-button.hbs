@@ -1,0 +1,2 @@
+{{! Template from `ember-observer` with MIT license }}
+<button type="button" class={{if (eq @selectedValue @value) "selected"}} {{on "click" (fn @updateSelectedValue @value)}}>{{@label}}</button>

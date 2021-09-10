@@ -1,0 +1,37 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="wrapper {{if this.isCentered 'centered'}}">
+  {{#if this.showGitHubAppsCTA}}
+    <TopBar>
+      <div class="cta">
+        <p class="row">
+          Join over 500,000 developers testing and building on Travis CI
+        </p>
+      </div>
+    </TopBar>
+  {{else}}
+    <TopBar />
+  {{/if}}
+  <FlashDisplay />
+  <div class="wrapper-main">
+    <div id="main" class="main" role="main">
+      {{#if this.repo.isLoaded}}
+        <RepositoryLayout
+          @repo={{this.repo}}
+          @build={{this.build}}
+          @job={{this.job}}
+          @tab={{this.tab}}
+        >
+          {{outlet}}
+        </RepositoryLayout>
+      {{/if}}
+    </div>
+  </div>
+  {{#if this.auth.signedIn}}
+    {{#unless this.features.dashboard}}
+      <aside id="left" class="{{unless this.auth.signedIn 'hidden'}}">
+        <RepositorySidebar />
+      </aside>
+    {{/unless}}
+  {{/if}}
+</div>

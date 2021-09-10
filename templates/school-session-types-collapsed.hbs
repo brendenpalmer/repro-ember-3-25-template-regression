@@ -1,0 +1,53 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<section
+  class="school-session-types-collapsed"
+  {{did-insert (perform this.load) @school}}
+  {{did-update (perform this.load) @school}}
+  data-test-school-session-types-collapsed
+  ...attributes
+>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand>
+    {{t "general.sessionTypes"}}
+  </div>
+  <div class="content">
+    <table class="condensed">
+      <thead>
+        <tr>
+          <th class="text-left">
+            {{t "general.sessionTypes"}}
+          </th>
+          <th class="text-left">
+            {{t "general.summary"}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{t "general.assessmentMethods"}}
+          </td>
+          <td class="summary-highlight" data-test-assessment-count>
+            {{#if this.load.lastSuccessful}}
+              {{this.assessmentMethods.length}}
+            {{else}}
+             <LoadingSpinner />
+            {{/if}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{t "general.instructionalMethods"}}
+          </td>
+          <td class="summary-highlight" data-test-instructional-count>
+            {{#if this.load.lastSuccessful}}
+              {{this.instructionalMethods.length}}
+            {{else}}
+             <LoadingSpinner />
+            {{/if}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

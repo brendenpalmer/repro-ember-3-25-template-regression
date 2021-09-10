@@ -1,0 +1,38 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.programs")}}
+<section class="program-year-visualizations">
+  <div class="backtolink">
+    <LinkTo @route="programYear.index" @models={{array @model.program @model}}>
+      {{t "general.backToProgramYear"}}
+    </LinkTo>
+  </div>
+  <h2>
+    {{t "general.programYearVisualizations"}}
+  </h2>
+  <h3>
+    <LinkTo @route="program" @model={{@model.program}}>
+      {{get (await @model.program) "title"}}
+    </LinkTo>
+    <LinkTo @route="programYear" @models={{array @model.program @model}}>
+      {{#if (get (await @model.cohort) "title")}}
+        {{get (await @model.cohort) "title"}}
+      {{else}}
+        {{t "general.classOf" year=(await @model.classOfYear)}}
+      {{/if}}
+    </LinkTo>
+  </h3>
+  <div class="visualizations">
+    <div>
+      <LinkTo @route="program-year-visualize-competencies" @model={{@model}}>
+        <h4>
+          {{t "general.objectiveMap"}}
+        </h4>
+        <VisualizerProgramYearCompetencies
+          @isIcon={{true}}
+          @programYear={{@model}}
+        />
+      </LinkTo>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div>
+  {{yield this}}
+  <div>
+    {{#if this.dynamicQuery.isLoading}}
+      <LoadingIndicator />
+    {{else if this.dynamicQuery.hasNextPage}}
+      <ShowMoreButton @click={{action 'showMore'}} />
+    {{/if}}
+  </div>
+</div>

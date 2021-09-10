@@ -1,0 +1,150 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<nav id="navigation" class="navigation {{if isOpen 'is-open'}}">
+  <ul>
+    {{#unless this.features.enterpriseVersion}}
+      {{#unless this.features.proVersion}}
+        {{#if this.auth.signedIn}}
+          <li>
+            <LinkTo @route="dashboard" class="navigation-anchor">
+              Dashboard
+            </LinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.changelog}}
+              @title="Travis CI Changelog"
+              class="navigation-anchor"
+            >
+              Changelog
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.docs}}
+              @title="Travis CI Documentation"
+              class="navigation-anchor"
+            >
+              Documentation
+            </ExternalLinkTo>
+          </li>
+        {{else}}
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.about}}
+              @title="Travis CI team"
+              class="navigation-anchor"
+            >
+              About Us
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.blog}}
+              @title="Travis CI Blog"
+              class="navigation-anchor"
+            >
+              Blog
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.status}}
+              @title="Travis CI Status"
+              class="navigation-anchor"
+            >
+              Status
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.docs}}
+              @title="Travis CI Documentation"
+              class="navigation-anchor"
+            >
+              Documentation
+            </ExternalLinkTo>
+          </li>
+        {{/if}}
+      {{/unless}}
+      {{#if this.features.proVersion}}
+        {{#if this.auth.signedIn}}
+          <li>
+            <LinkTo @route="dashboard" class="navigation-anchor">
+              Dashboard
+            </LinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.changelog}}
+              @title="Travis CI Changelog"
+              class="navigation-anchor"
+            >
+              Changelog
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.docs}}
+              @title="Travis CI Documentation"
+              class="navigation-anchor"
+            >
+              Documentation
+            </ExternalLinkTo>
+          </li>
+        {{else}}
+          <li>
+            <ExternalLinkTo
+              @href={{this.config.urls.about}}
+              @title="Travis CI team"
+              class="navigation-anchor"
+            >
+              About Us
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <LinkTo
+              @route="plans"
+              @title="Plans and Pricing"
+              class="navigation-anchor"
+            >
+              Plans &amp; Pricing
+            </LinkTo>
+          </li>
+          <li>
+            <LinkTo
+              @route="plans"
+              @query={{hash anchor="enterprise-section"}}
+              @title="Travis CI for Enterprise"
+              class="navigation-anchor"
+            >
+              Enterprise
+            </LinkTo>
+          </li>
+        {{/if}}
+      {{/if}}
+      <li>
+        <a class="navigation-anchor pointer" title="Help" {{action "goToHelp"}}>
+          Help
+        </a>
+      </li>
+      {{#if this.deploymentVersion}}
+        <li>
+          <span class="deployment-version">
+            {{this.deploymentVersion}}
+          </span>
+        </li>
+      {{/if}}
+    {{else if this.auth.signedIn}}
+      <li>
+        <ExternalLinkTo
+          @href={{this.config.urls.docs}}
+          @title="Documentation"
+          class="navigation-anchor"
+        >
+          Docs
+        </ExternalLinkTo>
+      </li>
+    {{/unless}}
+  </ul>
+</nav>

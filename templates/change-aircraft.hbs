@@ -1,0 +1,10 @@
+{{! Template from `skylines` with MIT license }}
+<FormPage @title={{t "choose-aircraft"}}>
+  <ChangeAircraftForm
+    @flightId={{model.id}}
+    @modelId={{readonly model.flight.model.id}}
+    @registration={{readonly model.flight.registration}}
+    @competitionId={{readonly model.flight.competitionId}}
+    @models={{model.aircraftModels}}
+    @onDidSave={{action "transitionToFlight"}} />
+</FormPage>

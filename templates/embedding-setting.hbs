@@ -1,0 +1,12 @@
+{{! Template from `admin` with GPL-2.0-only license }}
+{{#if isCheckbox}}
+  <label for={{inputId}}>
+    {{input checked=checked id=inputId type="checkbox"}}
+    {{i18n translationKey}}
+  </label>
+{{else}}
+  <label for={{inputId}}>{{i18n translationKey}}</label>
+  {{input value=value id=inputId placeholder=placeholder}}
+{{/if}}
+
+<div class="clearfix"></div>

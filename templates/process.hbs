@@ -1,0 +1,56 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.account.hasSubscriptionPermissions}}
+  {{#if this.isStepOne}}
+    {{#if this.showAddonsSelector}}
+      <Billing::SelectAddon
+        @title="Buy addon"
+        @selectedPlan={{this.selectedPlan}}
+        @selectedAddon={{this.selectedAddon}}
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @next={{action 'next'}}
+        @showCancelButton={{this.showCancelButton}}
+      />
+    {{else}}
+      <Billing::SelectPlan
+        @title="Edit plan"
+        @selectedPlan={{this.selectedPlan}}
+        @subscription={{this.subscription}}
+        @account={{this.account}}
+        @showPlansSelector={{this.showPlansSelector}}
+        @showAddonsSelector={{this.showAddonsSelector}}
+        @next={{action 'next'}}
+        @showCancelButton={{this.showCancelButton}}
+      />
+    {{/if}}
+  {{else if this.isStepTwo}}
+    <Billing::Information
+      @subscription={{this.subscription}}
+      @selectedPlan={{this.selectedPlan}}
+      @selectedAddon={{this.selectedAddon}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @next={{action 'next'}}
+      @back={{action 'back'}}
+    />
+  {{else if this.isStepThree}}
+    <Billing::Payment
+      @subscription={{this.subscription}}
+      @v1SubscriptionId={{this.v1SubscriptionId}}
+      @selectedPlan={{this.selectedPlan}}
+      @account={{this.account}}
+      @goToFirstStep={{action 'goToFirstStep'}}
+      @retryAuthorization={{this.retryAuthorization}}
+      @showPlansSelector={{this.showPlansSelector}}
+      @showAddonsSelector={{this.showAddonsSelector}}
+      @isProcessCompleted={{this.isProcessCompleted}}
+      @selectedAddon={{this.selectedAddon}}
+      @back={{action 'back'}}
+    />
+  {{/if}}
+{{else}}
+  <p data-test-no-permission-message>
+    You don't have permission to create a subscription
+  </p>
+{{/if}}

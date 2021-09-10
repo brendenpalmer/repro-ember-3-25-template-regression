@@ -1,0 +1,12 @@
+{{! Template from `ember-steps` with MIT license }}
+{{! Repo URL: https://github.com/alexlafroscia/ember-steps }}
+{{#if this.isActive}}
+  {{yield
+    (hash
+      hasNext=this.hasNext
+      hasPrevious=this.hasPrevious
+    )
+  }}
+{{else if (has-block "inverse")}}
+  {{yield to="inverse"}}
+{{/if}}

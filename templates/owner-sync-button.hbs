@@ -1,0 +1,27 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="sync-button">
+  {{#if this.owner.isSyncing}}
+    <p>
+      <button class="button" disabled="disabled">
+        <span class="lading-indicator--white">
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        Syncing
+      </button>
+    </p>
+  {{else if this.owner.roMode}}
+    <button class="button" disabled="disabled"></button>
+  {{else}}
+    <p>
+      <button class="button" {{action this.sync}}>
+        <span class="icon icon-sync"></span> Sync account
+      </button>
+    </p>
+    <p class="sync-last">
+      last synced {{format-time this.owner.syncedAt}}
+    </p>
+  {{/if}}
+</div>

@@ -1,0 +1,14 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.curriculumInventoryReports")}}
+<CurriculumInventory::Reports
+  @editCurriculumInventoryReport={{this.editCurriculumInventoryReport}}
+  @programId={{this.programId}}
+  @schoolId={{this.schoolId}}
+  @schools={{await @model}}
+  @sortReportsBy={{this.sortReportsBy}}
+  @setSortBy={{this.setSortBy}}
+  @setSchoolId={{this.setSchoolId}}
+  @setProgramId={{this.setProgramId}}
+/>
+

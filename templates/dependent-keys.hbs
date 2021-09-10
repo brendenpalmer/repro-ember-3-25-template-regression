@@ -1,0 +1,24 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<li class="mixin__property-dependency-list relative">
+  {{svg-jar "dependent-key-connection" width="20px" height="10px"}}
+  <ul class="m-0 p-0 list-none">
+    {{#each @keys as |depKey|}}
+      <li class="mixin__property-dependency-item relative text-base12 text-sm">
+        {{svg-jar
+          "dependent-key-bullet"
+          width="9px"
+          height="9px"
+        }}
+
+        <span
+          class="mixin__property-dependency-name"
+          data-label="object-property-name"
+        >
+          {{depKey}}
+        </span>
+      </li>
+    {{/each}}
+  </ul>
+</li>
+

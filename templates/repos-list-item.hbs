@@ -1,0 +1,57 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="tile {{this.repo.currentBuild.state}}">
+  <h2 class="tile-title {{this.repo.currentBuild.state}}">
+    {{#if this.repo.slug}}
+      <LinkTo @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}>
+        <StatusIcon @status={{this.repo.currentBuild.state}} />
+        <span data-test-repos-list-item-slug class="label-align inner-underline">
+          {{this.repo.slug}}
+          {{#if this.repo.shared}}
+            <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+          {{/if}}
+        </span>
+      </LinkTo>
+    {{/if}}
+  </h2>
+  {{#if this.repo.slug}}
+    {{#if this.repo.currentBuild.id}}
+      <p class="tile-title float-right {{this.repo.currentBuild.state}}">
+        <SvgImage @name="icon-hash" @class="icon" />
+        <LinkTo @route="build" @models={{array this.repo repo.currentBuild.id}}>
+          <span class="label-align inner-underline">
+            {{this.repo.currentBuild.number}}
+          </span>
+        </LinkTo>
+      </p>
+    {{/if}}
+  {{/if}}
+  <p>
+    <SvgImage @name="icon-clock" @class="icon" />
+    <span class="label-align">
+      Duration:
+      <time
+        class="duration"
+        datetime="PT{{this.repo.currentBuild.duration}}S"
+        title="{{if this.repo.currentBuild.duration (concat "Started " (pretty-date this.repo.currentBuild.startedAt))}}"
+      >
+        {{format-duration this.repo.currentBuild.duration}}
+      </time>
+    </span>
+  </p>
+  {{#if this.repo.currentBuild.isFinished}}
+    <p>
+      <SvgImage @name="icon-calendar" @class="icon" />
+      <span class="label-align">
+        Finished:
+        <time
+          class="finished_at timeago"
+          datetime={{this.repo.currentBuild.finishedAt}}
+          title="Finished {{pretty-date this.repo.currentBuild.finishedAt}}"
+        >
+          {{format-time this.repo.currentBuild.finishedAt}}
+        </time>
+      </span>
+    </p>
+  {{/if}}
+</div>

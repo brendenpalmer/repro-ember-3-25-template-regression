@@ -1,0 +1,11 @@
+{{! Template from `lisweb-frontend` with MIT license }}
+{{! Repo URL: https://github.com/hotsoft/lisweb_frontend/ }}
+{{#with (changeset model this.tipospessoa) as |changesetObj|}}
+  <PowerSelect
+    @changeset={{changesetObj}}
+    @submit={{this.submit}}
+    @rollback={{this.rollback}}
+  >
+    {{changesetObj}}
+  </PowerSelect>
+{{/with}}

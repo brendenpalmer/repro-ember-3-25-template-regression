@@ -1,0 +1,12 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.programs")}}
+<Program::Root
+  @program={{@model}}
+  @canUpdate={{this.canUpdate}}
+  @leadershipDetails={{this.leadershipDetails}}
+  @setLeadershipDetails={{set this.leadershipDetails}}
+  @manageLeadership={{this.manageLeadership}}
+  @setManageLeadership={{set this.manageLeadership}}
+/>
+{{outlet}}

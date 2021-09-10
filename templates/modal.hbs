@@ -1,0 +1,14 @@
+{{! Template from `discourse` with MIT license }}
+{{#d-modal
+  modalClass=modalClass
+  title=title
+  titleAriaElementId=titleAriaElementId
+  subtitle=subtitle
+  panels=panels
+  selectedPanel=selectedPanel
+  onSelectPanel=onSelectPanel
+  class="hidden"
+  errors=errors
+  closeModal=(route-action "closeModal")}}
+  {{outlet "modalBody"}}
+{{/d-modal}}

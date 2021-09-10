@@ -1,0 +1,39 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<section class="school-vocabularies-collapsed" data-test-school-vocabularies-collapsed ...attributes>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-title>
+    {{t "general.vocabularies"}}
+    ({{get (await @school.vocabularies) "length"}})
+  </div>
+  {{#if (is-pending @school.vocabularies)}}
+    <LoadingSpinner />
+  {{/if}}
+  {{#if (is-fulfilled @school.vocabularies)}}
+    <div class="content">
+      <table class="condensed">
+        <thead>
+          <tr>
+            <th class="text-left">
+              {{t "general.vocabulary"}}
+            </th>
+            <th class="text-left">
+              {{t "general.summary"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (sort-by "title" (await @school.vocabularies)) as |vocabulary|}}
+            <tr data-test-vocabulary>
+              <td>
+                {{vocabulary.title}}
+              </td>
+              <td class="summary-highlight">
+                {{t "general.thereAreXTerms" count=vocabulary.termCount}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+</section>

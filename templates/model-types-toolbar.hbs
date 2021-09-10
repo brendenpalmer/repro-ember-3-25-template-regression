@@ -1,0 +1,34 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="toolbar">
+  <Ui::ToolbarReloadButton
+    @action={{@reload}}
+    data-test-reload-container-btn
+  />
+
+  <Ui::ToolbarDivider />
+
+  <div class="toolbar__checkbox js-filter-hide-empty-model-types">
+    <label>
+      <Input
+        data-test-options-hideEmptyModelTypes
+        @type="checkbox"
+        @checked={{@hideEmptyModelTypes}}
+      />
+      Hide Empty Model Types
+    </label>
+  </div>
+  <div class="toolbar__checkbox js-filter-order-records-by-count">
+    <label>
+      <Input
+        data-test-options-orderByRecordCount
+        @type="checkbox"
+        @checked={{@orderByRecordCount}}
+      />
+      Order Models By Record Count
+    </label>
+  </div>
+  <button class="toolbar__radio js-filter" {{on "click" @getStore}} data-test-inspect-store type="button">
+    Inspect Store
+  </button>
+</div>

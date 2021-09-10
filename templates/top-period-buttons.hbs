@@ -1,0 +1,4 @@
+{{! Template from `discourse` with MIT license }}
+{{#each periods as |p|}}
+  {{d-button action=(action "changePeriod") class="btn-default" actionParam=p translatedLabel=(period-title p)}}
+{{/each}}

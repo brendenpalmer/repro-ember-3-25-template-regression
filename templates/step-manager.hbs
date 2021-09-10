@@ -1,0 +1,20 @@
+{{! Template from `ember-steps` with MIT license }}
+{{! Repo URL: https://github.com/alexlafroscia/ember-steps }}
+{{yield
+  (hash
+    Step=(component "step-manager/step"
+      register-step=this.registerStepComponent
+      remove-step=this.removeStepComponent
+      update-step-node=this.updateStepNode
+      currentStep=this.currentStep
+      transitions=this.transitions
+    )
+    hasNextStep=this.hasNextStep
+    hasPreviousStep=this.hasPreviousStep
+    currentStep=this.currentStep
+    steps=this.transitions.nodeArray
+    transition-to=this.transitionTo
+    transition-to-next=this.transitionToNext
+    transition-to-previous=this.transitionToPrevious
+  )
+}}

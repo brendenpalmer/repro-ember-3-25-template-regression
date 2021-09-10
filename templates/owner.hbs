@@ -1,0 +1,29 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<TravisLayout @layoutName="layouts/center" class="owner">
+  <header class="owner-header row">
+    <div class="owner-avatar">
+      <UserAvatar @url={{this.owner.avatarUrl}} @name={{this.owner.name}} @size={{75}} />
+    </div>
+    <div class="owner-info">
+      <h1 class="owner-title">
+        {{this.owner.name}}
+      </h1>
+      <p class="owner-handle">
+        <SvgImage @name={{vcs-icon this.owner.vcsType}} @class="icon--l" />
+        <a href={{this.profileUrl}} title="{{concat this.owner.name " on " (vcs-name this.owner.vcsType)}}">
+          <span class="label-align">
+            {{this.owner.login}}
+          </span>
+        </a>
+      </p>
+    </div>
+  </header>
+  <div class="tabs--owner">
+    <div class="tabbody">
+      <section role="tabpanel">
+        {{outlet}}
+      </section>
+    </div>
+  </div>
+</TravisLayout>

@@ -1,0 +1,54 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.model.isLoaded}}
+  <ul class="build-list">
+    {{#each this.builds as |build|}}
+      <BuildsItem @build={{build}} @vcsType={{this.repo.vcsType}} />
+    {{else}}
+      <NoBuilds />
+    {{/each}}
+  </ul>
+  <ul class="build-list">
+    {{#each this.repo.buildBackups as |build|}}
+      <BuildsBackupItem @build={{build}} />
+    {{/each}}
+  </ul>
+  <div class="">
+    {{#if this.showBuildHistoryLink}}
+      <div>
+        Previous build runs are available at
+        <ExternalLinkTo
+          @href={{this.buildHistoryLink}}
+          class="link link--underline link--teal"
+        >
+          travis-ci.org
+        </ExternalLinkTo>
+      </div>
+    {{/if}}
+    {{#if this.displayShowMoreButton}}
+      <p>
+        {{#if this.loadMoreBuilds.isRunning}}
+          <LoadingIndicator />
+        {{else}}
+          <ShowMoreButton @click={{perform this.loadMoreBuilds}} />
+        {{/if}}
+      </p>
+    {{else}}
+      {{#if (and this.hasBuildBackups this.displayExportFiles)}}
+        <p>
+          {{#if this.loadMoreExportFiles.isRunning}}
+            <LoadingIndicator />
+          {{else}}
+            {{#if this.displayMoreShowExportFiles}}
+              <ShowMoreButton @label="Show export files" @click={{perform this.loadMoreExportFiles}} />
+            {{else if (not this.lastExportFiles)}}
+              <ShowMoreButton @label="Show more export files" @click={{perform this.loadMoreExportFiles}} />
+            {{/if}}
+          {{/if}}
+        </p>
+      {{/if}}
+    {{/if}}
+  </div>
+{{else}}
+  <LoadingIndicator />
+{{/if}}

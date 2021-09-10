@@ -1,0 +1,17 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<LinkToAccount @routeName={{this.routeName}} @routeModel={{this.routeModel}} @class="org-info">
+  <span class="account-avatar">
+    <UserAvatar
+      @account={{this.account}}
+      @url={{this.account.avatarUrl}}
+      @name={{this.name}}
+      @showSubscriptionStatus={{true}}
+    />
+  </span>
+  <span class="account-info">
+    <h3 class="account-name">
+      {{this.name}}
+    </h3>
+  </span>
+</LinkToAccount>

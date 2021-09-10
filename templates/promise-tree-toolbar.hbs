@@ -1,0 +1,70 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="toolbar">
+  <Ui::ToolbarClearButton
+    @action={{@clear}}
+    class="js-clear-promises-btn"
+  />
+
+  {{! if should refresh the refresh button will be in the middle of the of the tab }}
+  {{#unless shouldRefresh}}
+    <Ui::ToolbarDivider />
+    <Ui::ToolbarReloadButton
+      @action={{@refreshPage}}
+      class="js-toolbar-page-refresh-btn"
+    />
+  {{/unless}}
+
+  <Ui::ToolbarDivider />
+
+  <Ui::ToolbarSearchField
+    @value={{@searchValue}}
+    class="js-promise-search"
+  />
+
+  <Ui::ToolbarDivider />
+
+  <button
+    class="{{if (eq @filter "all") "active"}} toolbar__radio toolbar__radio--first js-filter"
+    {{on "click" (fn @setFilter "all")}}
+    type="button"
+  >
+    All
+  </button>
+
+  <button
+    class="{{if (eq @filter "rejected") "active"}} toolbar__radio js-filter"
+    {{on "click" (fn @setFilter "rejected")}}
+    type="button"
+  >
+    Rejected
+  </button>
+  <button
+    class="{{if (eq @filter "pending") "active"}} toolbar__radio js-filter"
+    {{on "click" (fn @setFilter "pending")}}
+    type="button"
+  >
+    Pending
+  </button>
+  <button
+    class="{{if (eq @filter "fulfilled") "active"}} toolbar__radio toolbar__radio--last js-filter"
+    {{on "click" (fn @setFilter "fullfilled")}}
+    type="button"
+  >
+    Fulfilled
+  </button>
+
+  <Ui::ToolbarDivider />
+
+  <div class="toolbar__checkbox js-with-stack">
+    <label>
+      <Input
+        @type="checkbox"
+        @checked={{@instrumentWithStack}}
+        {{on "change" (fn @updateInstrumentWithStack (not @instrumentWithStack))}}
+      />
+      Trace promises
+    </label>
+
+  </div>
+</div>

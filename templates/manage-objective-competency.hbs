@@ -1,0 +1,48 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<section
+  class="program-year-manage-objective-competency"
+  data-test-program-year-manage-objective-competency
+>
+  {{#if @domains.length}}
+    <ul class="parent-picker" data-test-parent-picker>
+      {{#each @domains as |domain|}}
+        <li class="domain {{if
+              (or
+                (eq @selected.id domain.id)
+                (includes @selected.id (map-by "id" domain.competencies))
+              )
+              "selected"
+            }}"
+            data-test-domain
+        >
+          {{#if (eq @selected.id domain.id)}}
+            <label class="domain-title selected">
+              <input type="radio" checked="checked" {{on "click" @remove}}>
+              {{domain.title}}
+            </label>
+          {{else}}
+            <label class="domain-title">
+              <input type="radio" {{on "click" (fn @add domain.id)}}>
+              {{domain.title}}
+            </label>
+          {{/if}}
+          <ul>
+            {{#each (sort-by "title" domain.competencies) as |competency|}}
+              <li>
+                <ProgramYear::ManageObjectiveCompetencyItem
+                  @title={{competency.title}}
+                  @isSelected={{eq competency.id @selected.id}}
+                  @add={{fn @add competency.id}}
+                  @remove={{@remove}}
+                />
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="no-group" data-test-no-competencies-message>{{t "general.missingCompetenciesMessage"}}</p>
+  {{/if}}
+</section>

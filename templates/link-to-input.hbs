@@ -1,0 +1,13 @@
+{{! Template from `discourse` with MIT license }}
+{{#if showInput}}
+  {{yield}}
+{{else}}
+  <a href>
+    {{#if key}}
+      {{i18n key}}
+    {{/if}}
+    {{#if icon}}
+      {{d-icon icon}}
+    {{/if}}
+  </a>
+{{/if}}

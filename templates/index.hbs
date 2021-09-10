@@ -1,0 +1,13 @@
+{{! Template from `smallrobotco` with MIT license }}
+{{#if model}}
+  <GlobalHeader @page={{model}} />
+
+  {{#each model.section as |section|}}
+    <PageSection @section={{section}} />
+  {{/each}}
+
+  <GlobalFooter />
+
+{{else}}
+  <LoadingSpinner />
+{{/if}}

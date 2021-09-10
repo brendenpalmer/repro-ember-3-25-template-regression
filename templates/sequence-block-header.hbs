@@ -1,0 +1,39 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="curriculum-inventory-sequence-block-header"
+  ...attributes
+  data-test-curriculum-inventory-sequence-block-header
+  {{did-insert this.load @sequenceBlock}}
+  {{did-update this.load @sequenceBlock}}
+>
+  <div class="title" data-test-title>
+    {{#if @canUpdate}}
+      <EditableField
+        @value={{this.title}}
+        @save={{perform this.changeTitle}}
+        @close={{this.revertTitleChanges}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
+      >
+        <Input
+          aria-label={{t "general.title"}}
+          @type="text"
+          @value={{this.title}}
+          disabled={{isSaving}}
+          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+        />
+        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </EditableField>
+    {{else}}
+      <span class="h2">
+        <FaIcon @icon="lock" />
+        {{@sequenceBlock.title}}
+      </span>
+    {{/if}}
+  </div>
+</div>

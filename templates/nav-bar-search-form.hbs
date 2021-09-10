@@ -1,0 +1,18 @@
+{{! Template from `skylines` with MIT license }}
+<form
+  action="/search"
+  local-class="form"
+  class="navbar-form navbar-left navbar-search visible-lg"
+  ...attributes
+  {{on "submit" (prevent-default (fn @onSearch this.searchTextService.text))}}
+>
+  <div class="form-group">
+    <Input
+      @type="text"
+      @name="text"
+      @value={{this.searchTextService.text}}
+      placeholder={{t "search.search"}}
+      local-class="input"
+    />
+  </div>
+</form>

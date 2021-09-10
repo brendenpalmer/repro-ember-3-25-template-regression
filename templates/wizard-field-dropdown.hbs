@@ -1,0 +1,14 @@
+{{! Template from `discourse` with GPL-2.0-only license }}
+{{! Repo URL: git@github.com:discourse/discourse.git }}
+{{component
+  componentName
+  class=fieldClass
+  value=field.value
+  content=field.choices
+  nameProperty="label"
+  tabindex="9"
+  onChange=(action "onChangeValue")
+  options=(hash
+    translatedNone=false
+  )
+}}

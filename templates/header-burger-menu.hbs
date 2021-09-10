@@ -1,0 +1,15 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="navigation-toggle">
+  <button
+    type="button"
+    class="tofuburger no-button"
+    onclick={{action @onClick}}
+  >
+    {{#if this.isOpen}}
+      <SvgImage @name="icon-close" />
+    {{else}}
+      <SvgImage @name="icon-tofuburger" />
+    {{/if}}
+  </button>
+</div>

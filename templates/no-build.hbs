@@ -1,0 +1,15 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.repo.isMigrated}}
+  <MissingNotice
+    @title="Trigger a build"
+    @image="commandline"
+    data-test-recently-migrated-from-org-banner="true"
+  >
+    <p data-test-not-active-migrated-subtext class="text-big">
+      Push a commit to keep building
+    </p>
+  </MissingNotice>
+{{else}}
+  <NoBuilds />
+{{/if}}

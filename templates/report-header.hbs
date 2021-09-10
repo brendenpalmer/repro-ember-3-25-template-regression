@@ -1,0 +1,54 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="curriculum-inventory-report-header"
+  {{did-insert this.load @report}}
+  {{did-update this.load @report}}
+  data-test-curriculum-inventory-report-header
+  ...attributes
+>
+  <div class="title" data-test-name>
+    {{#if @canUpdate}}
+      <EditableField
+        @value={{if this.name this.name (t "general.clickToEdit")}}
+        @save={{perform this.saveName}}
+        @close={{this.revertNameChanges}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
+      >
+        <Input
+          aria-label={{t "general.title"}}
+          @type="text"
+          @value={{this.name}}
+          disabled={{isSaving}}
+          {{on "keyup" (fn this.addErrorDisplayFor "name")}}
+        />
+        {{#each (await (compute this.getErrorsFor "name")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </EditableField>
+    {{else}}
+      <h2 data-test-locked-name>
+        <FaIcon @icon="lock" />
+        {{@report.name}}
+      </h2>
+    {{/if}}
+  </div>
+  <div class="actions">
+    <a
+      class="download"
+      download="report.xml"
+      href={{@report.absoluteFileUri}}
+      rel="noopener noreferrer"
+      target="_blank"
+      data-test-download
+    >
+      {{t "general.download"}}
+    </a>
+    <button type="button" class="finalize" disabled={{not @canUpdate}} {{on "click" @finalize}} data-test-finalize>
+      {{t "general.finalize"}}
+    </button>
+  </div>
+</div>

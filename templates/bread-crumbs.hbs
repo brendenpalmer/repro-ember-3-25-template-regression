@@ -1,0 +1,24 @@
+{{! Template from `ember-template-bread-crumbs` with MIT license }}
+{{! Repo URL: github:nibynic/ember-template-bread-crumbs }}
+{{#each this.breadCrumbs.items as |item|}}
+  {{#if (has-block)}}
+
+    {{yield (hash
+      component=(if item.route
+        (component "bread-crumbs/link" item=item)
+        (component "bread-crumbs/text" item=item)
+      )
+      model=item
+    )}}
+
+  {{else}}
+
+    {{#if item.route}}
+      <BreadCrumbs::Link @item={{item}} />
+    {{else}}
+      <BreadCrumbs::Text @item={{item}} />
+    {{/if}}
+
+  {{/if}}
+
+{{/each}}

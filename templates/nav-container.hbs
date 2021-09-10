@@ -1,0 +1,13 @@
+{{! Template from `ember-3d-nav` with MIT license }}
+{{! Repo URL: https://github.com/shipshapecode/ember-3d-nav }}
+<nav
+  class="ember-3d-nav-container
+    {{if this.navService.navIsVisible "nav-is-visible"}}"
+>
+  <ul class="ember-3d-nav">
+    <NavItemsContainer>
+      {{yield}}
+      <NavMarker @multiColor={{@multiColor}} />
+    </NavItemsContainer>
+  </ul>
+</nav>

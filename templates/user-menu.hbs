@@ -1,0 +1,49 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<nav
+  class="{{if this.isOpen "is-open"}} user-menu"
+  aria-labelledby="user-menu-title"
+  {{did-insert (set this.element)}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{on "keydown" this.keyDown}}
+  data-test-user-menu
+>
+  <button
+    type="button"
+    aria-labelledby="user-menu-title"
+    class="toggle"
+    aria-haspopup="true"
+    aria-expanded={{if this.isOpen "true" "false"}}
+    data-test-toggle
+    {{on "click" this.toggleMenu}}
+  >
+    <FaIcon @icon="user" />
+    <span id="user-menu-title">
+      {{get this.model "fullName"}}
+    </span>
+  </button>
+  {{#if this.isOpen}}
+    <ClickOutside @onClickOutside={{fn (set this.isOpen) false}}>
+      <ul class="menu">
+        <li tabindex="-1" data-test-item>
+          <LinkTo @route="myprofile" @invokeAction={{set this.isOpen false}}>
+            {{t "general.myProfile"}}
+          </LinkTo>
+        </li>
+        <li tabindex="-1" data-test-item>
+          <LinkTo
+            @route="mymaterials"
+            @invokeAction={{set this.isOpen false}}
+          >
+            {{t "general.myMaterials"}}
+          </LinkTo>
+        </li>
+        <li tabindex="-1" data-test-item>
+          <LinkTo @route="logout" @invokeAction={{set this.isOpen false}}>
+            {{t "general.logout"}}
+          </LinkTo>
+        </li>
+      </ul>
+    </ClickOutside>
+  {{/if}}
+</nav>

@@ -1,0 +1,8 @@
+{{! Template from `admin` with GPL-2.0-only license }}
+{{email-styles-editor styles=model fieldName=fieldName save=(action "save")}}
+
+<div class="admin-footer">
+  <div class="buttons">
+    {{d-button action=(action "save") disabled=saveDisabled class="btn-primary" translatedLabel=saveButtonText}}
+  </div>
+</div>

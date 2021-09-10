@@ -1,0 +1,20 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<BuildMessagesList
+  @request={{@request}}
+  @viewMessage={{action (mut this.viewingMessage)}}
+/>
+<div class="raw-configs">
+  {{#each @request.uniqRawConfigs as |rawConfig|}}
+    <RawConfig
+      @rawConfig={{rawConfig}}
+      @build={{@request.build}}
+      @slug={{@request.repo.slug}}
+    />
+  {{else}}
+    <div class="starred-empty">
+      The .travis.yml file used for this job is not available
+    </div>
+  {{/each}}
+  <RequestConfig @config={{@request.config}} />
+</div>

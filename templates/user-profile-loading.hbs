@@ -1,0 +1,16 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div class="user-profile-loading">
+  <div class="blocks">
+    <ManageUsersSummary @canCreate={{canCreate}} />
+  </div>
+  <h1>
+    {{t "general.loading"}}
+  </h1>
+  <div class="blocks">
+    <div class="loading small-component has-not-saved"></div>
+    <div class="loading small-component has-not-saved"></div>
+    <div class="loading small-component has-not-saved"></div>
+    <div class="loading small-component has-not-saved"></div>
+  </div>
+</div>

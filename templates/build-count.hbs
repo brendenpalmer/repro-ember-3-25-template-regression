@@ -1,0 +1,15 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<InsightsGlance
+  @isLoading={{this.isLoading}}
+  @isEmpty={{this.isEmpty}}
+  @title="Total Builds"
+  @statistic={{this.totalBuildText}}
+  @delta={{this.percentageChange}}
+  @deltaTitle={{this.percentChangeTitle}}
+  @deltaText={{this.percentageChangeText}}
+  @labels={{this.labels}}
+  @values={{this.builds}}
+  @datasetTitle="Builds"
+  @centerline={{this.avgBuilds}}
+/>

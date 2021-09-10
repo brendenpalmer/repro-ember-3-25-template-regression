@@ -1,0 +1,14 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+{{#if icons}}
+  <div class="icons">
+    <span class="selection-indicator"></span>
+    {{#each icons as |icon|}}
+      {{d-icon icon translatedtitle=(dasherize title)}}
+    {{/each}}
+  </div>
+{{/if}}
+
+<div class="texts">
+  <span class="name">{{html-safe label}}</span>
+  <span class="desc">{{html-safe description}}</span>
+</div>

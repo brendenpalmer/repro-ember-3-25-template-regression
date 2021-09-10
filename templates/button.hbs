@@ -1,0 +1,20 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<button
+  role={{this.role}}
+  disabled={{this.disabled}}
+  class="
+    rounded-md uppercase px-3 py-2 font-bold
+    bg-{{this.bgColor}}
+    hover:bg-{{this.hoverBgColor}}
+    text-{{this.labelColor}}
+    text-xs
+    tracking-lg
+    w-{{this.width}}
+
+    {{if this.invert 'border-px border-solid'}}
+    border-{{this.borderColor}}
+  "
+  {{on 'click' (action 'handleClick')}}
+  ...attributes
+>{{yield}}</button>

@@ -1,0 +1,37 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<OverlayBackdrop @visible={{this.showOverlay}}>
+  {{! Title }}
+  <h2 data-test-insights-overlay-title>
+    {{#if this.isMonth}}
+      Build to get monthly insights
+    {{else if this.isWeek}}
+      It's been a quiet week for builds
+    {{/if}}
+  </h2>
+  {{! Body Text }}
+  <p data-test-insights-overlay-text>
+    All the build status results from the last
+    {{#if this.isMonth}}30{{else if this.isWeek}}7{{/if}}
+    days will appear here.
+    {{#if this.auth.signedOut}}
+      Have you tried logging in?
+    {{/if}}
+  </p>
+  {{! CTA }}
+  <MultiSigninButton data-test-insights-overlay-link="" />
+  {{#if this.canSync}}
+    <ExternalLinkTo
+      @href={{config-get "urls.gettingStarted"}}
+      class="button button--blue"
+      data-test-insights-overlay-link="true"
+    >
+      {{#if this.isMonth}}
+        Let's get you going
+      {{else if this.isWeek}}
+        Want help building?
+      {{/if}}
+    </ExternalLinkTo>
+  {{/if}}
+  {{yield}}
+</OverlayBackdrop>

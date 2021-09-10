@@ -1,0 +1,70 @@
+{{! Template from `skylines` with MIT license }}
+<BasePage>
+  <div class="page-header">
+    <h1>
+      {{t "notifications"}}
+
+      {{#if loading}}
+        <small>{{t "loading"}}</small>
+      {{else if markAsReadTask.isRunning}}
+        <small>{{t "processing"}}</small>
+      {{/if}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-xs-4">
+          {{#if prevPage}}
+            <LinkTo @query={{hash page=prevPage}} class="btn btn-default">&larr; {{t "newer"}}</LinkTo>
+          {{/if}}
+        </div>
+
+        <div class="col-xs-4" style="text-align:center">
+          {{#if hasUnread}}
+            <a href="#" {{action (perform markAsReadTask)}} title={{t "mark-all-as-read"}} class="btn btn-default">
+              {{svg-jar "eye-slash" class="fa-svg"}}
+              <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
+            </a>
+          {{/if}}
+        </div>
+
+        <div class="col-xs-4" style="text-align:right">
+          {{#if nextPage}}
+            <LinkTo @query={{hash page=nextPage}} class="btn btn-default">{{t "older"}} &rarr;</LinkTo>
+          {{/if}}
+        </div>
+      </div>
+
+      {{#if events}}
+        <Timeline @events={{events}} local-class="timeline" />
+      {{else}}
+        {{t "you-have-no-notifications"}}
+      {{/if}}
+
+      <div class="row">
+        <div class="col-xs-4">
+          {{#if prevPage}}
+            <LinkTo @query={{hash page=prevPage}} class="btn btn-default">&larr; {{t "newer"}}</LinkTo>
+          {{/if}}
+        </div>
+
+        <div class="col-xs-4" style="text-align:center">
+          {{#if hasUnread}}
+            <a href="#" {{action (perform markAsReadTask)}} title={{t "mark-all-as-read"}} class="btn btn-default">
+              {{svg-jar "eye-slash" class="fa-svg"}}
+              <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
+            </a>
+          {{/if}}
+        </div>
+
+        <div class="col-xs-4" style="text-align:right">
+          {{#if nextPage}}
+            <LinkTo @query={{hash page=nextPage}} class="btn btn-default">{{t "older"}} &rarr;</LinkTo>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</BasePage>

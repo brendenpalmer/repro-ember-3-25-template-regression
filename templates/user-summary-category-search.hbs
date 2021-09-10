@@ -1,0 +1,8 @@
+{{! Template from `discourse` with MIT license }}
+{{#if @count}}
+  {{#link-to "full-page-search" (query-params q=this.searchParams)}}
+    {{@count}}
+  {{/link-to}}
+{{else}}
+  &ndash;
+{{/if}}

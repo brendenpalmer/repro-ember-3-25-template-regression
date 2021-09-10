@@ -1,0 +1,7 @@
+{{! Template from `discourse` with MIT license }}
+{{d-button action=(action "openSystemFilePicker") label=label icon=icon}}
+{{#if acceptAnyFile}}
+  <input type="file">
+{{else}}
+  <input type="file" accept={{acceptedFileTypesString}}>
+{{/if}}

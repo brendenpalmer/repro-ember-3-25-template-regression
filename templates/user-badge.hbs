@@ -1,0 +1,8 @@
+{{! Template from `discourse` with MIT license }}
+<a class="user-card-badge-link" href={{this.badgeUrl}}>
+  {{#badge-button badge=@badge}}
+    {{#if this.showGrantCount}}
+      <span class="count">(&times;&nbsp;{{@count}})</span>
+    {{/if}}
+  {{/badge-button}}
+</a>

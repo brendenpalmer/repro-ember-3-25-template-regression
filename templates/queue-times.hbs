@@ -1,0 +1,16 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<InsightsGlance
+  @isLoading={{this.isLoading}}
+  @isEmpty={{this.isEmpty}}
+  @title="Average Queue Time"
+  @statistic={{this.avgWaitText}}
+  @delta={{this.percentageChange}}
+  @deltaTitle={{this.percentChangeTitle}}
+  @deltaText={{this.percentageChangeText}}
+  @isReverseDeltaColors={{true}}
+  @labels={{this.labels}}
+  @values={{this.waitMins}}
+  @datasetTitle="Minutes"
+  @centerline={{this.averageRounded}}
+/>

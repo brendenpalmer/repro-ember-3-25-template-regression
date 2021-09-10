@@ -1,0 +1,15 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{yield
+  (hash
+    isFiltering=this.isFiltering
+    isLoading=this.isLoading
+    form=(component "repository-filter-form"
+      query=this.query
+      onSearch=(perform this.search)
+    )
+    query=this.query
+    results=this.repositories
+    computeName=this.computeName
+  )
+}}

@@ -1,0 +1,55 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.filteredJobs.length}}
+  {{#unless this.required}}
+    {{#if this.stage}}
+      <header data-test-stage-header class="stage-header {{this.stageState}}">
+        <h2 class="section-title">
+          {{#if this.stageStateIcon}}
+            <span class="state-icon-container" title="{{this.stageStateTitle}}">
+              <SvgImage @name={{stageStateIcon}} @class="icon" />
+            </span>
+          {{/if}}
+          <span class="name">
+            {{format-message this.stage.name}}
+          </span>
+        </h2>
+        {{#if this.stage.duration}}
+          <div
+            class="stage-duration"
+            title="Started {{pretty-date this.stage.startedAt}}"
+          >
+            <SvgImage @name="icon-clock" @class="icon" />
+            <time
+              class="label-align"
+              aria-label="Stage duration"
+              datetime="PT{{this.stage.duration}}S"
+            >
+              {{format-duration this.stage.duration}}
+            </time>
+          </div>
+        {{/if}}
+      </header>
+    {{else}}
+      <h2 class="section-title">
+        <span class="label-align">
+          Allowed Failures
+        </span>
+        <span>
+          <SvgImage @name="icon-help" @class="icon-help" />
+          <EmberTooltip @text="These are jobs you can allow to fail without failing your entire build" />
+        </span>
+      </h2>
+    {{/if}}
+  {{/unless}}
+  <ul class="jobs-list">
+    {{#each this.filteredJobs as |job|}}
+      <JobsItem @job={{job}} @build={{this.build}} @repo={{this.repo}} />
+    {{/each}}
+  </ul>
+  {{#if this.stageAllowFailuresText}}
+    <aside>
+      {{this.stageAllowFailuresText}}
+    </aside>
+  {{/if}}
+{{/if}}

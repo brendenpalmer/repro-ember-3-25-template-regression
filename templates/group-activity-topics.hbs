@@ -1,0 +1,6 @@
+{{! Template from `discourse` with MIT license }}
+{{#load-more class="paginated-topics-list" selector=".paginated-topics-list .topic-list tr" action=(action "loadMore")}}
+  {{basic-topic-list topicList=model
+                     showPosters=true}}
+  {{conditional-loading-spinner condition=model.loadingMore}}
+{{/load-more}}

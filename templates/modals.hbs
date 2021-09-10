@@ -1,0 +1,20 @@
+{{! Template from `emberclear` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear.git }}
+{{!--
+  Static Modals / Modals that will /
+  could get toggleed from _multiple_ places.
+--}}
+<ModalStatic @name='keyboard-shortcuts' as |isActive actions|>
+  <KeyboardShortcuts @isActive={{isActive}} @close={{actions.close}} />
+
+
+  {{on-key 'ctrl+h' (prevent-default actions.toggle)}}
+  {{on-key 'ctrl+/' (prevent-default actions.toggle)}}
+</ModalStatic>
+
+<ModalStatic @name='search' as |isActive actions|>
+  <Search @isActive={{isActive}} @close={{actions.close}} />
+
+  {{on-key 'ctrl+k' (prevent-default actions.toggle)}}
+</ModalStatic>
+

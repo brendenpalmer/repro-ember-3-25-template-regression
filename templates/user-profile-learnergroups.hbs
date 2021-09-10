@@ -1,0 +1,42 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="user-profile-learnergroups large-component"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @user.learnerGroups}}
+  ...attributes
+>
+  <h2 class="title">
+    {{t "general.learnerGroups"}}
+  </h2>
+  {{#if (is-array this.selectedLearnerGroups)}}
+    <p>
+      {{#if (gt this.selectedLearnerGroups.length 0)}}
+        <ul>
+          {{#each
+            (sort-by "sortTitle" this.selectedLearnerGroups) as |learnerGroup|
+          }}
+            <li>
+              {{learnerGroup.schoolTitle}}:
+              {{learnerGroup.programTitle}}
+              <em>
+                {{learnerGroup.cohortTitle}}
+                &mdash;
+              </em>
+              {{learnerGroup.allParentsTitle}}
+              <strong>
+                {{learnerGroup.title}}
+              </strong>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
+    </p>
+  {{else}}
+    <p>
+      <LoadingSpinner />
+    </p>
+  {{/if}}
+</div>

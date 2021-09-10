@@ -1,0 +1,7 @@
+{{! Template from `discourse` with MIT license }}
+{{#if isLoading}}
+  <span class="title">{{title}}</span>
+  <div class="spinner {{size}}"></div>
+{{else}}
+  {{yield}}
+{{/if}}

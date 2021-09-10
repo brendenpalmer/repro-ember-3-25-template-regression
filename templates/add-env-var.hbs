@@ -1,0 +1,74 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<TravisForm
+  @onSubmit={{perform this.save}}
+  as |form|
+>
+  <div class="form-elem">
+    <form.field
+      @label="Name"
+      @value={{this.name}}
+      @required={{true}}
+      @validateOnField={{false}}
+      @showValidationStatusIcons={{false}}
+      @onChange={{action (mut this.name)}}
+      @validator={{action "validateEnvName"}}
+      as |field|
+    >
+      <field.input class="env-name" placeholder="Name" />
+    </form.field>
+  </div>
+  <div class="form-elem">
+    <form.field
+      @label="Value"
+      @value={{this.value}}
+      @required={{true}}
+      @onChange={{action (mut this.value)}}
+      @showValidationStatusIcons={{false}}
+      as |field|
+    >
+      <field.input class="env-value" placeholder="Value" />
+    </form.field>
+  </div>
+  <div class="form-elem">
+    <form.field
+      @label="Branch"
+      @value={{this.branch}}
+      @required={{false}}
+      class="env-branch-selector"
+      @showValidationStatusIcons={{false}}
+      as |field|
+    >
+      <field.select
+        @placeholder="All branches"
+        @allowClear={{true}}
+        @onchange={{action (mut this.branch)}}
+        @search={{perform this.search}}
+        as |branch|
+      >
+        {{branch}}
+      </field.select>
+    </form.field>
+  </div>
+  <div class="form-elem">
+    <form.field
+      @label="Display value in build log"
+      @disableFrame={{true}}
+      class="display-value-switch"
+      @value={{this.public}}
+      @onChange={{action (mut this.public)}}
+      as |field|
+    >
+      {{field.switch}}
+    </form.field>
+  </div>
+  <div class="form-elem">
+    {{#if this.save.isRunning}}
+      <LoadingIndicator />
+    {{else}}
+      <button onclick={{form.submit}} class="add-env-form-submit form-submit">
+        Add
+      </button>
+    {{/if}}
+  </div>
+</TravisForm>

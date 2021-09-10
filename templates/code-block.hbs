@@ -1,0 +1,13 @@
+{{! Template from `ember-prism` with MIT license }}
+{{! Repo URL: https://github.com/shipshapecode/ember-prism }}
+<pre
+  class="{{this.languageClass}} {{if @showLineNumbers "line-numbers"}}"
+>
+  {{~! ~}}
+  <CodeInline
+    ...attributes
+    @code={{@code}}
+    @language={{@language}}
+  />
+  {{~! ~}}
+</pre>

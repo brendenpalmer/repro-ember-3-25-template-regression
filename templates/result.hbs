@@ -1,0 +1,14 @@
+{{! Template from `emberclear` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear.git }}
+<a
+  href={{url-for @to @id}}
+  {{on 'click' (prevent-default
+    (queue
+      (transition-to (url-for @to @id))
+      @afterSelect
+    )
+  )}}
+  ...attributes
+>
+  {{yield}}
+</a>

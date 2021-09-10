@@ -1,0 +1,9 @@
+{{! Template from `admin` with GPL-2.0-only license }}
+{{#if hasFormattedLogs}}
+  <pre>{{formattedLogs}}</pre>
+{{else}}
+  <p>{{noLogsMessage}}</p>
+{{/if}}
+{{#if showLoadingSpinner}}
+  <div class="spinner small"></div>
+{{/if}}

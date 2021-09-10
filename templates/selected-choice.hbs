@@ -1,0 +1,11 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+<button aria-label={{i18n "select_kit.delete_item" name=itemName}} id="{{id}}-choice" data-value={{itemValue}} data-name={{itemName}} type="button" {{action selectKit.deselect item}} class="btn btn-default selected-choice {{extraClass}}">
+  {{d-icon "times"}}
+  {{#if (has-block)}}
+    {{yield}}
+  {{else}}
+    <span class="d-button-label">
+      {{html-safe itemName}}
+    </span>
+  {{/if}}
+</button>

@@ -1,0 +1,15 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<UiKit::Box
+  @tag={{this.tag}}
+  @color={{this.bgColor}}
+  @margin={{this.margin}}
+  @padding={{this.padding}}
+>
+  <UiKit::Text
+    @color={{this.textColor}}
+    @size='sm'
+  >
+    {{~yield~}}
+  </UiKit::Text>
+</UiKit::Box>

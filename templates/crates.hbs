@@ -1,0 +1,48 @@
+{{! Template from `cargo` with (MIT OR Apache-2.0) license }}
+{{! Repo URL: git+https://github.com/rust-lang/crates.io.git }}
+{{page-title 'Crates'}}
+
+<PageHeader @title="All Crates" @suffix={{if this.letter (concat "starting with '" this.letter "'")}}/>
+
+<div local-class='selection'>
+  {{#each this.alphabet as |letter|}}
+    <LinkTo @query={{hash letter=letter page=1}}>
+      {{ letter }}
+    </LinkTo>
+  {{/each}}
+
+  <label local-class="filter-dropdown-label">
+    Filter by letter:
+
+    <select local-class="filter-dropdown" {{on "change" this.handleSelection}}>
+      <option value="">No Filter</option>
+      {{#each this.alphabet as |letter|}}
+        <option value={{letter}} selected={{eq letter this.letter}}>{{ letter }}</option>
+      {{/each}}
+    </select>
+  </label>
+</div>
+
+<div local-class="results-meta">
+  <ResultsCount
+    @start={{this.pagination.currentPageStart}}
+    @end={{this.pagination.currentPageEnd}}
+    @total={{this.totalItems}}
+    data-test-crates-nav
+  />
+
+  <div data-test-crates-sort>
+    <span local-class="sort-by-label">Sort by</span>
+    <SortDropdown @current={{this.currentSortBy}} as |sd|>
+      <sd.Option @query={{hash page=1 sort="alpha"}}>Alphabetical</sd.Option>
+      <sd.Option @query={{hash page=1 sort="downloads"}}>All-Time Downloads</sd.Option>
+      <sd.Option @query={{hash page=1 sort="recent-downloads"}}>Recent Downloads</sd.Option>
+      <sd.Option @query={{hash page=1 sort="recent-updates"}}>Recent Updates</sd.Option>
+      <sd.Option @query={{hash page=1 sort="new"}}>Newly Added</sd.Option>
+    </SortDropdown>
+  </div>
+</div>
+
+<CrateList @crates={{this.model}} local-class="list" />
+
+<Pagination @pagination={{this.pagination}} />

@@ -1,0 +1,6 @@
+{{! Template from `discourse` with MIT license }}
+<div class="fps-result-entries">
+  {{#each posts as |post|}}
+    {{search-result-entry post=post bulkSelectEnabled=bulkSelectEnabled selected=selected}}
+  {{/each}}
+</div>

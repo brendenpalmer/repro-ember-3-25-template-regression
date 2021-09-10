@@ -1,0 +1,26 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<h3 class="h3--red">
+  This action will remove the log permanently!
+</h3>
+<p class="text-big">
+  Do you want to continue?
+</p>
+<div class="buttons">
+  <button
+    type="button"
+    class="button-delete plans-button--red"
+    title="Permanently remove this log"
+    onclick={{action "removeLog"}}
+  >
+    Yes, remove log
+  </button>
+</div>
+<button
+  trype="button"
+  title="Close modal"
+  class="modal-close pointer"
+  onclick={{action "toggleRemoveLogModal"}}
+>
+  <SvgImage @name="icon-failed" @class="icon" />
+</button>

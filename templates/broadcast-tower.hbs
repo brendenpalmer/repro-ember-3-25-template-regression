@@ -1,0 +1,16 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<span
+  class="icon-broadcast {{this.status}} {{if this.isOpen 'is-open'}}"
+  title="broadcasts"
+  onclick={{action (perform toggle)}}
+>
+  <SvgImage @name="icon-broadcast" />
+  {{#if this.count}}
+    <div class="count-wrapper">
+      <div class="count">
+        {{this.count}}
+      </div>
+    </div>
+  {{/if}}
+</span>

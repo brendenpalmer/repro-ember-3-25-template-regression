@@ -1,0 +1,39 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="label-and-token">
+  <span class="label">
+    Token
+  </span>
+  <span class="token-field">
+    {{#if this.showCopySuccess}}
+      <span class="token-copied-text">
+        Token copied!
+      </span>
+    {{else if this.tokenIsVisible}}
+      <span class="auth-token">
+        {{this.token}}
+      </span>
+    {{else}}
+      <span class="obfuscated-chars">
+        {{obfuscated-chars 20}}
+      </span>
+    {{/if}}
+  </span>
+</div>
+<div class="token-actions">
+  <CopyButton
+    class="copy-button"
+    @clipboardText={{this.token}}
+    @title="Copy to clipboard"
+    @success={{action "copyTokenSuccessful"}}
+  >
+    <SvgImage @name="icon-copy" @class="icon" />
+    <span>Copy token</span>
+  </CopyButton>
+  <button class="show-token" onclick={{action "tokenVisibility"}}>
+    <SvgImage @name="icon-seemore" @class="icon" />
+    <span>
+      {{if this.tokenIsVisible "Hide token" "View token"}}
+    </span>
+  </button>
+</div>

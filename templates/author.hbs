@@ -1,0 +1,21 @@
+{{! Template from `website` with MIT license }}
+{{! Repo URL: https://github.com/shipshapecode/shipshape.io }}
+<div class="blog-posts section flex flex-wrap justify-center">
+  <div class="section-content">
+    <div class="flex items-center">
+      <h1>{{this.author.attributes.name}}</h1>
+    </div>
+
+    <p>
+      {{this.model.length}} posts
+    </p>
+
+    <BlogPostMenu
+      @navigatePages={{action "navigatePages"}}
+      @page={{this.page}}
+      @posts={{this.model}}
+      @totalPosts={{this.model.length}}
+    >
+    </BlogPostMenu>
+  </div>
+</div>

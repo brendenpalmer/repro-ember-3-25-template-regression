@@ -1,0 +1,9 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="wrapper layout-striped">
+  <TopBar />
+  <FlashDisplay />
+  <div id="main" class="main" role="main">
+    {{yield (hash section=(component "layouts/striped-section"))}}
+  </div>
+</div>

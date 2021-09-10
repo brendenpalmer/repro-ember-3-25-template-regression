@@ -1,0 +1,20 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="switch-inner">
+  <span class="on">
+    {{#if this.onText}}
+      <span>{{this.onText}}</span>
+    {{else}}
+      <SvgImage @name="icon-passed" @class="icon-on" @alt="on" />
+    {{/if}}
+  </span>
+  <span class="off">
+    {{#if offText}}
+      <span>{{offText}}</span>
+    {{else}}
+      <SvgImage @name="icon-failed" @class="icon-off" @alt="off" />
+    {{/if}}
+  </span>
+</div>
+
+{{yield}}

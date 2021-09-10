@@ -1,0 +1,25 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="missing-notice">
+  <figure class="page-graphic">
+    <SvgImage @name="barricade" @class="barricade" />
+  </figure>
+  <h2 class="page-title">
+    We couldn't find the owner <br />
+    <span class="h2--red">
+      {{this.ownerLogin}}
+    </span>
+  </h2>
+  {{#if this.features.enterpriseVersion}}
+    {{! we only need this text on enterprise, where public mode may be disabled.
+      on pro every owner is visible }}
+    {{#unless this.auth.signedIn}}
+      <p class="page-notice">
+        This owner may not exist or you may need to
+        <LinkTo @route="signin" class="auth-button--white m-l-s">
+          Sign in
+        </LinkTo>
+      </p>
+    {{/unless}}
+  {{/if}}
+</div>

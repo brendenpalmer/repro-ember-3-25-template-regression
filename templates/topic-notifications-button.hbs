@@ -1,0 +1,27 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+{{#if appendReason}}
+  <p class="reason">
+    {{topic-notifications-options
+      value=notificationLevel
+      topic=topic
+      onChange=(action "changeTopicNotificationLevel")
+      options=(hash
+        icon=icon
+        showFullTitle=showFullTitle
+        showCaret=showCaret
+      )
+    }}
+    <span class="text">{{html-safe notificationReasonText}}</span>
+  </p>
+{{else}}
+  {{topic-notifications-options
+    value=notificationLevel
+    topic=topic
+    onChange=(action "changeTopicNotificationLevel")
+    options=(hash
+      icon=icon
+      showFullTitle=showFullTitle
+      showCaret=showCaret
+    )
+  }}
+{{/if}}

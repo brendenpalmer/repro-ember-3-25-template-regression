@@ -1,0 +1,97 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if (eq this.skipBillingInfo true)}}
+  {{action next}}
+{{/if}}
+<div class='billing-information-form'>
+  <h3 data-test-contact-details-title='true'>
+    Contact details
+  </h3>
+  {{#if this.selectedAddon}}
+    <Billing::SelectedAddon
+      @selectedAddon={{this.selectedAddon}}
+      @goToFirstStep={{action this.goToFirstStep}}
+    />
+  {{else}}
+    <Billing::SelectedPlan
+      @selectedPlan={{this.selectedPlan}}
+      @totalPrice={{this.selectedPlan.startingPrice}}
+      @goToFirstStep={{action this.goToFirstStep}}
+    />
+    <Billing::WarningMessage
+      @selectedPlan={{this.selectedPlan}}
+      @subscription={{this.subscription}}
+    />
+  {{/if}}
+  <TravisForm @onSubmit={{action next}} as |form|>
+    <div data-test-billing-form>
+      <div class='flex flex--col flex-md-row'>
+        <div class='full-width form-elem inline-form-elem'>
+          <form.field
+            @label='First Name'
+            @value={{this.billingInfo.firstName}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut this.billingInfo.firstName)}} as |Field|
+          >
+            <Field.input @name='firstname'/>
+          </form.field>
+        </div>
+        <div class='full-width form-elem'>
+          <form.field
+            @label='Last Name'
+            @value={{this.billingInfo.lastName}}
+            @required={{true}}
+            @showRequiredMark={{true}}
+            @showValidationStatusIcons={{false}}
+            @onChange={{action (mut this.billingInfo.lastName)}} as |Field|
+          >
+            <Field.input @name='lastname'/>
+          </form.field>
+        </div>
+      </div>
+      <div class='form-elem billing-optional-field'>
+        <form.field
+          @label='Company Name'
+          @value={{this.billingInfo.company}}
+          @showValidationStatusIcons={{false}}
+          @onChange={{action (mut this.billingInfo.company)}} as |Field|
+        >
+          <Field.input @name='companyName'/>
+        </form.field>
+      </div>
+      <div data-test-email-inputs-wrapper="true">
+        <form.field
+          @label='Billing Email Address'
+          @isMultipleInputsField={{true}}
+          @disableFrame={{true}}
+          @required={{true}}
+          @showRequiredMark={{true}}
+          @showValidationStatusIcons={{false}}
+          @validator={{form-validator form.validators.email}}
+          @initialValue={{this.billingInfo.billingEmail}}
+          as |Field|
+        >
+          <Field.multipleInputs @updateValues={{action 'updateEmails'}}/>
+        </form.field>
+      </div>
+      <h3 data-test-billing-details-title='true'>
+        Billing address
+      </h3>
+      <Billing::PostalAddress @billingInfo={{this.subscription.billingInfo}} @form={{form}} />
+      <div class='form-elem flex flex--wrap'>
+        <button
+          onclick={{action form.submit}}
+          class='button--blue'
+          data-test-proceed-to-payment-button
+        >
+          Proceed to Payment
+        </button>
+        <span data-test-back-to-plans='true' onClick={{action back}} class='link back-button'>
+          Back to plans
+        </span>
+      </div>
+    </div>
+  </TravisForm>
+</div>

@@ -1,0 +1,16 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<UiKit::box data-test-sales-contact-form-container="true">
+  <div class="iframe-wrapper">
+    <iframe 
+      data-test-sales-contact-iframe="true"
+      class="pardot-iframe"
+      id="pardot-iframe"
+      src={{this.pardotFormUrl}} 
+      type="text/html" 
+      frameborder="0" 
+      allowTransparency="true"
+      {{did-insert this.setHeight}}
+    ></iframe>
+  </div>
+</UiKit::box>

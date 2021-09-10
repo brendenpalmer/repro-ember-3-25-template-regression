@@ -1,0 +1,13 @@
+{{! Template from `skylines` with MIT license }}
+<PowerSelect
+  @options={{modelsWithNull}}
+  @selected={{model}}
+  @searchField="name"
+  @onChange={{action "onChange"}}
+as |model|>
+  {{#if (eq model.id null)}}
+    [{{t "unspecified"}}]
+  {{else}}
+    {{model.name}}
+  {{/if}}
+</PowerSelect>

@@ -1,0 +1,6 @@
+{{! Template from `ember-observer` with MIT license }}
+<div class="test-category-chooser">
+  <PowerSelectMultiple @options={{this.sortedCategories}} @selected={{this.addon.categories}} @searchField="displayName" @dropdownClass="test-category-chooser-dropdown" @placeholder="Select categories" @onChange={{@onchange}} as |category option|>
+    {{category.displayName}} {{#if (not (includes option.selected category))}}{{#if category.description}}&middot; <span class="category-chooser-description">{{category.description}}</span>{{/if}}{{/if}}
+  </PowerSelectMultiple>
+</div>

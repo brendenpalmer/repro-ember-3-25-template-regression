@@ -1,0 +1,67 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<article class="repo-header">
+  <header class="name">
+    <div class="inline-block repo-title">
+      <div class="inline-block">
+        <RepositoryVisibilityIcon @repository={{this.repo}} />
+      </div>
+      <h1 data-test-repo-header-title class="inline-block vertical-align">
+        <LinkTo @route="owner" @models={{array this.repo.provider this.repo.ownerName}} >
+          {{this.repo.owner.login}}
+        </LinkTo>
+        /
+        <LinkTo @route="repo" @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}} >
+          {{this.repo.name}}
+        </LinkTo>
+      </h1>
+    </div>
+    <div>
+      <ExternalLinkTo
+        @href={{this.repoUrl}}
+        class="repo-gh inline-block"
+        @title={{concat this.repo.name " on " (vcs-name this.repo.vcsType)}}
+      >
+        <SvgImage @name={{vcs-icon this.repo.vcsType}} />
+      </ExternalLinkTo>
+      <RepoStatusBadge @repo={{this.repo}} @onClick={{action 'toggleStatusBadgeModal'}} />
+    </div>
+  </header>
+  <main class="repo-main">
+    <div class="repo-navigation">
+      <RepoShowTabs @repo={{this.repo}} @build={{this.build}} @job={{this.job}} />
+      <RepoShowTools
+        @repo={{this.repo}}
+        @build={{this.build}}
+        @job={{this.job}}
+        @tab={{this.tab}}
+        @onTriggerBuild={{action "toggleTriggerBuildModal"}}
+      />
+    </div>
+    <div class="travistab-body repo-body">
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        <BuildLayout @build={{this.build}} @repo={{this.repo}} />
+      {{/if}}
+    </div>
+  </main>
+</article>
+<Modal
+  @isVisible={{this.isShowingStatusBadgeModal}}
+  @onClose={{action "toggleStatusBadgeModal"}}
+>
+  <StatusImages
+    @repo={{this.repo}}
+    @onClose={{action "toggleStatusBadgeModal"}}
+  />
+</Modal>
+<Modal
+  @isVisible={{this.isShowingTriggerBuildModal}}
+  @onClose={{action "toggleTriggerBuildModal"}}
+>
+  <TriggerCustomBuild
+    @repo={{this.repo}}
+    @onClose={{action "toggleTriggerBuildModal"}}
+  />
+</Modal>

@@ -1,0 +1,19 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.coursesAndSessions")}}
+<section class="session-type-visualize-vocabularies">
+  <h2 class="clickable">
+    <LinkTo
+      @route="school"
+      @model={{@model.school}}
+      @query={{hash schoolSessionTypeDetails=true}}
+    >
+      {{@model.school.title}}
+      {{@model.title}}
+    </LinkTo>
+  </h2>
+  <h3>
+    {{t "general.termsBySessionType"}}
+  </h3>
+  <VisualizerSessionTypeVocabularies @sessionType={{@model}} />
+</section>

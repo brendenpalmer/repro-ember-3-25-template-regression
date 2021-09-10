@@ -1,0 +1,12 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+{{#if collection.content.length}}
+  <ul class="select-kit-collection" aria-live="polite" role="menu">
+    {{#each collection.content as |item|}}
+      {{component (component-for-row collection.identifier item selectKit)
+        item=item
+        value=value
+        selectKit=selectKit
+      }}
+    {{/each}}
+  </ul>
+{{/if}}

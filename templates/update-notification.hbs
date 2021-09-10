@@ -1,0 +1,10 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<button
+  type="button"
+  class="ilios-update-notification"
+  {{on "click" (perform this.click)}}
+  ...attributes
+>
+  {{t "general.iliosUpdatePending"}}
+</button>

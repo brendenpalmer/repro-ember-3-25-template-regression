@@ -1,0 +1,20 @@
+{{! Template from `ember-template-bread-crumbs` with MIT license }}
+{{! Repo URL: github:nibynic/ember-template-bread-crumbs }}
+{{#if (or @item.models @item.model)}}
+  <LinkTo
+    @route={{@item.route}}
+    @models={{or @item.models (array @item.model)}}
+    @query={{if @item.query @item.query (hash)}}
+    ...attributes
+  >
+    {{@item.text}}
+  </LinkTo>
+{{else}}
+  <LinkTo
+    @route={{@item.route}}
+    @query={{if @item.query @item.query (hash)}}
+    ...attributes
+  >
+    {{@item.text}}
+  </LinkTo>
+{{/if}}

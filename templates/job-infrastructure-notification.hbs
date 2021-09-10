@@ -1,0 +1,29 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#unless this.features.enterpriseVersion}}
+  {{#if this.auth.signedIn}}
+    {{#if this.isDeprecatedOrRetiredMacImage}}
+      <NoticeBanner>
+        {{{this.deprecatedOrRetiredMacImageMessage}}}
+      </NoticeBanner>
+    {{/if}}
+    {{#if this.isPreciseEOL}}
+      <NoticeBanner>
+        This job {{this.conjugatedRun}} on our <b>Precise</b> environment,
+        which is in the process of being decommissioned.
+        Please update to a newer Ubuntu version by specifying
+        <code>dist: xenial</code> in your <em>.travis.yml</em>.
+      </NoticeBanner>
+    {{/if}}
+  {{/if}}
+{{/unless}}
+{{#if this.isWindows}}
+  <NoticeBanner>
+    Windows builds are in early access stage. Please head to the
+    <ExternalLinkTo
+      @content="Travis CI Community"
+      @href="https://travis-ci.community/c/windows"
+    />
+    forum to get help or post ideas.
+  </NoticeBanner>
+{{/if}}

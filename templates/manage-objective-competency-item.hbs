@@ -1,0 +1,20 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{#if @isSelected}}
+  <label class="selected">
+    <input
+      type="radio"
+      checked="checked"
+      {{on "click" @remove}}
+    >
+    {{@title}}
+  </label>
+{{else}}
+  <label>
+    <input
+      type="radio"
+      {{on "click" @add}}
+    >
+    {{@title}}
+  </label>
+{{/if}}

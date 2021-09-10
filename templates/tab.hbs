@@ -1,0 +1,12 @@
+{{! Template from `cargo` with (MIT OR Apache-2.0) license }}
+{{! Repo URL: git+https://github.com/rust-lang/crates.io.git }}
+<li ...attributes>
+  <a
+    href={{@link.url}}
+    local-class="link {{if @link.isActive "active"}}"
+    data-test-active={{@link.isActive}}
+    {{on "click" @link.transitionTo}}
+  >
+    {{yield}}
+  </a>
+</li>

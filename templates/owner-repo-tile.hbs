@@ -1,0 +1,121 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="owner-tile-head">
+  <div class="owner-tile-visibility">
+    {{#if this.repo.private}}
+      <SvgImage @name="icon-lock" @alt="Private repository" @class="icon private" />
+      <EmberTooltip @text="Private repository" />
+    {{else}}
+      <SvgImage @name="icon-os" @alt="Public repository" @class="icon public" />
+      <EmberTooltip @text="Public repository" />
+    {{/if}}
+  </div>
+</div>
+<div class="owner-tile-body">
+  <div class="owner-tile-main">
+    <section class="owner-tile-section owner-tile-repo fade-out">
+      <h2 class="repo-title color">
+        <StatusIcon @status={{this.repo.defaultBranch.lastBuild.state}} />
+        <LinkTo
+          @route="repo"
+          @models={{array this.repo.provider this.repo.urlOwnerName this.repo.urlName}}
+          class="label-align"
+        >
+          <span class="repo-title-text">
+            {{this.repo.name}}
+            {{#if this.repo.shared}}
+              <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" />
+            {{/if}}
+          </span>
+        </LinkTo>
+      </h2>
+    </section>
+    {{#if this.repo.defaultBranch.lastBuild}}
+      <section class="owner-tile-section build-number owner-tile-build">
+        <h3 class="label">
+          Last Build
+        </h3>
+        <p class="row-content color">
+          <SvgImage @name="icon-hash" @class="icon color-icon" />
+          <LinkTo
+            @route="build"
+            @models={{array
+              this.repo.provider
+              this.repo.ownerName
+              this.repo.vcsName
+              this.repo.defaultBranch.lastBuild.id
+            }}
+          >
+            <span class="label-align">
+              {{this.repo.defaultBranch.lastBuild.number}}
+            </span>
+          </LinkTo>
+        </p>
+      </section>
+      <section
+        class="owner-tile-section fade-out default-branch owner-tile-branch"
+      >
+        <h3 class="label">
+          Default Branch
+        </h3>
+        <p class="row-content color">
+          <RequestIcon
+            @event={{this.repo.defaultBranch.lastBuild.eventType}}
+            class="label-align"
+          />
+          <LinkTo
+            @route="build"
+            @models={{array
+              this.repo.provider
+              this.ownerName
+              this.repoName
+              this.repo.defaultBranch.lastBuild.id
+            }}
+          >
+            <span class="label-align default-branch-name">
+              {{this.repo.defaultBranch.name}}
+            </span>
+          </LinkTo>
+        </p>
+      </section>
+      <section class="owner-tile-section commit-sha owner-tile-commit">
+        <h3 class="label">
+          Commit
+        </h3>
+        <p class="row-content">
+          <SvgImage @name="icon-compare" @class="icon" />
+          <ExternalLinkTo
+            @href={{this.repo.defaultBranch.lastBuild.commit.compareUrl}}
+            class="label-align"
+          >
+            <EmberTooltip @text="{{concat "View diff on " (vcs-name this.repo.vcsType)}}" />
+            <span class="label-align commit-compare monospace">
+              {{format-sha this.repo.defaultBranch.lastBuild.commit.sha}}
+            </span>
+          </ExternalLinkTo>
+          <SvgImage @name="icon-external-link" @class="icon" />
+        </p>
+      </section>
+      <section class="owner-tile-section fade-out owner-tile-date">
+        <h3 class="label">
+          Finished
+        </h3>
+        <p class="row-content">
+          <SvgImage @name="icon-calendar" @class="icon" />
+          <span class="build-status label-align">
+            {{this.repo.defaultBranch.lastBuild.state}}
+          </span>
+          <span class="finished-at label-align">
+            {{format-time this.repo.defaultBranch.lastBuild.finishedAt}}
+          </span>
+        </p>
+      </section>
+    {{else}}
+      <section class="owner-tile-section owner-tile-no-build">
+        <p class="row-content">
+          There is no build on the default branch yet.
+        </p>
+      </section>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,36 @@
+{{! Template from `ember-osf-web` with Apache-2.0 license }}
+{{! Repo URL: https://github.com/CenterForOpenScience/ember-osf-web }}
+<HeadLayout />
+{{page-title (t 'general.OSF')}}
+<div
+    data-test-application
+    local-class='Application'
+    inert={{this.osfModalState.inModalState}}
+>
+    {{#unless this.disableHeader}}
+        {{#if this.theme.isProvider}}
+            <style>
+                {{!-- template-lint-disable no-bare-strings --}}
+                @import url('{{this.theme.stylesheet}}');
+                {{!-- template-lint-enable no-bare-strings --}}
+            </style>
+            <div id='branded-navbar'></div>
+        {{else}}
+            <OsfHeader />
+        {{/if}}
+    {{/unless}}
+    {{#if this.shouldShowVerifyEmailModals}}
+        <Application::-Components::VerifyEmailModal />
+    {{/if}}
+    {{!--
+    NOTE: the global Application__page class is used in registries
+    to fix weird styling issues that break other embosf pages (quickfiles).
+    --}}
+    <div class='Application__page' local-class='Application__page'>
+        {{outlet}}
+    </div>
+    <OsfFooter />
+    <CookieBanner />
+</div>
+<div {{capture-element (action (mut this.osfModalState.dialogWormholeTarget))}}></div>
+<OsfModeFooter />

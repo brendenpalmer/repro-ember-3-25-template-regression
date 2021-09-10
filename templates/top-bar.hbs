@@ -1,0 +1,32 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="topbar {{if this.isNavigationOpen 'expanded'}} {{if this.showBroadcasts 'expanded'}}" >
+  <HeaderBurgerMenu @isOpen={{this.isNavigationOpen}} @onClick={{action 'toggleNavigation'}} />
+  <h1 id="logo" class="logo">
+    <ExternalLinkTo
+      @content="Travis CI"
+      @href="https://travis-ci.com"
+    />
+  </h1>
+  <HeaderBroadcasts @showBroadcasts={{this.showBroadcasts}} />
+  <HeaderLinks @isOpen={{this.isNavigationOpen}} />
+  <ProfileMenu />
+</div>
+{{#if this.isUnconfirmed}}
+ <UnconfirmedUserBanner />
+{{/if}}
+{{#if this.features.enterpriseVersion}}
+  <EnterpriseBanner />
+{{/if}}
+{{#unless this.features.proVersion}}
+  <MigrationBanner />
+{{/unless}}
+{{#if hasBlock}}
+  {{yield}}
+{{else if this.showCta}}
+  <div class="cta">
+    <p class="row">
+      Help make Open Source a better place and start building better software today!
+    </p>
+  </div>
+{{/if}}

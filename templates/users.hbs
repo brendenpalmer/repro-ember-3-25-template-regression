@@ -1,0 +1,21 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.admin")}}
+<LinkTo @route="admin-dashboard">
+  {{t "general.backToAdminDashboard"}}
+</LinkTo>
+<IliosUsers
+  @offset={{this.offset}}
+  @setOffset={{set this.offset}}
+  @limit={{this.limit}}
+  @setLimit={{set this.limit}}
+  @query={{this.query}}
+  @setQuery={{set this.query}}
+  @showNewUserForm={{this.showNewUserForm}}
+  @setShowNewUserForm={{set this.showNewUserForm}}
+  @showBulkNewUserForm={{this.showBulkNewUserForm}}
+  @setShowBulkNewUserForm={{set this.showBulkNewUserForm}}
+  @searchTerms={{this.searchTerms}}
+  @setSearchTerms={{set this.searchTerms}}
+  @transitionToUser={{this.transitionToUser}}
+/>

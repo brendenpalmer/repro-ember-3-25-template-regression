@@ -1,0 +1,8 @@
+{{! Template from `pinochle` with MIT license }}
+<ShareLink @url={{@game.joinUrl}} ...attributes  {{focus-trap}}>
+  <p class='line-height-8' data-test-waiting-for-players>
+    Waiting for {{english-list @game.display.offlinePlayerNames}} to join.
+    <br>
+    Share this link with them in case they lost it.
+  </p>
+</ShareLink>

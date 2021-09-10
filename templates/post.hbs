@@ -1,0 +1,53 @@
+{{! Template from `smallrobotco` with MIT license }}
+{{#if post}}
+  <MainNav @class="hero" @navColor={{post.navColor}} @heroColor={{post.heroColor}} @heroOverlay={{post.heroOverlay}} />
+  <section class="hero-splash">
+    <div class="hero-wrapper {{post.heroColor}} {{post.heroLayout}}" style="{{post.inlineBackground}}">
+      <div class='overlay {{post.heroOverlay}}'>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="hero-col">
+              <div class="hero-block">
+                <div class="hero-text">
+                  <h1 class="{{post.navColor}}">
+                    {{{post.title}}}
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="body col-12 col-md-10 col-lg-8 py-3 pt-md-5 mx-auto">
+        {{html-safe post.body.value}}
+      </div>
+      <div class="author-bio col-12 col-md-10 col-lg-8 py-3 pb-md-5 mx-auto">
+        <div class="d-flex">
+          <div class="bio-photo">
+            <img src="{{post.bio.photo.fullUrl}}" alt="portrait of {{post.bio.title}}" class="photo img-fluid" >
+          </div>
+          <div class="bio-details col">
+            <div class="name">
+              {{post.bio.title}}
+            </div>
+            <div class="title">
+              {{post.bio.professionalTitle}}
+            </div>
+            <div class="bio-body">
+            {{html-safe post.bio.body.value}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <GlobalFooter />
+{{else}}
+  <LoadingSpinner />
+{{/if}}

@@ -1,0 +1,18 @@
+{{! Template from `skylines` with MIT license }}
+<BasePage>
+  <div class="page-header">
+    <h1>
+      {{t "flights"}}
+
+      {{#if loading}}
+        <small>{{t "loading"}}</small>
+      {{/if}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      {{outlet}}
+    </div>
+  </div>
+</BasePage>

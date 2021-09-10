@@ -1,0 +1,32 @@
+{{! Template from `skylines` with MIT license }}
+<BasePage>
+  <div class="page-header">
+    <h1>{{t "members-of-CLUB" htmlSafe=true club=club.name clubURL=(href-to "club" club.id)}}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>{{t "name"}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model.users as |user|}}
+          <tr>
+            <td class="column-buttons">
+              <LinkTo @route="user" @model={{user.id}}>{{user.name}}</LinkTo>
+
+              <div class="pull-right">
+                <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+                <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BasePage>

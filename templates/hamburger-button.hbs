@@ -1,0 +1,11 @@
+{{! Template from `@emberclear/ui` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear }}
+<button
+  data-test-hamburger-toggle
+  type='button'
+  class='button-link navbar-burger burger {{@class}} {{if @isActive 'is-active'}}'
+  aria-expanded='false'
+  {{on 'click' @onClick}}
+>
+  <FaIcon @icon='bars' @prefix='fas' />
+</button>

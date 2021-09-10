@@ -1,0 +1,31 @@
+{{! Template from `emberclear` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear.git }}
+{{!-- template-lint-disable no-inline-styles --}}
+<button
+  type='button'
+  class='
+    p-absolute {{if (eq @direction 'down') 'bottom' 'top'}}
+    button is-info is-small
+    m-b-sm
+    '
+  style='margin-top: 60px; z-index: 100;'
+  {{on 'click' @onClick}}
+>
+  <span class='icon'>
+    {{#if (eq @direction 'down')}}
+      <FaIcon @icon='angle-down' />
+    {{else}}
+      <FaIcon @icon='angle-up' />
+    {{/if}}
+  </span>
+
+  {{t 'ui.sidebar.unread'}}
+
+  <span class='icon'>
+    {{#if (eq @direction 'down')}}
+      <FaIcon @icon='angle-down' />
+    {{else}}
+      <FaIcon @icon='angle-up' />
+    {{/if}}
+  </span>
+</button>

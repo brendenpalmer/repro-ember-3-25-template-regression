@@ -1,0 +1,315 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div id="top" class="top landing-page">
+  <TopBar @landingPage={{true}} />
+</div>
+<FlashDisplay />
+<div id="landing" class="landing">
+  <div class="row hero z-1">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns" id="hero-copy">
+        <h1>
+          Test and Deploy with Confidence
+        </h1>
+        <p>
+          Easily sync your projects with Travis CI
+          <br class="mobile-break" />
+          and you’ll be testing your code in minutes!
+        </p>
+        {{#if this.auth.signedOut}}
+          {{#if this.multiVcs.disabled}}
+            <button class="hero-button org" {{action "signIn" "github"}}>
+              <SvgImage @name="sign-in-mascot" />
+              <span class="label-align">
+                Sign Up
+              </span>
+            </button>
+          {{/if}}
+
+          {{#if this.multiVcs.enabled}}
+            <div>
+              {{#if this.multiVcs.enableGithubLogin}}
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'github')}}>
+                  <SvgImage @name="icon-repooctocat" />
+                  <span class="label-align">
+                    Sign up with Github
+                  </span>
+                </button>
+              {{/if}}
+              {{#if this.multiVcs.enableAssemblaLogin}}
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'assembla')}}>
+                  <SvgImage @name="icon-assembla" />
+                  <span class="label-align">
+                    Sign up with Assembla
+                  </span>
+                </button>
+              {{/if}}
+              {{#if this.multiVcs.enableBitbucketLogin}}
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'bitbucket')}}>
+                  <SvgImage @name="icon-bitbucket" />
+                  <span class="label-align">
+                    Sign up with Bitbucket
+                  </span>
+                </button>
+              {{/if}}
+              {{#if this.multiVcs.enableGitlabLogin}}
+                <button class="hero-button org multi-vcs" {{on 'click' (action this.signIn 'gitlab')}}>
+                  <SvgImage @name="icon-bitbucket" />
+                  <span class="label-align">
+                    Sign up with Gitlab
+                  </span>
+                </button>
+              {{/if}}
+            </div>
+          {{/if}}
+        {{/if}}
+        {{#if this.auth.signingIn}}
+          <button class="hero-button org">
+            <span class="loading-indicator--white">
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+            <span class="label-align">
+              Signing In
+            </span>
+          </button>
+        {{/if}}
+      </div>
+      <div class="large-12 columns laptop-wrapper">
+        <div id="laptop">
+          <img src="../images/landing-page/laptop.png" alt="Travis CI screenshot" />
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="row oss-testing">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns">
+        <h2>
+          The home of
+          <br class="mobile-break" />
+          open source testing
+        </h2>
+        <p>
+          Over 900k open source projects
+          <br class="mobile-break" />
+          and 600k users are testing on Travis CI.
+        </p>
+        <OssUsageNumbers @numbers={{932977}} />
+      </div>
+    </section>
+  </div>
+  <div class="row customers">
+    <section class="section-companies section--white section--center">
+      <div class="inner">
+        <h3 class="customers-header">
+          Travis CI is trusted by great companies
+        </h3>
+        <ul class="list--customers">
+          <li>
+            <ExternalLinkTo
+              @href="https://www.zendesk.com/"
+              @title="Zendesk"
+              class="customer"
+            >
+              <img src="../images/svg/zendesk.svg" class="customer-zendesk" />
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href="https://www.engineyard.com/"
+              @title="Engine Yard"
+              class="customer"
+            >
+              <img src="../images/svg/engineyard.svg" class="customer-engineyard" />
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href="http://www.heroku.com/"
+              @title="Heroku"
+              class="customer"
+            >
+              <img src="../images/svg/customer-logos-heroku.svg" class="customer-heroku" />
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href="http://www.bittorrent.com/"
+              @title="BitTorrent"
+              class="customer"
+            >
+              <img src="../images/svg/customer-logos-bittorrent.svg" class="customer-bittorrent" />
+            </ExternalLinkTo>
+          </li>
+          <li>
+            <ExternalLinkTo
+              @href="https://moz.com/"
+              @title="moz"
+              class="customer"
+            >
+              <img src="../images/svg/moz.svg" alt class="customer-moz" />
+            </ExternalLinkTo>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <div class="row free-for-oss">
+    <section class="landing-centered-wrapper">
+      <div class="large-12 columns">
+        <h2>
+          Testing your open source<br class="mobile-no-break" />
+          projects will always be free!
+        </h2>
+        <p>
+          <em>Seriously. Always.</em>
+          We like to think of it as our way of giving<br class="mobile-no-break" />
+          back to a community that connects so many people.
+        </p>
+      </div>
+    </section>
+  </div>
+  <div class="spacer"></div>
+  <section class="section--feature section--white">
+    <h2 class="h2--green" style="text-align:center">
+      Features to help you get the job done
+    </h2>
+    <div class="section-feature-container">
+      <div class="section-list">
+        <ul class="list--features">
+          <li>
+            <div class="feature-image-container">
+              <img src="../images/landing-page/Gh.svg" alt="" />
+            </div>
+            <h3 class="h3">
+              Get set up in seconds
+            </h3>
+            <p class="text-small">
+              Login with GitHub, tell Travis CI to test a project, and then push to GitHub. Could it be any simpler!
+            </p>
+          </li>
+          <li>
+            <div class="feature-image-container">
+              <img src="../images/landing-page/platform.svg" alt="" />
+            </div>
+            <h3 class="h3">
+              Supports your platform
+            </h3>
+            <p class="text-small">
+              Many databases and services are pre-installed and can be enabled in your build configuration.
+            </p>
+          </li>
+          <li>
+            <div class="feature-image-container">
+              <img src="../images/landing-page/PR.svg" alt="" />
+            </div>
+            <h3 class="h3">
+              Test your pull requests
+            </h3>
+            <p class="text-small">
+              Make sure every Pull Request to your project is tested before it's merged.
+            </p>
+          </li>
+          <li>
+            <div class="feature-image-container">
+              <img src="../images/landing-page/heroku.svg" alt="" />
+            </div>
+            <h3 class="h3">
+              Deploy anywhere
+            </h3>
+            <p class="text-small">
+              Updating staging or production as soon as your tests pass has never been easier!
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="list-check-container">
+        <ul class="list-check">
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Quick setup
+          </li>
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Live build views
+          </li>
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Pull request support
+          </li>
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Pre-installed database services
+          </li>
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Auto deployments on passing builds
+          </li>
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Clean VMs for every build
+          </li>
+          <li>
+            <img src="../images/svg/stage-passed.svg" alt="" class="checkmark" /> Mac, Linux, and iOS support
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <div class="row build-flows">
+    <section class="section-branch-pr section--grey landing-centered-wrapper">
+      <h2 class="build-flow-header">
+        Branch build flow
+      </h2>
+      <div class="branch-pr-container">
+        <div class="build-flow-image"></div>
+        <div class="build-steps-container">
+          <p class="build-step-1 build-steps">
+            You push your<br />
+            code to GitHub
+          </p>
+          <p class="build-step-2 build-steps">
+            GitHub triggers<br />
+            Travis CI to build
+          </p>
+          <p class="build-step-3 build-steps">
+            Hooray!<br />
+            Your build passes!
+          </p>
+          <p class="build-step-4 build-steps">
+            Travis CI deploys<br />
+            to Heroku
+          </p>
+          <p class="build-step-5 build-steps">
+            Travis CI tells your<br />
+            team all is well
+          </p>
+        </div>
+      </div>
+      <h2 class="build-flow-header">
+        Pull request build flow
+      </h2>
+      <div class="branch-pr-container">
+        <div class="build-pr-image"></div>
+        <div class="build-steps-container">
+          <p class="build-step-6 build-steps">
+            A pull request<br />
+            is created
+          </p>
+          <p class="build-step-7 build-steps">
+            GitHub tells Travis CI<br />
+            the build is mergeable
+          </p>
+          <p class="build-step-8 build-steps">
+            Hooray!<br />
+            Your build passes!
+          </p>
+          <p class="build-step-9 build-steps">
+            Travis CI updates<br />
+            the PR that it passed
+          </p>
+          <p class="build-step-10 build-steps">
+            You merge in<br />
+            the PR goodness
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

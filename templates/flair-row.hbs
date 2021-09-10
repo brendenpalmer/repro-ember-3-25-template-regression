@@ -1,0 +1,11 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+{{#if item.url}}
+  {{avatar-flair
+    flairName=item.name
+    flairUrl=item.url
+    flairBgColor=item.bgColor
+    flairColor=item.color
+  }}
+{{/if}}
+
+<span>{{label}}</span>

@@ -1,0 +1,14 @@
+{{! Template from `skylines` with MIT license }}
+<PowerSelect
+  @options={{pilots}}
+  @disabled={{@disabled}}
+  @selected={{pilot}}
+  @onChange={{action "onChange"}}
+  @searchField="name"
+as |pilot|>
+  {{#if (eq pilot.id null)}}
+    [{{t "unknown-or-other-person"}}]
+  {{else}}
+    {{pilot.name}}
+  {{/if}}
+</PowerSelect>

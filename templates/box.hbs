@@ -1,0 +1,8 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#let (element this.tag) as |Tag|~}}
+  <Tag
+    class={{this.allClasses}}
+    ...attributes
+  >{{yield}}</Tag>
+{{~/let}}

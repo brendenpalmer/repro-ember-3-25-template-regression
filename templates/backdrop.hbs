@@ -1,0 +1,12 @@
+{{! Template from `@emberclear/ui` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear }}
+<div
+  ...attributes
+  role='button'
+  class='
+   full-overlay
+   {{if @isInvisible 'invisible'}}
+   {{if @isActive 'active'}}
+  '
+  {{on 'click' @onClick}}
+/>

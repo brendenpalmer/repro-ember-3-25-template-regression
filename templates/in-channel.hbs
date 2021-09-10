@@ -1,0 +1,8 @@
+{{! Template from `emberclear` with GPL-3.0 license }}
+{{! Repo URL: https://github.com/NullVoxPopuli/emberclear.git }}
+<Pod::Chat::ChatHistory
+  class='flex-grow flex-column'
+  @messages={{this.messages}}
+  @to={{this.model.targetChannel}}/>
+
+<Pod::Chat::ChatEntry class='p-l-md p-r-md' @to={{this.model.targetChannel}} />

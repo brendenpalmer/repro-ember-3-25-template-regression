@@ -1,0 +1,188 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<aside class="profile-aside">
+  <section>
+    <h2>
+      My Account
+    </h2>
+    <ul class="profile-user">
+      <li>
+        <OrgItem @account={{this.user}} />
+      </li>
+    </ul>
+    <SyncButton @isOrganization={{this.isOrganization}}/>
+  </section>
+  {{#if this.showMigrationBetaBanner}}
+    <section class="migrate-beta" data-test-sidebar-migrate>
+      <h2>
+        A single place for all your builds
+      </h2>
+      <p>
+        You can now have all your public and private repositories together at travis-ci.com
+      </p>
+      <button
+        class="button--blue"
+        onclick={{action (mut this.isShowingMigrateBetaDialog) true}}
+        data-test-migrate-signup="true"
+      >
+        {{#if this.user.isMigrationBetaRequested}}
+          Add {{vcs-vocab this.model.vcsType 'organization' plural=true}} to the beta
+        {{else}}
+          Sign up for the beta
+        {{/if}}
+      </button>
+    </section>
+  {{/if}}
+  <section class="profile-orgs">
+    <h2>
+      {{vcs-vocab this.model.vcsType 'organization' plural=true}}
+    </h2>
+    <ul class="profile-orgs-list">
+      {{#each this.organizations as |organization|}}
+        <li>
+          <OrgItem @account={{organization}} />
+        </li>
+      {{else}}
+        <li class="profile-text">
+          You are not currently a member of<br />
+          any {{vcs-vocab this.model.vcsType 'organization' lower=true}}.
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+  {{#if (and this.accessSettingsUrl (not this.user.isAssembla))}}
+    <section class="profile-additional no-divider">
+      <h2>
+        Missing {{indefinite-article (vcs-vocab this.model.vcsType 'organization')}} {{vcs-vocab this.model.vcsType 'organization'}}?
+      </h2>
+      <ExternalLinkTo
+        @href={{this.accessSettingsUrl}}
+        @title="{{vcs-vocab this.model.vcsType 'organization' plural=true lower=false}} Access Settings on {{vcs-name this.user.vcsType}}"
+      >
+        Review and add</ExternalLinkTo>
+      your authorized {{vcs-vocab this.model.vcsType 'organization' plural=true lower=true}}.
+    </section>
+  {{/if}}
+</aside>
+<article class="profile-main">
+  {{#unless this.model.error}}
+    <header class="profile-header">
+      <div class="left">
+        <UserAvatar
+          @account={{this.model}}
+          @url={{this.model.avatarUrl}}
+          @name={{this.model.name}}
+          @size={{96}}
+          @showSubscriptionStatus={{true}}
+        />
+        <div class="account-details">
+          <h1 class="h2--grey">
+            {{this.accountName}}
+          </h1>
+          <div class="addenda">
+            <span class="login">
+              @{{this.model.login}}
+            </span>
+            {{#if this.model.education}}
+              <span class="badge square grey">
+                Education
+              </span>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </header>
+    {{#if this.showSubscriptionStatusBanner}}
+      <SubscriptionStatusBanner
+        @color="yellow"
+        @message="There was an error determining your subscription status."
+        @billingLinkText="Visit billing"
+        @billingUrl={{this.billingUrl}}
+        @showLink={{this.model.subscriptionPermissions.create}}
+      />
+    {{/if}}
+    <nav class="travistab-nav">
+      <ul>
+        {{#if this.model.isUser}}
+          <li>
+            <LinkTo @route="account.repositories">
+              Repositories
+            </LinkTo>
+          </li>
+          <li data-test-settings-tab>
+            <LinkTo @route="account.settings">
+              Settings
+            </LinkTo>
+          </li>
+          {{#if this.showSubscriptionTab}}
+            <li data-test-billing-tab>
+              <LinkTo @route="account.billing">
+                Plan
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showMigrateTab}}
+            <li data-test-migrate-tab>
+              <LinkTo @route="account.migrate">
+                Migrate
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showPlanUsageTab}}
+            <li data-test-plan-usage-tab>
+              <LinkTo @route="account.plan_usage">
+                Plan usage
+              </LinkTo>
+            </li>
+          {{/if}}
+        {{/if}}
+        {{#if this.model.isOrganization}}
+          <li>
+            <LinkTo @route="organization.repositories" @model={{this.model}}>
+              Repositories
+            </LinkTo>
+          </li>
+          {{#if this.showOrganizationSettings}}
+            <li data-test-org-settings-tab>
+              <LinkTo @route="organization.settings" @model={{this.model}}>
+                Settings
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showSubscriptionTab}}
+            <li data-test-billing-tab>
+              <LinkTo @route="organization.billing" @model={{this.model}}>
+                Plan
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showMigrateTab}}
+            <li>
+              <LinkTo @route="organization.migrate" @model={{this.model}}>
+                Migrate
+              </LinkTo>
+            </li>
+          {{/if}}
+          {{#if this.showPlanUsageTab}}
+            <li data-test-plan-usage-tab>
+              <LinkTo @route="organization.plan_usage" @model={{this.model}}>
+                Plan usage
+              </LinkTo>
+            </li>
+          {{/if}}
+        {{/if}}
+      </ul>
+    </nav>
+    {{yield}}
+  {{else}}
+    <NoAccount
+      @name={{this.model.login}}
+      @vcsType={{this.model.vcsType}}
+    />
+  {{/unless}}
+</article>
+
+<Dialogs::MigrateBeta
+  @isOpen={{this.isShowingMigrateBetaDialog}}
+  @onClose={{fn (mut this.isShowingMigrateBetaDialog) false}}
+/>

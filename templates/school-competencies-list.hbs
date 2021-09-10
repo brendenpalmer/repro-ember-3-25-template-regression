@@ -1,0 +1,26 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="school-competencies-list"
+  data-test-school-competencies-list
+  ...attributes
+>
+  <div class="grid-row headers">
+    <div class="grid-item">{{t "general.competency"}}</div>
+    <div class="grid-item">{{t "general.aamcPcrs"}}</div>
+  </div>
+  {{#each (sort-by "title" @domains) as |domain|}}
+    <SchoolCompetenciesListItem
+      @competency={{domain}}
+      @isDomain={{true}}
+      @canUpdate={{@canUpdate}}
+    />
+    {{#each (sort-by "title" (await domain.children)) as |competency|}}
+      <SchoolCompetenciesListItem
+        @competency={{competency}}
+        @isDomain={{false}}
+        @canUpdate={{@canUpdate}}
+      />
+    {{/each}}
+  {{/each}}
+</div>

@@ -1,0 +1,15 @@
+{{! Template from `discourse` with GPL-2.0-only license }}
+{{! Repo URL: git@github.com:discourse/discourse.git }}
+{{#styleguide-example title="header-icons"}}
+  {{mount-widget widget="header-icons"}}
+{{/styleguide-example}}
+
+{{#styleguide-example title="header-icons - user"}}
+  {{mount-widget widget="header-icons" args=(hash user=dummy.user)}}
+{{/styleguide-example}}
+
+{{#styleguide-example title="header-icons - notifications"}}
+  {{mount-widget
+    widget="header-icons"
+    args=(hash user=dummy.userWithUnread flagCount=5)}}
+{{/styleguide-example}}

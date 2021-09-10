@@ -1,0 +1,17 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<LoadMore
+  @dynamicQuery={{this.buildsLoader}}
+  @liveItems={{this.builds}}
+  as |loader|
+>
+  {{#if loader.isNoneFound}}
+    <MissingNotice @title={{@missingNotice}} />
+  {{else}}
+    <ul class="build-list">
+      {{#each loader.items as |build|}}
+        <BuildsItem @build={{build}} @vcsType={{@repo.vcsType}} />
+      {{/each}}
+    </ul>
+  {{/if}}
+</LoadMore>

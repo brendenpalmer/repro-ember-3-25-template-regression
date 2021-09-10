@@ -1,0 +1,36 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div data-test-curriculum-inventory-sequence-block-details ...attributes>
+  <CurriculumInventory::SequenceBlockHeader
+    @canUpdate={{@canUpdate}}
+    @sequenceBlock={{@sequenceBlock}}
+  />
+  {{#if (is-fulfilled @sequenceBlock.allParents)}}
+    <div class="breadcrumbs">
+      <span>
+        <LinkTo
+          @route="curriculumInventoryReport"
+          @model={{@sequenceBlock.report}}
+        >
+          {{t "general.curriculumInventoryReport"}}
+        </LinkTo>
+      </span>
+      {{#each (reverse (await @sequenceBlock.allParents)) as |parent|}}
+        <span>
+          <LinkTo @route="curriculumInventorySequenceBlock" @model={{parent}}>
+            {{parent.title}}
+          </LinkTo>
+        </span>
+      {{/each}}
+      <span>
+        {{@sequenceBlock.title}}
+      </span>
+    </div>
+  {{/if}}
+  <CurriculumInventory::SequenceBlockOverview
+    @sequenceBlock={{@sequenceBlock}}
+    @canUpdate={{@canUpdate}}
+    @sortBy={{@sortSessionsBy}}
+    @setSortBy={{@setSortSessionBy}}
+  />
+</div>

@@ -1,0 +1,40 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="{{unless @isIcon "not-icon"}}
+  visualizer-program-year-competencies"
+  {{did-insert (perform this.load) @programYear}}
+  {{did-update (perform this.load) @programYear}}
+  ...attributes
+>
+  {{#if this.load.lastSuccessful}}
+    {{#if (or @isIcon this.data)}}
+      <SimpleChart
+        @name="tree"
+        @isIcon={{@isIcon}}
+        @data={{this.data}}
+        @hover={{perform this.nodeHover}}
+        @leave={{perform this.nodeHover}} as |chart|
+      >
+        {{#if this.tooltipTitle}}
+          <chart.tooltip @title={{this.tooltipTitle}}>
+            <div>
+              <h5>
+                {{t "general.courses"}}
+                ({{this.tooltipCourses.length}})
+              </h5>
+              {{truncate (join ", " this.tooltipCourses) 200 true}}
+            </div>
+            <div>
+              <h5>
+                {{t "general.sessions"}}
+                ({{this.tooltipSessions.length}})
+              </h5>
+              {{truncate (join ", " this.tooltipSessions) 200 true}}
+            </div>
+          </chart.tooltip>
+        {{/if}}
+      </SimpleChart>
+    {{/if}}
+  {{/if}}
+</div>

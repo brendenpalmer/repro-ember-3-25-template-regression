@@ -1,0 +1,17 @@
+{{! Template from `discourse` with GPL-2.0-only license }}
+{{! Repo URL: git@github.com:discourse/discourse.git }}
+<section class="styleguide">
+  <section class="styleguide-menu">
+    {{#each categories as |c|}}
+      <ul>
+        <li class="styleguide-heading">{{i18n (concat "styleguide.categories." c.id)}}</li>
+        {{#each c.sections as |s|}}
+          <li>{{styleguide-link section=s}}</li>
+        {{/each}}
+      </ul>
+    {{/each}}
+  </section>
+  <section class="styleguide-contents">
+    {{outlet}}
+  </section>
+</section>

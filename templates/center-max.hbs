@@ -1,0 +1,11 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="wrapper centered">
+  <TopBar />
+  <FlashDisplay />
+  <div id="main" class="main main-max" role="main">
+    <div class="inner-max">
+      {{yield}}
+    </div>
+  </div>
+</div>

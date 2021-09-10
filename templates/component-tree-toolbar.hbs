@@ -1,0 +1,38 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="toolbar">
+  <button
+    class="{{if @isInspecting "active"}} toolbar__icon-button"
+    {{on "click" @toggleInspect}}
+    type="button"
+  >
+    {{svg-jar "inspect" width="16px" height="17px"}}
+  </button>
+
+  <Ui::ToolbarDivider />
+
+  <button
+    class="toolbar__icon-button"
+    title="expand all"
+    {{on "click" @expandAll}}
+    type="button"
+  >
+    {{svg-jar "chevron-down" width="16px" height="16px"}}
+  </button>
+
+  <button
+    class="toolbar__icon-button"
+    title="collapse all"
+    {{on "click" @collapseAll}}
+    type="button"
+  >
+    {{svg-jar "chevron-right" width="16px" height="16px"}}
+  </button>
+
+  <Ui::ToolbarDivider />
+
+  <Ui::ToolbarSearchField
+    @value={{@query}}
+    data-test-filter-views
+  />
+</div>

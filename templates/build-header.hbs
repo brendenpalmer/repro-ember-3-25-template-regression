@@ -1,0 +1,250 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="build-header-container">
+  <div class="build-commit">
+    <h2 class="build-title {{this.item.state}}">
+      <StatusIcon @status={{this.item.state}} />
+      {{#if this.item.isPullRequest}}
+        <small class="commit-branch" title={{this.item.pullRequestTitle}}>
+          {{vcs-vocab this.item.repo.vcsType 'pullRequest'}} #{{this.item.pullRequestNumber}}
+        </small>
+        {{#if this.build.request.isDraft}}
+          <span data-test-build-header-draft-badge class="message-label badge">
+            draft
+          </span>
+        {{/if}}
+        {{this.item.pullRequestTitle}}
+      {{else}}
+        {{#if this.item.isTag}}
+          <small class="commit-branch" title={{this.item.tag.name}}>
+            {{this.item.tag.name}}
+          </small>
+        {{else}}
+          <small class="commit-branch" title={{this.item.branch.name}}>
+            {{this.item.branch.name}}
+          </small>
+        {{/if}}
+        {{format-message this.commit.subject repo=this.item.repo eventType=this.build.eventType maxLength=60}}
+      {{/if}}
+    </h2>
+    <div class="commit-info">
+      {{#if this.commit.body}}
+        <p class="commit-description {{this.commitBodyClass}}" title="{{this.commit.body}}">
+          <span class="monospace">
+            {{format-message this.commit.body repo=this.item.repo pre=true}}
+          </span>
+        </p>
+      {{/if}}
+      <ul class="list-icon">
+        <li>
+          <ExternalLinkTo @href={{this.commitUrl}}>
+            <EmberTooltip @text="{{concat "View commit on " (vcs-name this.item.repo.vcsType)}}" />
+            <SvgImage @name="icon-commit" @class="icon" />
+            <span class="label-align inner-underline commit-commit">
+              Commit
+              <span class="label-align-item monospace">
+                {{format-sha this.commit.sha}}
+              </span>
+            </span>
+            <SvgImage @name="icon-external-link" @class="icon" />
+          </ExternalLinkTo>
+        </li>
+        {{#if this.displayCompare}}
+          <li>
+            {{#if this.item.isPullRequest}}
+              <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
+                <EmberTooltip @text="View {{vcs-vocab this.item.repo.vcsType 'pullRequest'}} on {{vcs-name this.item.repo.vcsType}}" />
+                <SvgImage @name="icon-compare" @class="icon" />
+                <span class="label-align inner-underline commit-compare">
+                  #{{this.item.pullRequestNumber}}: {{this.item.pullRequestTitle}}
+                </span>
+                <SvgImage @name="icon-external-link" @class="icon" />
+              </ExternalLinkTo>
+            {{else if this.item.commit.compareUrl}}
+              <ExternalLinkTo @href={{this.item.commit.compareUrl}}>
+                <EmberTooltip @text="{{concat "View diff on " (vcs-name this.item.repo.vcsType)}}" />
+                <SvgImage @name="icon-compare" @class="icon" />
+                <span class="label-align inner-underline commit-compare">
+                  Compare
+                  <span class="label-align-item monospace">
+                    {{short-compare-shas this.item.commit.compareUrl}}
+                  </span>
+                </span>
+                <SvgImage @name="icon-external-link" @class="icon" />
+              </ExternalLinkTo>
+            {{/if}}
+          </li>
+        {{/if}}
+        <li>
+          {{#if this.item.isTag}}
+            <ExternalLinkTo @href={{this.tagUrl}} class="commit-branch-url">
+              <EmberTooltip @text="{{concat "View tag on " (vcs-name this.item.repo.vcsType)}}" />
+              <SvgImage @name="icon-tag" @class="icon" />
+              <span class="label-align inner-underline">
+                Tag {{this.build.tag.name}}
+              </span>
+              <SvgImage @name="icon-external-link" @class="icon" />
+            </ExternalLinkTo>
+          {{else if this.build.branchName}}
+            <ExternalLinkTo @href={{this.branchUrl}} class="commit-branch-url">
+              <EmberTooltip @text="{{concat "View branch on " (vcs-name this.item.repo.vcsType)}}" />
+              <SvgImage @name="icon-branch" @class="icon" />
+              <span class="label-align inner-underline">
+                Branch
+                <span class="label-align-item monospace">
+                  {{this.build.branchName}}
+                </span>
+              </span>
+              <SvgImage @name="icon-external-link" @class="icon" />
+            </ExternalLinkTo>
+          {{/if}}
+        </li>
+      </ul>
+      <p class="commit-author">
+        <CreatedBy
+          @user={{this.build.createdBy}}
+          @commit={{this.commit}}
+          @eventType={{this.build.eventType}}
+        />
+      </p>
+    </div>
+  </div>
+  <div class="build-info">
+    <h3 class="build-status {{this.item.state}}">
+      {{#if this.isJob}}
+        <LinkTo @route="job" @models={{array this.repo this.item}}>
+          {{#if this.item.isTag}}
+            <SvgImage @name="icon-tag" @class="{{this.item.state}} icon" />
+          {{else}}
+            <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
+          {{/if}}
+          <span data-test-build-header-build-state class="inner-underline">
+            #{{this.item.jobNumber}} {{humanize-state this.item.state}}
+          </span>
+        </LinkTo>
+      {{else}}
+        <LinkTo @route="build" @models={{array this.repo this.item}}>
+          {{#if this.item.isTag}}
+            <SvgImage @name="icon-tag" @class="{{this.item.state}} icon" />
+          {{else}}
+            <RequestIcon @event={{this.item.eventType}} @state={{item.state}} />
+          {{/if}}
+          <span data-test-build-header-build-state class="inner-underline">
+            #{{this.item.number}} {{humanize-state this.buildState}}
+          </span>
+        </LinkTo>
+      {{/if}}
+    </h3>
+    <ul class="list-icon">
+      {{#if this.isJob}}
+        <li class="commit-stopwatch">
+          <SvgImage @name="icon-stopwatch" @class="icon--m" />
+          <span class="label-align">
+            {{#if this.item.toBeQueued}}
+              Waiting to be queued
+            {{else if this.item.toBeStarted}}
+              Waiting to start
+            {{else}}
+              {{if this.item.isFinished "Ran for" "Running for"}}
+              <time datetime="PT{{this.item.elapsedTime}}S">
+                {{format-duration this.item.elapsedTime}}
+              </time>
+            {{/if}}
+          </span>
+        </li>
+      {{else}}
+        <li title="{{if this.item.elapsedTime (concat "Started " (pretty-date this.item.startedAt))}}" class="commit-stopwatch">
+          <SvgImage @name="icon-stopwatch" @class="icon--m" />
+          <span class="label-align">
+            {{if this.item.isFinished "Ran for" "Running for"}}
+            <time datetime="PT{{this.item.elapsedTime}}S">
+              {{format-duration this.item.elapsedTime}}
+            </time>
+          </span>
+        </li>
+      {{/if}}
+      {{#if this.item.isFinished}}
+        {{#if this.item.isMatrix}}
+          <li class="commit-clock">
+            <SvgImage @name="icon-clock" @class="icon" />
+            <span class="label-align">
+              Total time
+              <time datetime="PT{{this.item.duration}}S">
+                {{format-duration this.item.duration}}
+              </time>
+            </span>
+          </li>
+        {{/if}}
+        <li title="Finished {{pretty-date this.item.finishedAt}}" class="commit-calendar">
+          <SvgImage @name="icon-calendar" @class="icon" />
+          <time class="label-align" datetime={{pretty-date this.item.finishedAt}}>
+            {{format-time this.item.finishedAt}}
+          </time>
+        </li>
+        {{#if this.item.repo.shared}}
+          <SvgImage @name="icon-shared" @alt="Shared repository" @class="icon shared" /> Shared repository
+        {{/if}}
+      {{/if}}
+      {{#if this.build.priority}}
+        <SvgImage @name="icon-prioritize" @class="icon" />
+        <span class="build-prioritize">Prioritized build</span>
+      {{/if}}
+    </ul>
+  </div>
+  <div class="build-tools align-action-btn">
+    {{#if this.isJob}}
+      <RepoActions @job={{this.item}} @repo={{this.item.repo}} />
+    {{else}}
+      <RepoActions @build={{this.item}} @repo={{this.item.repo}} />
+    {{/if}}
+  </div>
+</div>
+{{#if this.isNotMatrix}}
+  <div class="job-matrix-name-separator"></div>
+  <div class="job-container">
+    <div class="job-detail-container">
+      <div class="detail-job-os {{this.os}}">
+        <EmberTooltip @text='{{this.os}} {{this.osVersion}}' />
+        <SvgImage @name={{osIcon}} @class="icon" />
+      </div>
+      {{#if this.name}}
+        <div class="detail-job-name">
+          <SvgImage @name="job-name-icon" @class="icon" />
+          <span class="label-align" aria-label="Title">
+            {{this.name}}
+          </span>
+        </div>
+      {{/if}}
+
+      <div class="detail-job-arch">
+        <SvgImage @name="icon-arch" @class="icon" />
+        <span class="label-align" aria-label="CPU Architecture">
+          {{this.arch}}
+        </span>
+      </div>
+
+      <div class="detail-job-lang">
+        <SvgImage @name="icon-language" @class="icon" />
+        <span class="label-align" aria-label="Language">
+          {{#if this.languages}}
+            {{this.languages}}
+          {{else}}
+            no language set
+          {{/if}}
+        </span>
+      </div>
+    </div>
+    {{#if this.environment}}
+      <div class="detail-job-env {{if this.envExpanded 'expandEnv' 'closeEnv'}}"
+        {{on 'click' (action 'toggleEnv')}}
+        {{on 'mouseenter' (action 'expandEnv')}}
+        {{on 'mouseleave' (action 'closeEnv')}}
+      >
+        <SvgImage @name="icon-environment" @class="icon" />
+        <span class="label-align" aria-label="Environment variables">
+          {{this.environment}}
+        </span>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

@@ -1,0 +1,12 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="toolbar">
+  <Ui::ToolbarReloadButton
+    @action={{@reload}}
+    data-test-reload-container-btn
+  />
+
+  <Ui::ToolbarDivider />
+
+  <Ui::SendToConsole @action={{@sendContainerToConsole}} />
+</div>

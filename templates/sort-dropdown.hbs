@@ -1,0 +1,12 @@
+{{! Template from `cargo` with (MIT OR Apache-2.0) license }}
+{{! Repo URL: git+https://github.com/rust-lang/crates.io.git }}
+<Dropdown as |dd|>
+  <dd.Trigger local-class="trigger" data-test-current-order>
+    {{svg-jar "sort" local-class="icon"}}
+    {{@current}}
+  </dd.Trigger>
+
+  <dd.Menu as |menu|>
+    {{yield (hash Option=(component "sort-dropdown/option" menu=menu))}}
+  </dd.Menu>
+</Dropdown>

@@ -1,0 +1,5 @@
+{{! Template from `discourse` with MIT license }}
+{{#d-modal-body}}
+  <p>{{html-safe (i18n "topics.bulk.selected" count=model.topics.length)}}</p>
+  {{outlet "bulkOutlet"}}
+{{/d-modal-body}}

@@ -1,0 +1,25 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+<div class="toolbar">
+  <Ui::ToolbarClearButton @action={{@clear}} />
+
+  <Ui::ToolbarDivider />
+
+  <div class="toolbar__checkbox">
+    <label title="Deprecation workflow">
+      <Input
+        @type="checkbox"
+        @checked={{@toggleDeprecationWorkflow}}
+        {{on "change" @changeDeprecationWorkflow}}
+      />
+      Toggle for Deprecation Workflow
+    </label>
+  </div>
+
+  <Ui::ToolbarDivider />
+
+  <Ui::ToolbarSearchField
+    @value={{@searchValue}}
+    data-test-deprecations-search
+  />
+</div>

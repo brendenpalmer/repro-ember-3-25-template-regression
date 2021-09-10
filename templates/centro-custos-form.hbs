@@ -1,0 +1,15 @@
+{{! Template from `lisweb-frontend` with MIT license }}
+{{! Repo URL: https://github.com/hotsoft/lisweb_frontend/ }}
+{{#let (changeset this.myFormModel this.myValidations) as |changesetObject|}}
+  <ChangesetForm @changeset={{changesetObject}} as |Form changeset|>
+    <Form.Input @fieldName="name.first" @label="First Name" />
+    <Form.Input @fieldName="name.last" @label="Last Name" />
+    <Form.Input @fieldName="email" @label="Email" />
+    <Form.Input @fieldName="hometown" @label="Home Town" />
+    <Form.Select @fieldName="preferences" @label="Preferences" />
+
+    <button type="submit">
+      Submit
+    </button>
+  </ChangesetForm>
+{{/let}}

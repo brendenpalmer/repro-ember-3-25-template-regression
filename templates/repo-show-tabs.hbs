@@ -1,0 +1,74 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<ul>
+  <li data-test-current-tab-container id="tab_current" class={{this.classCurrent}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="repo" @models={{array this.repo}} @current-when="repo.index">
+        Current
+      </LinkTo>
+    {{/if}}
+  </li>
+  <li id="tab_branches" class={{this.classBranches}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="branches" @model={{this.repo}}>
+        Branches
+      </LinkTo>
+    {{/if}}
+  </li>
+  <li id="tab_builds" class={{this.classBuilds}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="builds" @model={{this.repo}}>
+        Build History
+      </LinkTo>
+    {{/if}}
+  </li>
+  <li id="tab_pull_requests" class={{this.classPullRequests}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="pullRequests" @model={{this.repo}}>
+        {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true}}
+      </LinkTo>
+    {{/if}}
+  </li>
+  <li id="tab_build" class={{this.classBuild}}>
+    {{#if this.build.id}}
+      {{#if this.repo.slug}}
+        <SvgImage @name="icon-arrowtabs" @class="tab-arrow" />
+        <LinkTo @route="build" @models={{array this.repo this.build}}>
+          Build #{{this.build.number}}
+        </LinkTo>
+      {{/if}}
+    {{/if}}
+  </li>
+  <li id="tab_job" class={{this.classJob}}>
+    {{#if this.job.id}}
+      {{#if this.repo.slug}}
+        <LinkTo @route="job" @models={{array this.repo this.job}}>
+          Job #{{this.job.jobNumber}}
+        </LinkTo>
+      {{/if}}
+    {{/if}}
+  </li>
+  <li id="tab_settings" class={{this.classSettings}}>
+    {{#if this.repo.slug}}
+      <LinkTo @route="settings" @model={{this.repo}}>
+        Settings
+      </LinkTo>
+    {{/if}}
+  </li>
+  <li id="tab_requests" class="{{this.classRequests}}">
+    {{#if this.repo.slug}}
+      <LinkTo @route="requests" @model={{this.repo}}>
+        Requests
+      </LinkTo>
+    {{/if}}
+  </li>
+  {{#if this.config.endpoints.caches}}
+    <li id="tab_caches" class={{this.classCaches}}>
+      {{#if this.repo.slug}}
+        <LinkTo @route="caches" @model={{this.repo}}>
+          Caches
+        </LinkTo>
+      {{/if}}
+    </li>
+  {{/if}}
+</ul>

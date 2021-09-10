@@ -1,0 +1,61 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<div class="row-item">
+  <StatusIcon @status={{this.requestClass}} />
+</div>
+<div class="row-item fade-out">
+  <RequestIcon @event={{this.request.event_type}} @state={{this.requestClass}} />
+  <span class="label-align m-l-s" data-requests-item-related-model>
+    {{#if this.request.isPullRequest}}
+      <strong>
+        #{{this.build.pullRequestNumber}}
+      </strong>
+    {{/if}}
+    {{#if this.request.branchName}}
+      <strong>
+        {{this.request.branchName}}
+      </strong>
+    {{/if}}
+    {{#if this.request.commit}}
+      {{commit-link this.request.repo.vcsType this.request.repo.slug this.request.commit.sha}}
+    {{else}}
+      <em data-requests-item-commit-missing>
+        No commit available
+      </em>
+    {{/if}}
+  </span>
+</div>
+<div
+  class="row-item fade-out"
+  title="{{pretty-date this.request.created_at}}"
+  data-requests-item-created-at
+>
+  <SvgImage @name="icon-calendar" @class="icon" />
+  <span class="label-align">
+    {{format-time this.request.created_at}}
+  </span>
+</div>
+<div class="row-item fade-out" data-requests-item-commit-message>
+  {{{format-message this.request.commit.message short="true" repo=this.build.repo}}}
+</div>
+<div class="row-item" data-requests-item-build>
+  {{#if this.build}}
+    <SvgImage @name="icon-hash" @class="icon" />
+    <LinkTo
+      @route="build"
+      @model={{this.build}}
+      @title="Go to the build this request triggered"
+    >
+      <span class="label-align inner-underline">
+        {{this.build.number}}
+      </span>
+    </LinkTo>
+  {{else}}
+    -
+  {{/if}}
+</div>
+<div class="row-item fade-out" data-requests-item-message>
+  <span class="label-align" title="{{this.message}}">
+    {{this.message}}
+  </span>
+</div>

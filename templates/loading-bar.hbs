@@ -1,0 +1,13 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  aria-hidden="true"
+  class="loading-bar"
+  data-test-loading-bar
+  {{did-insert (perform this.incrementProgress)}}
+  {{did-update (perform this.incrementProgress) @isLoading}}
+  ...attributes
+>
+  {{! template-lint-disable no-inline-styles }}
+  <span class="bar" data-test-bar data-value={{this.progress}} style={{this.barWidth}}></span>
+</div>

@@ -1,0 +1,10 @@
+{{! Template from `select-kit` with GPL-2.0-only license }}
+<div class="select-kit-header-wrapper">
+  {{#each icons as |icon|}}
+    {{d-icon icon}}
+  {{/each}}
+
+  {{multi-select/format-selected-content content=selectedContent selectKit=selectKit}}
+
+  {{d-icon caretIcon class="caret-icon"}}
+</div>

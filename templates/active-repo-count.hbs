@@ -1,0 +1,12 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<InsightsGlance
+  @isLoading={{this.isAnythingLoading}}
+  @isEmpty={{this.isEmpty}}
+  @title="Active Repositories"
+  @statistic={{this.activeTotal}}
+  @labels={{this.labels}}
+  @values={{this.activeRepos}}
+  @datasetTitle="Active Repositories"
+  @centerline={{this.avgReposRounded}}
+/>

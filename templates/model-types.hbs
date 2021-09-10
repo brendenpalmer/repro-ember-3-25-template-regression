@@ -1,0 +1,23 @@
+{{! Template from `ember-inspector` with MIT license }}
+{{! Repo URL: https://github.com/emberjs/ember-inspector }}
+{{#if this.toolbarContainer}}
+  {{#in-element this.toolbarContainer}}
+    <ModelTypesToolbar
+      @getStore={{this.getStore}}
+      @hideEmptyModelTypes={{this.hideEmptyModelTypes}}
+      @orderByRecordCount={{this.orderByRecordCount}}
+      @reload={{action send "reload"}}
+    />
+  {{/in-element}}
+{{/if}}
+
+<ItemTypes
+  @header="Model Types"
+  @sorted={{
+    readonly (if this.orderByRecordCount this.sortByDescCount this.sortByName)
+  }}
+  @type="model"
+  @width={{this.navWidth}}
+>
+  {{outlet}}
+</ItemTypes>

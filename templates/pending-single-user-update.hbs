@@ -1,0 +1,69 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<div
+  class="pending-single-user-updates"
+  data-test-pending-single-user-update
+  ...attributes
+>
+
+  {{#each this.updates as |update|}}
+    <div class="update" data-test-update>
+      <div class="explanation" data-test-explanation>
+        <FaIcon @icon="exclamation-triangle" class="no" />
+        {{#if (eq update.type "emailMismatch")}}
+          {{t
+            "general.pendingUserUpdates.emailMismatch"
+            value=update.value
+            email=(get (await update.user) "email")
+          }}
+        {{else}}
+          {{t (concat "general.pendingUserUpdates." update.type)}}
+        {{/if}}
+      </div>
+      <div class="actions" data-test-actions>
+        {{#if this.isSaving}}
+          <LoadingSpinner />
+        {{else}}
+          {{#if (eq update.type "emailMismatch")}}
+            <button
+              type="button"
+              {{on "click" (perform this.updateEmailAddress update)}}
+              data-test-update-email
+            >
+              <FaIcon
+                @icon="arrow-circle-up"
+                class="yes"
+                @title={{t "general.update"}}
+              />
+              {{t "general.pendingUserUpdates.updateIlios"}}
+            </button>
+          {{/if}}
+          <button
+            type="button"
+            {{on "click" (perform this.excludeFromSync)}}
+            data-test-exclude-from-sync
+          >
+            <FaIcon
+              @icon="ban"
+              class="no"
+              @title={{t "general.excludeFromSync"}}
+            />
+            {{t "general.excludeFromSync"}}
+          </button>
+          <button
+            type="button"
+            {{on "click" (perform this.disableUser)}}
+            data-test-disable
+          >
+            <FaIcon
+              @icon="times"
+              class="no"
+              @title={{t "general.disableUser"}}
+            />
+            {{t "general.disableUser"}}
+          </button>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+</div>

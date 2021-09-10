@@ -1,0 +1,4 @@
+{{! Template from `skylines` with MIT license }}
+{{#each @flights as |flight|}}
+  <FlightPathLayerFeature @source={{this.source}} @flight={{flight}} />
+{{/each}}

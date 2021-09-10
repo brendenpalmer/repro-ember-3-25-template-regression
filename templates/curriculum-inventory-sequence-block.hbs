@@ -1,0 +1,16 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+{{page-title (t "general.curriculumInventoryReports")}}
+<CurriculumInventory::SequenceBlockDetails
+  @sequenceBlock={{@model}}
+  @canUpdate={{this.canUpdate}}
+  @sortSessionsBy={{this.sortSessionsBy}}
+  @setSortSessionBy={{this.setSortSessionsBy}}
+/>
+<CurriculumInventory::SequenceBlockList
+  @report={{await @model.report}}
+  @parent={{@model}}
+  @canUpdate={{this.canUpdate}}
+  @sequenceBlocks={{await @model.children}}
+  @remove={{this.removeChildSequenceBlock}}
+/>

@@ -1,0 +1,37 @@
+{{! Template from `smallrobotco` with MIT license }}
+<div class="ember-view">
+  <HeadLayout />
+  <BurgerMenu @position="right" @animation="reveal" @itemAnimation="stack" @dismissOnItemClick="true" as |burger|>
+    <burger.menu @itemTagName="li" @dismissOnItemClick="true" as |menu|>
+      <a class="menu-close" {{action burger.state.actions.close}}><i aria-hidden="true" class="fa fa-times"></i> Close</a>
+      <ul>
+        <menu.item>
+          <LinkTo @route="index">Home</LinkTo>
+        </menu.item>
+        <menu.item>
+          <LinkTo @route="consulting">Consulting</LinkTo>
+        </menu.item>
+        <menu.item>
+          <LinkTo @route="development">Development</LinkTo>
+        </menu.item>
+        <menu.item>
+          <LinkTo @route="support">Support</LinkTo>
+        </menu.item>
+        <menu.item>
+          <LinkTo @route="about">About</LinkTo>
+        </menu.item>
+        <menu.item>
+          <LinkTo @route="blog">Inspiration &amp; Ideas</LinkTo>
+        </menu.item>
+        <menu.item>
+          <LinkTo @route="contact">Contact Us</LinkTo>
+        </menu.item>
+      </ul>
+    </burger.menu>
+
+    <burger.outlet>
+      <a class="hamburger right" {{action burger.state.actions.toggle}}><i aria-hidden="true" class="fa fa-bars"></i> Menu</a>
+      {{outlet}}
+    </burger.outlet>
+  </BurgerMenu>
+</div>

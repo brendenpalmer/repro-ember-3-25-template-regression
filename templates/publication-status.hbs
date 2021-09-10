@@ -1,0 +1,11 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<span class="status publication-status {{if @item.isFinalized "published" "notpublished"}}">
+  <span data-test-text>
+    {{#if @item.isFinalized}}
+      {{t "general.finalized"}}
+    {{else}}
+      {{t "general.draft"}}
+    {{/if}}
+  </span>
+</span>

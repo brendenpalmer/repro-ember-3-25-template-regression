@@ -1,0 +1,4 @@
+{{! Template from `discourse` with MIT license }}
+{{#if value}}
+  {{d-button class="btn-default group-manage-logs-filter" action=(action "clearFilter") actionParam=type icon="times-circle" translatedLabel=(concat label ": " filterText)}}
+{{/if}}

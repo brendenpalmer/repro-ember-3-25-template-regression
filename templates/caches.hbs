@@ -1,0 +1,61 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{#if this.cachesExist}}
+  <div class="caches-header">
+    <h1 class="small-title">
+      All caches
+      <small>
+        (<ExternalLinkTo @href="http://docs.travis-ci.com/user/caching/" @title="Read about caching">Read the docs</ExternalLinkTo>)
+      </small>
+    </h1>
+    <button
+      class="{{if this.deleteRepoCache.isRunning 'deleting'}} delete-cache-button no-button"
+      title="Delete all repository caches"
+      onclick={{action (perform this.deleteRepoCache)}}
+    >
+      Delete all repository caches
+      <SvgImage @name="icon-trash" @class="icon" />
+    </button>
+  </div>
+  {{#if this.model.pushes.length}}
+    <h2 class="small-title">
+      Pushes
+    </h2>
+    <ul class="caches-list push-caches">
+      {{#each this.model.pushes as |cache|}}
+        <CachesItem
+          @cache={{cache}}
+          @repo={{this.repo}}
+          @caches={{this.model.pushes}}
+        />
+      {{/each}}
+    </ul>
+  {{/if}}
+  {{#if this.model.pullRequests.length}}
+    <h2 class="small-title">
+      {{vcs-vocab this.repo.vcsType 'pullRequest' plural=true}}
+    </h2>
+    <ul class="caches-list pull-request-caches">
+      {{#each this.model.pullRequests as |cache|}}
+        <CachesItem
+          @cache={{cache}}
+          @repo={{this.repo}}
+          @caches={{this.model.pullRequests}}
+        />
+      {{/each}}
+    </ul>
+  {{/if}}
+{{else}}
+  <p class="helptext no-caches">
+    No caches have been created yet,
+    <br />
+    read more on
+    <ExternalLinkTo
+      @href="http://docs.travis-ci.com/user/caching/"
+      @title="Documentation on caching"
+    >
+      how to setup caching with your build
+    </ExternalLinkTo>
+    .
+  </p>
+{{/if}}

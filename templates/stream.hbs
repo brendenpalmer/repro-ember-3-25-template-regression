@@ -1,0 +1,5 @@
+{{! Template from `discourse` with MIT license }}
+{{#if model.noContent}}
+  <div class="alert alert-info">{{html-safe model.noContentHelp}}</div>
+{{/if}}
+{{user-stream stream=model}}

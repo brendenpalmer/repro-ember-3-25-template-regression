@@ -1,0 +1,97 @@
+{{! Template from `skylines` with MIT license }}
+<div class="panel-body" ...attributes>
+  <form
+    data-test-upload-form={{if uploadTask.isRunning "uploading"}}
+    {{on "submit" (action "submit")}}
+  >
+    {{#if error}}
+      <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+    {{/if}}
+
+    <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}>
+      <input
+        type="file"
+        name="files"
+        multiple="multiple"
+        class="form-control"
+        disabled={{uploadTask.isRunning}}
+        data-test-files
+        {{on "change" (action "setFilesFromEvent")}}
+      >
+    </ValidatedBlock>
+
+    <ValidatedBlock
+      @label={{t "pilot"}}
+      @validation={{validations.attrs.pilotId}}
+      @didValidate={{didValidate}}
+      data-test-pilot
+    >
+      <PilotSelect
+        @clubMembers={{clubMembers}}
+        @pilotId={{pilotId}}
+        @disabled={{uploadTask.isRunning}}
+        @onChange={{action (mut pilotId)}}
+      />
+    </ValidatedBlock>
+
+    {{#if showPilotNameInput}}
+      <ValidatedInput
+        @value={{pilotName}}
+        @validation={{validations.attrs.pilotName}}
+        @label={{t "pilot"}}
+        @disabled={{uploadTask.isRunning}}
+        @didValidate={{didValidate}} />
+    {{/if}}
+
+    <input type="hidden" name="pilotId" value={{pilotId}}>
+    <input type="hidden" name="pilotName" value={{pilotName}}>
+
+    <div local-class="weglide-box">
+      <label local-class="weglide-label">
+        <input
+          type="checkbox"
+          checked={{this.uploadToWeGlide}}
+          disabled={{uploadTask.isRunning}}
+          local-class="weglide-label"
+          data-test-upload-to-weglide-checkbox
+          {{on "change" (action "toggleWeGlide")}}
+        />
+        {{t "weglide.checkbox-label"}}
+        <img src="/weglide.svg" aria-hidden="true">
+      </label>
+
+      {{#if this.uploadToWeGlide}}
+        <hr local-class="weglide-divider" />
+
+        <Weglide::UserIdField
+          @disabled={{uploadTask.isRunning}}
+          @onChange={{action "updateWeGlideUserId"}}
+          data-test-weglide-user-id
+        />
+
+        <div
+          local-class="weglide-birthday"
+          class={{if (and this.weglideBirthday (not this.weglideBirthdayIsValid)) "has-error"}}
+        >
+          <label class="control-label" for="weglideBirthday">{{t "weglide.birthday"}}</label>
+          <input
+            type="date"
+            value={{this.weglideBirthday}}
+            disabled={{uploadTask.isRunning}}
+            class="form-control"
+            id="weglideBirthday"
+            data-test-weglide-birthday
+            {{on "input" (action "updateWeGlideBirthday")}}
+          />
+        </div>
+
+        <input type="hidden" name="weglideUserId" value={{this.weglideUserId}}>
+        <input type="hidden" name="weglideBirthday" value={{this.weglideBirthday}}>
+      {{/if}}
+    </div>
+
+    <button class="btn btn-primary btn-block" type="submit" disabled={{this.submitDisabled}} data-test-submit-button>
+      {{t (if uploadTask.isRunning "uploading" "upload")}}
+    </button>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<ScrollHere @immediate={{true}} />
+<Layouts::Striped
+  @useTailwind={{true}}
+  @isTopBarWhite={{true}}
+  @isFlush={{true}}
+  as |layout|
+>
+  {{outlet}}
+</Layouts::Striped>

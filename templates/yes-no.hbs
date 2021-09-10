@@ -1,0 +1,9 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<span class={{if @value "yes" "no"}} data-test-yes-no ...attributes>
+  {{#if @value}}
+    {{t "general.yes"}}
+  {{else}}
+    {{t "general.no"}}
+  {{/if}}
+</span>

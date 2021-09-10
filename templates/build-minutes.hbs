@@ -1,0 +1,13 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+{{! Product thinks that referencing Job Minutes in the title will be easier for people to understand than Build Minutes. }}
+<InsightsGlance
+  @isLoading={{this.isLoading}}
+  @isEmpty={{this.isEmpty}}
+  @title="Total Job Minutes"
+  @statistic={{this.totalBuildText}}
+  @labels={{this.labels}}
+  @values={{this.buildMins}}
+  @datasetTitle="Minutes"
+  @centerline={{this.avgBuildMins}}
+/>

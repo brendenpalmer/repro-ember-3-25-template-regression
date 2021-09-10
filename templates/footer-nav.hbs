@@ -1,0 +1,40 @@
+{{! Template from `smallrobotco` with MIT license }}
+<div class="company col-6 col-md-3 col-lg-2">
+  <h4>Company</h4>
+  <nav>
+    <ul>
+      <li>
+        <LinkTo @route="about">About Us</LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="contact">Contact Us</LinkTo>
+      </li>
+      {{!-- <li>
+      {{#link-to "work"}}Our Work{{/link-to}}
+    </li> --}}
+      <li>
+        <LinkTo @route="blog">Inspiration & Ideas</LinkTo>
+      </li>
+
+    </ul>
+  </nav>
+</div>
+<div class="services col-6 col-md-3 col-lg-2">
+  <h4>Services</h4>
+  <nav>
+    <ul>
+      <li>
+          <LinkTo @route="consulting">Consulting</LinkTo>
+        </li>
+        <li>
+          <LinkTo @route="development">Development</LinkTo>
+        </li>
+        <li>
+          <LinkTo @route="support">Support</LinkTo>
+        </li>
+        {{!-- <li>
+          {{#link-to "pricing"}}Pricing{{/link-to}}
+        </li> --}}
+    </ul>
+  </nav>
+</div>

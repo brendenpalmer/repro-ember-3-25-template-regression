@@ -1,0 +1,21 @@
+{{! Template from `travis` with MIT license }}
+{{! Repo URL: https://github.com/travis-ci/travis-web }}
+<span class="travis-form__field-checkbox-wrapper">
+  <input
+    type="checkbox"
+    checked={{this.checked}}
+    disabled={{this.disabled}}
+    onchange={{action "toggle"}}
+    onfocus={{action "focus"}}
+    onblur={{action "blur"}}
+  />
+  <SvgImage
+    @name="checkbox-checked"
+    @class="travis-form__field-checkbox-image--checked"
+  />
+  <SvgImage
+    @name="checkbox-unchecked"
+    @class="travis-form__field-checkbox-image--unchecked"
+  />
+</span>
+{{yield}}

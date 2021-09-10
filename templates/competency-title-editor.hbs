@@ -1,0 +1,32 @@
+{{! Template from `ilios` with MIT license }}
+{{! Repo URL: https://github.com/ilios/frontend }}
+<span
+  class="competency-title-editor"
+  data-test-competency-title-editor
+>
+  {{#if @canUpdate}}
+    <EditableField
+      @value={{this.title}}
+      @save={{perform this.save}}
+      @close={{this.revert}}
+      @saveOnEnter={{true}}
+      data-test-title
+      @closeOnEscape={{true}} as |isSaving|
+    >
+      <Input
+        @type="text"
+        @value={{this.title}}
+        disabled={{isSaving}}
+        aria-label={{t "general.title"}}
+        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+      />
+    </EditableField>
+    {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+      <span class="validation-error-message">
+        {{message}}
+      </span>
+    {{/each}}
+  {{else}}
+    {{this.title}}
+  {{/if}}
+</span>
