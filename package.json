@@ -1,5 +1,5 @@
 {
-  "name": "repro-ember-3-28-template-regression",
+  "name": "repro-ember-3-25-template-regression",
   "version": "0.0.1",
   "description": "Simple reproduction to show template compilation regression in Ember 3.25",
   "main": "index.js",
