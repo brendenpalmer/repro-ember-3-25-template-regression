@@ -13,7 +13,10 @@
   "devDependencies": {
     "ember-source-3-24": "npm:ember-source@3.24.5",
     "ember-source-3-25": "npm:ember-source@3.25.4",
+    "ember-source-3-28": "npm:ember-source@3.28.1",
     "fast-glob": "^3.2.7",
+    "glimmer-compiler-ember-source-3-28": "npm:@glimmer/compiler@0.80.0",
+    "glimmer-compiler-ember-source-3-24": "npm:@glimmer/compiler@0.65.3",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "prettier": "^2.4.0"
