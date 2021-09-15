@@ -2129,6 +2129,10 @@ get-stream@^6.0.0:
     "@glimmer/wire-format" "0.80.0"
     "@simple-dom/interface" "^1.4.0"
 
+"glimmer-compiler-experiment@link:../../glimmerjs/glimmer-vm/dist/@glimmer/compiler":
+  version "0.0.0"
+  uid ""
+
 glob-parent@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"

@@ -7,9 +7,10 @@ const fs = require('fs');
 const pkg = require('../package.json');
 
 /**
-  @typdef CompilersToTest
+  @typedef CompilerToTest
 
   @property {'@glimmer/component' | 'ember-source'} package
+  @property {string} label
   @property {string} version;
   @property {(template: string) => void} precompile;
   @property {Array} plugins the ASTPlugin type from @glimmer/syntax
@@ -18,7 +19,7 @@ const pkg = require('../package.json');
 /**
   Create an array of compiler functions to try out, these objects are in this format:
 
- @returns CompilersToTest
+ @return {CompilerToTest[]}
 */
 function getCompilers() {
   return Object.entries(pkg.devDependencies).reduce((memo, [label]) => {
@@ -34,13 +35,20 @@ function getCompilers() {
 
       const emberPackage = label.substring('glimmer-component'.length);
 
-      buildCompileOptions =
-        require(`${emberPackage}/dist/ember-template-compiler`).compileOptions;
+      // Use the package version if it's legit; otherwise default to using 3.28
+      try {
+        buildCompileOptions =
+          require(`${emberPackage}/dist/ember-template-compiler`).compileOptions;
+      } catch {
+        buildCompileOptions =
+          require(`ember-source-3-28/dist/ember-template-compiler`).compileOptions;
+      }
     } else {
       return memo;
     }
 
     const compilerInfo = {
+      label,
       package: compilerPkg.name,
       version: compilerPkg.version,
       precompile,
@@ -77,7 +85,11 @@ async function getAllTemplates() {
 function measure({ precompile, buildCompileOptions }, templates) {
   const start = Date.now();
 
-  templates.forEach(({ relativePath, fileContent }) => {
+  // This way we stop holding the template in memory.
+  // TODO: (maybe) make sure we match what we do in the actual build pipeline
+  let template;
+  while ((template = templates.pop())) {
+    let { relativePath, fileContent } = template;
     precompile(
       fileContent,
       buildCompileOptions({
@@ -92,25 +104,24 @@ function measure({ precompile, buildCompileOptions }, templates) {
         },
       })
     );
-  });
+  }
 
   return Date.now() - start;
 }
 
 (async function run() {
-  console.log('Getting all templates in templates/');
-  const templates = await getAllTemplates();
-  console.log(`Found ${templates.length} templates`);
-
   let timingLogs = [];
 
-  compilers.forEach((compilerInfo) => {
-    let displayName = `${compilerInfo.package}@${compilerInfo.version}`;
-    console.log(`Measuring precompile time using '${displayName}'`);
-    const timing = measure(compilerInfo, templates);
+  await Promise.all(
+    compilers.map(async (compilerInfo) => {
+      const templates = await getAllTemplates();
 
-    timingLogs.push([`Total precompile time using '${displayName}'`, timing]);
-  });
+      const timing = measure(compilerInfo, templates);
+
+      let displayName = `${compilerInfo.package}@${compilerInfo.version} (${compilerInfo.label})`;
+      timingLogs.push([`Total precompile time using '${displayName}'`, timing]);
+    })
+  );
 
   timingLogs.forEach((info) => console.log(...info));
 })();
