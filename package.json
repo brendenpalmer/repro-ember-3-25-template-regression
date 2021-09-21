@@ -24,8 +24,5 @@
   },
   "lint-staged": {
     "*.js": "prettier --write"
-  },
-  "workspaces": [
-    "glimmer-vm"
-  ]
+  }
 }
