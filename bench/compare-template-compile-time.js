@@ -112,19 +112,30 @@ function measure({ precompile, buildCompileOptions }, templates) {
   return Date.now() - start;
 }
 
+const displayNameFor = (compilerInfo) =>
+  `${compilerInfo.package}@${compilerInfo.version} (${compilerInfo.label})`;
+
 (async function run() {
-  let timingLogs = [];
+  /** @type {Map<string, Array<number>>} */
+  const timingLogs = new Map(compilers.map((c) => [displayNameFor(c), []]));
+
+  // Get five of each compiler to run. We'll average the results at the end.
+  const compilersToRun = compilers.reduce(
+    (cs, c) => cs.concat([c, c, c, c, c]),
+    []
+  );
 
   await Promise.all(
-    compilers.map(async (compilerInfo) => {
+    compilersToRun.map(async (compilerInfo) => {
       const templates = await getAllTemplates();
 
       const timing = measure(compilerInfo, templates);
-
-      let displayName = `${compilerInfo.package}@${compilerInfo.version} (${compilerInfo.label})`;
-      timingLogs.push([`Total precompile time using '${displayName}'`, timing]);
+      timingLogs.get(displayNameFor(compilerInfo)).push(timing);
     })
   );
 
-  timingLogs.forEach((info) => console.log(...info));
+  for (let [name, timings] of timingLogs) {
+    let avg = timings.reduce((sum, n) => sum + n, 0) / timings.length;
+    console.log(`Average total precompile time using ${name}`, avg);
+  }
 })();
