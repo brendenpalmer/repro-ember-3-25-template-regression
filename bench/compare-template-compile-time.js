@@ -40,8 +40,11 @@ function getCompilers() {
         buildCompileOptions =
           require(`${emberPackage}/dist/ember-template-compiler`).compileOptions;
       } catch {
-        buildCompileOptions =
-          require(`ember-source-3-28/dist/ember-template-compiler`).compileOptions;
+        // The regular 3.28 source to use for that fallback.
+        const fallbackEmberSource =
+          'ember-source-3-28/dist/ember-template-compiler';
+
+        buildCompileOptions = require(fallbackEmberSource).compileOptions;
       }
     } else {
       return memo;
