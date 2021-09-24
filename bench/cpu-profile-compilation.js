@@ -17,6 +17,17 @@ let compiler = getCompilers().find(
   ({ label }) => label === 'glimmer-compiler-experiment'
 );
 
+function timestamp() {
+  const now = new Date();
+  const day = now.getDate();
+  const month = now.getMonth();
+  const year = now.getFullYear();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  return `${year}-${month}-${day}-${hours}${minutes}`;
+}
+
 (async function run() {
   mkdirSync('cpu-profiles', { recursive: true });
 
@@ -30,7 +41,7 @@ let compiler = getCompilers().find(
     path.join(
       __dirname,
       '..',
-      'cpu-profiles/glimmer-compiler-experiment.cpuprofile'
+      `cpu-profiles/${timestamp()}-glimmer-compiler-experiment.cpuprofile`
     ),
     JSON.stringify(profile),
     { encoding: 'utf-8' }
