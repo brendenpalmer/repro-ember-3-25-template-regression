@@ -1,3 +1,7 @@
+[submodule "glimmer-vm-experiments"]
+	path = glimmer-vm-experiments
+	url = git@github.com:glimmerjs/glimmer-vm.git
+
 [submodule "glimmer-vm"]
 	path = glimmer-vm
 	url = git@github.com:glimmerjs/glimmer-vm.git

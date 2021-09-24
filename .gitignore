@@ -2,3 +2,4 @@ node_modules
 yarn-error.log
 get-and-copy-templates.js
 .DS_Store
+cpu-profiles

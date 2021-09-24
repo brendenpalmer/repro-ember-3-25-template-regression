@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "./glimmer-vm"
+    },
+    {
+      "path": "./glimmer-vm-experiments"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "glimmer-vm": true,
+      "glimmer-vm-experiments": true
+    }
+  }
+}
