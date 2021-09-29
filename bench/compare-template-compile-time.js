@@ -30,8 +30,13 @@ function measure(compilerInfo, templates) {
     })
   );
 
+  // Build a little "table"
+  console.log('| variant | average | min | max | ');
+  console.log('| ------- | ------- | --- | --- | ');
   for (let [name, timings] of timingLogs) {
     let avg = timings.reduce((sum, n) => sum + n, 0) / timings.length;
-    console.log(`Average total precompile time using ${name}`, avg);
+    let min = Math.min(...timings);
+    let max = Math.max(...timings);
+    console.log(`| ${name} | ${avg} | ${min} | ${max} |`);
   }
 })();
