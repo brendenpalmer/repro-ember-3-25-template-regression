@@ -21,11 +21,13 @@ function timestamp() {
   const now = new Date();
   const day = now.getDate();
   const month = now.getMonth();
+  const monthString = month < 10 ? `0${month}` : month;
   const year = now.getFullYear();
   const hours = now.getHours();
+  const hoursString = hours < 10 ? `0${hours}` : hours;
   const minutes = now.getMinutes();
 
-  return `${year}-${month}-${day}-${hours}${minutes}`;
+  return `${year}-${monthString}-${day}-${hoursString}${minutes}`;
 }
 
 (async function run() {
