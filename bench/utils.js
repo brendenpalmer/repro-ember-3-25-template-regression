@@ -58,32 +58,41 @@ export function compileTemplates(
  */
 export function getCompilers() {
   return Object.entries(pkg.devDependencies).reduce((memo, [label]) => {
-    const compilerPkg = require(`${label}/package.json`);
-
-    let precompile;
-    let buildCompileOptions = (options) => options;
-
-    if (compilerPkg.name === 'ember-source') {
-      precompile = require(`${label}/dist/ember-template-compiler`).precompile;
-    } else if (compilerPkg.name === '@glimmer/compiler') {
-      precompile = require(label).precompile;
-
-      buildCompileOptions = compileOptionsFor(label, buildCompileOptions);
-    } else {
-      return memo;
+    let compiler = getCompiler(label);
+    if (compiler) {
+      memo.push(compiler);
     }
-
-    const compilerInfo = {
-      label,
-      package: compilerPkg.name,
-      version: compilerPkg.version,
-      precompile,
-      buildCompileOptions,
-    };
-    memo.push(compilerInfo);
-
     return memo;
   }, []);
+}
+
+/**
+  @param {string} label the compiler label
+  @returns {CompilerToTest | null}
+ */
+export function getCompiler(label) {
+  const compilerPkg = require(`${label}/package.json`);
+
+  let precompile;
+  let buildCompileOptions = (options) => options;
+
+  if (compilerPkg.name === 'ember-source') {
+    precompile = require(`${label}/dist/ember-template-compiler`).precompile;
+  } else if (compilerPkg.name === '@glimmer/compiler') {
+    precompile = require(label).precompile;
+
+    buildCompileOptions = compileOptionsFor(label, buildCompileOptions);
+  } else {
+    return null;
+  }
+
+  return {
+    label,
+    package: compilerPkg.name,
+    version: compilerPkg.version,
+    precompile,
+    buildCompileOptions,
+  };
 }
 
 function compileOptionsFor(label, buildCompileOptions) {
@@ -176,4 +185,22 @@ export function endProfile() {
       resolve(profile);
     });
   });
+}
+
+/**
+  Get a timestamp formatted like `2021-09-29-1709`.
+
+  @returns string
+ */
+export function timestamp() {
+  const now = new Date();
+  const day = now.getDate();
+  const month = now.getMonth();
+  const monthString = month < 10 ? `0${month}` : month;
+  const year = now.getFullYear();
+  const hours = now.getHours();
+  const hoursString = hours < 10 ? `0${hours}` : hours;
+  const minutes = now.getMinutes();
+
+  return `${year}-${monthString}-${day}-${hoursString}${minutes}`;
 }

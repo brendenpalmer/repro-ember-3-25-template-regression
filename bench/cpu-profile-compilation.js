@@ -11,41 +11,37 @@ import {
   getAllTemplates,
   startProfile,
   endProfile,
+  timestamp,
 } from './utils.js';
 
-let compiler = getCompilers().find(
-  ({ label }) => label === 'glimmer-compiler-experiment'
+const INTERESTING = [
+  'glimmer-compiler-experiment',
+  'glimmer-compiler-ember-source-3-24',
+];
+
+let compilersToRun = getCompilers().filter(({ label }) =>
+  INTERESTING.includes(label)
 );
-
-function timestamp() {
-  const now = new Date();
-  const day = now.getDate();
-  const month = now.getMonth();
-  const monthString = month < 10 ? `0${month}` : month;
-  const year = now.getFullYear();
-  const hours = now.getHours();
-  const hoursString = hours < 10 ? `0${hours}` : hours;
-  const minutes = now.getMinutes();
-
-  return `${year}-${monthString}-${day}-${hoursString}${minutes}`;
-}
 
 (async function run() {
   mkdirSync('cpu-profiles', { recursive: true });
 
-  let templates = await getAllTemplates();
+  // Sequencing is intentional. Don't want interference!
+  for (let compiler of compilersToRun) {
+    let templates = await getAllTemplates();
 
-  await startProfile();
-  compileTemplates(compiler, templates);
-  let profile = await endProfile();
+    await startProfile();
+    compileTemplates(compiler, templates);
+    let profile = await endProfile();
 
-  writeFileSync(
-    path.join(
-      __dirname,
-      '..',
-      `cpu-profiles/${timestamp()}-glimmer-compiler-experiment.cpuprofile`
-    ),
-    JSON.stringify(profile),
-    { encoding: 'utf-8' }
-  );
+    writeFileSync(
+      path.join(
+        __dirname,
+        '..',
+        `cpu-profiles/${timestamp()}-${compiler.label}.cpuprofile`
+      ),
+      JSON.stringify(profile),
+      { encoding: 'utf-8' }
+    );
+  }
 })();
