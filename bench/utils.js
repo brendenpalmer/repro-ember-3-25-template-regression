@@ -51,19 +51,27 @@ export function compileTemplates(
   @property {Array} plugins the ASTPlugin type from @glimmer/syntax
 */
 
+const INTERESTING = [
+  'glimmer-compiler-ember-source-3-24',
+  'glimmer-compiler-experiment',
+  'glimmer-compiler-latest',
+];
+
 /**
   Create an array of compiler functions to try out, these objects are in this format:
 
   @return {CompilerToTest[]}
  */
 export function getCompilers() {
-  return Object.entries(pkg.devDependencies).reduce((memo, [label]) => {
-    let compiler = getCompiler(label);
-    if (compiler) {
-      memo.push(compiler);
-    }
-    return memo;
-  }, []);
+  return Object.entries(pkg.devDependencies)
+    .reduce((memo, [label]) => {
+      let compiler = getCompiler(label);
+      if (compiler) {
+        memo.push(compiler);
+      }
+      return memo;
+    }, [])
+    .filter(({ label }) => INTERESTING.includes(label));
 }
 
 /**
@@ -195,12 +203,13 @@ export function endProfile() {
 export function timestamp() {
   const now = new Date();
   const day = now.getDate();
-  const month = now.getMonth();
+  const dayString = day < 10 ? `0${day}` : day;
+  const month = now.getMonth() + 1;
   const monthString = month < 10 ? `0${month}` : month;
   const year = now.getFullYear();
   const hours = now.getHours();
   const hoursString = hours < 10 ? `0${hours}` : hours;
   const minutes = now.getMinutes();
 
-  return `${year}-${monthString}-${day}-${hoursString}${minutes}`;
+  return `${year}-${monthString}-${dayString}-${hoursString}${minutes}`;
 }

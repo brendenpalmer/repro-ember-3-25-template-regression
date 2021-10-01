@@ -24,7 +24,9 @@ let compilersToRun = getCompilers().filter(({ label }) =>
 );
 
 (async function run() {
-  mkdirSync('cpu-profiles', { recursive: true });
+  let time = timestamp();
+  let outputDir = path.join(__dirname, '..', '_data', 'cpu-profiles', time);
+  mkdirSync(outputDir, { recursive: true });
 
   // Sequencing is intentional. Don't want interference!
   for (let compiler of compilersToRun) {
@@ -35,11 +37,7 @@ let compilersToRun = getCompilers().filter(({ label }) =>
     let profile = await endProfile();
 
     writeFileSync(
-      path.join(
-        __dirname,
-        '..',
-        `cpu-profiles/${timestamp()}-${compiler.label}.cpuprofile`
-      ),
+      path.join(outputDir, `${compiler.label}.cpuprofile`),
       JSON.stringify(profile),
       { encoding: 'utf-8' }
     );

@@ -37,34 +37,31 @@ const displayNameFor = (compilerInfo) =>
     []
   );
 
-  await Promise.all(
-    compilersToRun.map(async ([compilerInfo, runCountForCompiler]) => {
-      let outputFileName = `${compilerInfo.label}-${runCountForCompiler}.txt`;
-      let outputPath = join(outputDir, outputFileName);
+  // Run these in sequence intentionally to minimize CPU contention.
+  for (let [compilerInfo, runCountForCompiler] of compilersToRun) {
+    let outputFileName = `${compilerInfo.label}-${runCountForCompiler}.txt`;
+    let outputPath = join(outputDir, outputFileName);
 
-      try {
-        await execa(process.execPath, [
-          SUBPROCESS_PATH,
-          compilerInfo.label,
-          outputPath,
-        ]);
-      } catch (e) {
-        console.error('failed execa-ing', e);
-      }
+    try {
+      await execa(process.execPath, [
+        SUBPROCESS_PATH,
+        compilerInfo.label,
+        outputPath,
+      ]);
+    } catch (e) {
+      console.error('failed execa-ing', e);
+    }
 
-      let timingContents;
-      try {
-        timingContents = await readFile(outputPath, {
-          encoding: 'utf-8',
-        });
-      } catch (e) {
-        console.error('failed reading output', e);
-      }
+    let timingContents;
+    try {
+      timingContents = await readFile(outputPath, { encoding: 'utf-8' });
+    } catch (e) {
+      console.error('failed reading output', e);
+    }
 
-      const timing = parseFloat(timingContents.trim());
-      timingLogs.get(displayNameFor(compilerInfo)).push(timing);
-    })
-  );
+    const timing = parseFloat(timingContents.trim());
+    timingLogs.get(displayNameFor(compilerInfo)).push(timing);
+  }
 
   // Build a little "table"
   console.log('| variant | average | min | max | ');
