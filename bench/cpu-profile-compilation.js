@@ -16,6 +16,7 @@ import {
 
 const INTERESTING = [
   'glimmer-compiler-experiment',
+  'glimmer-compiler-latest',
   'glimmer-compiler-ember-source-3-24',
 ];
 

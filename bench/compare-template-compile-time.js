@@ -15,6 +15,17 @@ const compilers = getCompilers();
 const displayNameFor = (compilerInfo) =>
   `${compilerInfo.package}@${compilerInfo.version} (${compilerInfo.label})`;
 
+/**
+  @param {numbers[]} numbers a sorted array of numbers to find the median of
+  @return {number}
+ */
+function median(numbers) {
+  let mid = Math.floor(numbers.length / 2);
+  return numbers.length % 2 === 0
+    ? (numbers[mid] + numbers[mid - 1]) / 2
+    : numbers[mid];
+}
+
 (async function run() {
   // per-run output directory
   let outputDir = join(OUTPUT_BASE_DIR, timestamp());
@@ -64,12 +75,15 @@ const displayNameFor = (compilerInfo) =>
   }
 
   // Build a little "table"
-  console.log('| variant | average | min | max | ');
-  console.log('| ------- | ------- | --- | --- | ');
+  console.log('| variant | runs | average | median | min | max | ');
+  console.log('| ------- | ---- | ------- | ------ | --- | --- | ');
   for (let [name, timings] of timingLogs) {
+    timings.sort((a, b) => a - b);
     let avg = timings.reduce((sum, n) => sum + n, 0) / timings.length;
+    let runs = timings.length;
     let min = Math.min(...timings);
     let max = Math.max(...timings);
-    console.log(`| ${name} | ${avg} | ${min} | ${max} |`);
+    let med = median(timings);
+    console.log(`| ${name} | ${runs} | ${avg} | ${med} | ${min} | ${max} |`);
   }
 })();
